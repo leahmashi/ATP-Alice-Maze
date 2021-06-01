@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="650.0" prefWidth="900.0" stylesheets="@../CSSs/ChooseMazeStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MazeViewController">
+    <children>
+        <MenuBar minHeight="15.0" minWidth="240.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Load" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Options">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Properties" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help" />
+                <Menu mnemonicParsing="false" text="About" />
+                <Menu mnemonicParsing="false" text="Exit" />
+            </menus>
+        </MenuBar>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <GridPane layoutX="-1.0" layoutY="-1.0" prefHeight="624.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="ALWAYS" />
+                    </rowConstraints>
+                    <children>
+                  <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <AnchorPane layoutX="39.0" layoutY="70.0">
+                           <children>
+                                    <Label fx:id="chooseRowsLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="20.0" minWidth="160.0" text="Enter number of rows:" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font></Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="39.0" layoutY="70.0">
+                           <children>
+                                    <Label fx:id="chooseColsLabel" layoutX="5.0" layoutY="45.0" minHeight="20.0" minWidth="160.0" text="Enter number of cols:">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font></Label>
+                           </children>
+                        </AnchorPane>
+                         <TextField fx:id="EnterRowsLabel" layoutX="39.0" layoutY="90.0" minHeight="25.0" minWidth="160.0" onKeyPressed="#getRowsInput" promptText="enter rows here">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </TextField>
+                         <TextField fx:id="EnterColsLabel" layoutX="39.0" layoutY="135.0" minHeight="25.0" minWidth="160.0" onKeyPressed="#getColsInput" promptText="enter cols here">
+                             <font>
+                                 <Font name="System Bold Italic" size="12.0" />
+                             </font>
+                         </TextField>
+                        <AnchorPane layoutX="49.0" layoutY="120.0">
+                           <children>
+                                    <Label fx:id="chooseMazeType" layoutX="2.0" layoutY="43.0" minHeight="20.0" minWidth="135.0" text="Choose maze type:">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font></Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="19.0" layoutY="22.0">
+                           <children>
+                                    <Ellipse id="ellipseChooseMaze" fill="WHITE" layoutX="101.0" layoutY="115.0" opacity="0.1" radiusX="120.0" radiusY="137.0" stroke="BLACK" strokeType="INSIDE" />
+                              <ChoiceBox layoutX="26.0" layoutY="166.0" prefWidth="150.0">
+                                   <items>
+                                       <FXCollections fx:factory="observableArrayList">
+                                            <String fx:id="simpleChoice" fx:value="Simple" />
+                                            <String fx:id="primChoice" fx:value="Randomized Prim" />
+                                       </FXCollections>
+                                   </items>
+                               </ChoiceBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                    </children>
+                </GridPane>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
