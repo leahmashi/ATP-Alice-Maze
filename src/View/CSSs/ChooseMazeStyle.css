@@ -53,6 +53,20 @@
     -fx-font-weight: bold italic;
 }
 
+#returnToText {
+  -fx-text-fill: white;
+  -fx-font-family: "Calibari";
+  -fx-font-size: 15px;
+  -fx-font-weight: bold italic;
+}
+
+#MainWindowText {
+  -fx-text-fill: white;
+  -fx-font-family: "Calibari";
+  -fx-font-size: 15px;
+  -fx-font-weight: bold italic;
+}
+
 Button {
     -fx-text-fill: white;
     -fx-font-family: "Calibari";
