@@ -2,6 +2,11 @@ package View.controllers;
 
 
 import algorithms.mazeGenerators.Maze;
+import com.sun.jdi.IntegerValue;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
@@ -15,9 +20,11 @@ public class MazeViewController
     private static MediaPlayer mediaPlayer;
     private int rows;
     private int cols;
+    @FXML
+    public TextField EnterRowsText;
 
 
-    public void initialize() throws Exception
+    public void initialize()
     {
         Media musicFile = new Media(new File("resources/AliceChooseMazeMusic.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(musicFile);
@@ -29,35 +36,43 @@ public class MazeViewController
                 mediaPlayer.play();
             }
         });
-
-
     }
 
     public void getRowsInput(KeyEvent keyEvent)
     {
-        if (!keyEvent.getCode().equals(KeyCode.ENTER))
+        String rowsInput = EnterRowsText.getText();
+        try
         {
-            System.out.println("here");
+            rows = Integer.parseInt(rowsInput);
+        }
+        catch (Exception e)
+        {
+            raiseErrorWindow();
         }
     }
 
     public void getColsInput(KeyEvent keyEvent)
     {
-        if (!keyEvent.getCode().equals(KeyCode.ENTER))
+        String rowsInput = EnterRowsText.getText();
+        try
         {
-            System.out.println("here2");
+            rows = Integer.parseInt(rowsInput);
+        }
+        catch (Exception e)
+        {
+            raiseErrorWindow();
         }
     }
 
-//    int rows = Integer.valueOf(textField_mazeRows.getText());
-//    int cols = Integer.valueOf(textField_mazeColumns.getText());
-//    String mazeGeneratorType = textField_mazeGeneratorType.getText();
-//
-//    boolean setSuccess = setGenerator(mazeGeneratorType);
-//        if (setSuccess)
-//    {
-//        Maze maze = mazeGenrator.generate(rows, cols);
-//
-//    }
+    public void raiseErrorWindow()
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("One of the values you entered isn't an integer, please try again");
+        alert.show();
+    }
 
+    public void generateMaze(ActionEvent actionEvent)
+    {
+
+    }
 }

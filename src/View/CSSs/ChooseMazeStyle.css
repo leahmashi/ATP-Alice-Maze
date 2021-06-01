@@ -18,7 +18,7 @@
     -fx-font-weight: bold italic;
 }
 
-#EnterRowsLabel {
+#EnterRowsText {
     -fx-text-fill: black;
     -fx-font-family: "Calibari";
     -fx-font-size: 12px;
@@ -32,7 +32,7 @@
     -fx-font-weight: bold italic;
 }
 
-#EnterColsLabel {
+#EnterColsText {
     -fx-text-fill: black;
     -fx-font-family: "Calibari";
     -fx-font-size: 12px;
