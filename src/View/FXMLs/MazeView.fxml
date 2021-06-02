@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import View.MazeDisplayer?>
 <?import javafx.scene.layout.*?>
 
 
-<?import java.util.ArrayList?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <fx:define>
-        <ArrayList fx:id="mazeArray">
-
-        </ArrayList>
-    </fx:define>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MazeViewController">
+    <bottom>
+        <HBox BorderPane.alignment="CENTER">
+            <Label text="Status bar"/>
+        </HBox>
+    </bottom>
+    <center>
+        <Pane BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </padding>
+            <MazeDisplayer fx:id="mazeDisplayer" height="400.0" imageFileNamePlayer="./resources/AliceCharacter.png"
+                           imageFileNameWall="./resources/grassHedgeWall.png"
+                           onKeyPressed="#keyPressed" width="400.0"/>
+        </Pane>
+    </center>
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <MenuBar>
+                <Menu mnemonicParsing="false" text="File">
+                    <MenuItem mnemonicParsing="false" text="New"/>
+                    <MenuItem mnemonicParsing="false" text="Save"/>
+                    <MenuItem mnemonicParsing="false" text="Load"/>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Options">
+                    <MenuItem mnemonicParsing="false" text="Properties"/>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help"/>
+                <Menu mnemonicParsing="false" text="About"/>
+                <Menu mnemonicParsing="false" text="Exit"/>
+            </MenuBar>
+        </VBox>
+    </top>
 </BorderPane>
+
+
+
+
