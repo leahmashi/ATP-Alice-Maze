@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="650.0" prefWidth="900.0" stylesheets="@../CSSs/MainStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MyViewController">
+<BorderPane prefHeight="650.0" prefWidth="900.0" stylesheets="@../CSSs/MainStyle.css" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MyViewController">
     <bottom>
         <HBox alignment="CENTER" spacing="10">
             <Button onAction="#generateMaze" prefHeight="60.0" prefWidth="130.0" text="Generate Maze" BorderPane.alignment="BOTTOM_LEFT">

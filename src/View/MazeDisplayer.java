@@ -26,13 +26,8 @@ public class MazeDisplayer extends Canvas
         draw();
     }
 
-    public int getPlayerRow() {
-        return playerRow;
-    }
-
-    public int getPlayerCol() {
-        return playerCol;
-    }
+    public int getPlayerRow() { return playerRow; }
+    public int getPlayerCol() { return playerCol; }
 
     public void setPlayerPosition(int row, int col)
     {
@@ -41,33 +36,17 @@ public class MazeDisplayer extends Canvas
         draw();
     }
 
-    public String getImageFileNameWall() {
-        return imageFileNameWall.get();
-    }
+    public String getImageFileNameWall() { return imageFileNameWall.get(); }
+    public String imageFileNameWallProperty() { return imageFileNameWall.get(); }
+    public void setImageFileNameWall(String imageFileNameWall) { this.imageFileNameWall.set(imageFileNameWall); }
+    public String getImageFileNamePlayer() { return imageFileNamePlayer.get(); }
+    public String imageFileNamePlayerProperty() { return imageFileNamePlayer.get(); }
+    public void setImageFileNamePlayer(String imageFileNamePlayer) { this.imageFileNamePlayer.set(imageFileNamePlayer); }
 
-    public String imageFileNameWallProperty() {
-        return imageFileNameWall.get();
-    }
-
-    public void setImageFileNameWall(String imageFileNameWall) {
-        this.imageFileNameWall.set(imageFileNameWall);
-    }
-
-    public String getImageFileNamePlayer() {
-        return imageFileNamePlayer.get();
-    }
-
-    public String imageFileNamePlayerProperty() {
-        return imageFileNamePlayer.get();
-    }
-
-    public void setImageFileNamePlayer(String imageFileNamePlayer)
+    private void draw()
     {
-        this.imageFileNamePlayer.set(imageFileNamePlayer);
-    }
-
-    private void draw() {
-        if(maze != null){
+        if(maze != null)
+        {
             double canvasHeight = getHeight();
             double canvasWidth = getWidth();
             int rows = maze.length;
