@@ -15,9 +15,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
@@ -62,6 +64,43 @@ public class chooseMazeViewController
         alert.show();
     }
 
+//    public void generateMaze(ActionEvent actionEvent) throws IOException
+//    {
+//        String colsInput = EnterColsText.getText();
+//        String rowsInput = EnterRowsText.getText();
+//        try {
+//            rows = Integer.parseInt(rowsInput);
+//            cols = Integer.parseInt(colsInput);
+//            mazeChoice = (String) primChoice.getValue();
+//            if (mazeChoice == null)
+//                raiseErrorWindow("Please choose a maze type");
+//            else
+//                mg = ChooseMaze(mazeChoice);
+//        }
+//        catch (Exception e)
+//        {
+//            raiseErrorWindow("One or more inputs isn't a positive number, please try again");
+//        }
+//
+//        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
+//        MazeViewController controller = new MazeViewController(rows, cols, mg);
+//        loader.setController(controller);
+//        Parent root = loader.load();
+//        root.setId("maze");
+//        Stage MazeWindowStage = new Stage();
+//        Scene MazeWindowScene = new Scene(root, 900, 650);
+//        MazeWindowStage.setTitle("mazeScene");
+//        MazeWindowStage.setScene(MazeWindowScene);
+//
+//        MazeWindowStage.show();
+//
+//        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> {
+//            mediaPlayer.stop();
+//        });
+//
+//        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+//    }
+
     public void generateMaze(ActionEvent actionEvent) throws IOException
     {
         String colsInput = EnterColsText.getText();
@@ -80,19 +119,13 @@ public class chooseMazeViewController
             raiseErrorWindow("One or more inputs isn't a positive number, please try again");
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
-        MazeViewController controller = new MazeViewController(rows, cols, mg);
-        loader.setController(controller);
-        Parent root = loader.load();
-        root.setId("maze");
         Stage MazeWindowStage = new Stage();
-        Scene MazeWindowScene = new Scene(root, 900, 650);
-        MazeWindowStage.setTitle("mazeScene");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
+        Parent root = fxmlLoader.load();
+        MazeViewController controller = fxmlLoader.getController();
+        controller.initData(rows, cols, mg);
+        Scene MazeWindowScene = new Scene(root);
         MazeWindowStage.setScene(MazeWindowScene);
-
-//        MazeViewController controller = loader.getController();
-//        controller.initData(rows, cols, mg);
-
         MazeWindowStage.show();
 
         ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> {

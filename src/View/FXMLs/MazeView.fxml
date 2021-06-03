@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import View.MazeDisplayer?>
 <?import javafx.scene.layout.*?>
-
-
-<?import javafx.scene.canvas.Canvas?>
+<?import View.MazeDisplayer?>
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../CSSs/MazeStyle.css" >
-<!--    <bottom>-->
-<!--        <HBox BorderPane.alignment="CENTER">-->
-<!--            <Label text="Status bar"/>-->
-<!--        </HBox>-->
-<!--    </bottom>-->
-
+            xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../CSSs/MazeStyle.css" fx:controller="View.controllers.MazeViewController">
+    <bottom>
+        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0"
+                onAction="#returnToMain">
+            <graphic>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                      prefHeight="45.0" prefWidth="120.0">
+                    <Label text="return to" fx:id="returnToText">
+                        <VBox.margin>
+                            <Insets left="30.0"/>
+                        </VBox.margin>
+                    </Label>
+                    <Label fx:id="MainWindowText" text="main window">
+                        <VBox.margin>
+                            <Insets bottom="15.0" left="15.0"/>
+                        </VBox.margin>
+                    </Label>
+                </VBox>
+            </graphic>
+        </Button>
+    </bottom>
     <center>
         <Pane BorderPane.alignment="CENTER" fx:id="pane" >
 <!--                <padding>-->
 <!--                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>-->
 <!--                </padding>-->
-            <MazeDisplayer fx:id="mazeDisplayerFXML" height="600.0" imageFileNamePlayer="./resources/AliceCharacter.jpg"
-                           imageFileNameWall="./resources/grassHedgeWall.png" onKeyPressed="#keyPressed" onMouseDragOver="#resize" width="900.0" />
+            <MazeDisplayer fx:id="mazeDisplayerFXML" height="575.0" imageFileNamePlayer="./resources/AliceCharacter.jpg"
+                           imageFileNameWall="./resources/grassHedgeWall.png" onKeyPressed="#keyPressed" width="900.0" />
         </Pane>
     </center>
     <top>
