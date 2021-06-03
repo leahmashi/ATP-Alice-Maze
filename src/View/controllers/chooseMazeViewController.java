@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -27,7 +29,9 @@ public class chooseMazeViewController
     private static MediaPlayer mediaPlayer;
     private int rows;
     private int cols;
+    private Maze maze;
     private AMazeGenerator mg;
+    private String mazeChoice;
     @FXML
     public TextField EnterRowsText;
     @FXML
@@ -48,6 +52,7 @@ public class chooseMazeViewController
                 mediaPlayer.play();
             }
         });
+
     }
 
     public void raiseErrorWindow(String text)
@@ -57,39 +62,44 @@ public class chooseMazeViewController
         alert.show();
     }
 
-    public void generateMaze() throws IOException
+    public void generateMaze(ActionEvent actionEvent) throws IOException
     {
         String colsInput = EnterColsText.getText();
         String rowsInput = EnterRowsText.getText();
-        String mazeChoice;
         try {
             rows = Integer.parseInt(rowsInput);
             cols = Integer.parseInt(colsInput);
             mazeChoice = (String) primChoice.getValue();
-            if (mazeChoice == null) {
+            if (mazeChoice == null)
                 raiseErrorWindow("Please choose a maze type");
-            }
             else
-            {
                 mg = ChooseMaze(mazeChoice);
-                Maze maze = mg.generate(rows, cols);
-            }
         }
         catch (Exception e)
         {
             raiseErrorWindow("One or more inputs isn't a positive number, please try again");
         }
 
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
+        MazeViewController controller = new MazeViewController(rows, cols, mg);
+        loader.setController(controller);
+        Parent root = loader.load();
+        root.setId("maze");
+        Stage MazeWindowStage = new Stage();
+        Scene MazeWindowScene = new Scene(root, 900, 650);
+        MazeWindowStage.setTitle("mazeScene");
+        MazeWindowStage.setScene(MazeWindowScene);
 
+//        MazeViewController controller = loader.getController();
+//        controller.initData(rows, cols, mg);
 
-//        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
-//        root.setId("maze");
-//        Stage MazeWindowStage = new Stage();
-//        Scene MazeWindowScene = new Scene(root, 900, 650);
-//        MazeWindowStage.setTitle("mazeScene");
-//        MazeWindowStage.setScene(MazeWindowScene);
-//        MazeWindowStage.show();
-//        System.out.println(String.format("rows = %d, columns = %d, Choice: %s", rows, cols, mazeChoice));
+        MazeWindowStage.show();
+
+        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> {
+            mediaPlayer.stop();
+        });
+
+        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
     }
 
     public void returnToMain(ActionEvent actionEvent) throws IOException

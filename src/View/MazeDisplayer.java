@@ -1,11 +1,14 @@
 package View;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,6 +46,7 @@ public class MazeDisplayer extends Canvas
     public String imageFileNamePlayerProperty() { return imageFileNamePlayer.get(); }
     public void setImageFileNamePlayer(String imageFileNamePlayer) { this.imageFileNamePlayer.set(imageFileNamePlayer); }
 
+
     private void draw()
     {
         if(maze != null)
@@ -58,10 +62,13 @@ public class MazeDisplayer extends Canvas
             GraphicsContext graphicsContext = getGraphicsContext2D();
             //clear the canvas:
             graphicsContext.clearRect(0, 0, canvasWidth, canvasHeight);
-            graphicsContext.setFill(Color.RED);
+            Image image = new Image("grassHedgeWall.jpg");
+            graphicsContext.setFill(new ImagePattern(image));
 
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
                     if(maze[i][j] == 1){
                         //if it is a wall:
                         double x = j * cellWidth;
@@ -70,6 +77,8 @@ public class MazeDisplayer extends Canvas
                     }
                 }
             }
+
+            drawPlayer(graphicsContext, cellHeight, cellWidth);
         }
     }
 
@@ -105,7 +114,7 @@ public class MazeDisplayer extends Canvas
     {
         double x = getPlayerCol() * cellWidth;
         double y = getPlayerRow() * cellHeight;
-        graphicsContext.setFill(Color.GREEN);
+//        graphicsContext.setFill(Color.GREEN);
 
         Image playerImage = null;
         try
@@ -119,5 +128,14 @@ public class MazeDisplayer extends Canvas
             graphicsContext.fillRect(x, y, cellWidth, cellHeight);
         else
             graphicsContext.drawImage(playerImage, x, y, cellWidth, cellHeight);
+    }
+
+    public void drawClicked()
+    {
+        GraphicsContext gc = getGraphicsContext2D();
+        gc.clearRect(0, 0, getWidth(), getHeight());
+        Image image = new Image("grassHedgeWall.jpg");
+        gc.setFill(new ImagePattern(image));
+        gc.fillRect(0, 0, getWidth(), getHeight());
     }
 }
