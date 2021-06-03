@@ -1,9 +1,9 @@
 package View.controllers;
 
 
+import View.AView;
 import View.MazeDisplayer;
-import algorithms.mazeGenerators.AMazeGenerator;
-import algorithms.mazeGenerators.Maze;
+import algrorithms.mazeGenerators.AMazeGenerator;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -25,15 +26,16 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class MazeViewController implements Initializable
+public class MazeViewController extends AView implements Initializable
 {
     public AMazeGenerator generator;
     public int _rows;
     public int _cols;
-    public Maze maze;
     private static MediaPlayer mediaPlayer;
+//    public MyViewModel viewModel;
 
     @FXML
     private MazeDisplayer mazeDisplayerFXML;
@@ -41,18 +43,12 @@ public class MazeViewController implements Initializable
     StringProperty updatePlayerRow = new SimpleStringProperty();
     StringProperty updatePlayerCol = new SimpleStringProperty();
 
+    //getters & setters
     public String getUpdatePlayerRow() { return updatePlayerRow.get(); }
     public void setUpdatePlayerRow(int updatePlayerRow) { this.updatePlayerRow.set(updatePlayerRow + ""); }
     public String getUpdatePlayerCol() { return updatePlayerCol.get(); }
     public void setUpdatePlayerCol(int updatePlayerCol) { this.updatePlayerCol.set(updatePlayerCol + ""); }
 
-
-//    MazeViewController(int rows, int cols, AMazeGenerator mg)
-//    {
-//        _rows = rows;
-//        _cols = cols;
-//        generator = mg;
-//    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -60,12 +56,12 @@ public class MazeViewController implements Initializable
 //        playerRow.textProperty().bind(updatePlayerRow);
 //        playerCol.textProperty().bind(updatePlayerCol);
         Platform.runLater(() -> {
-            maze = generator.generate(_rows, _cols);
-            mazeDisplayerFXML.drawMaze(maze.getMazeArray());
+
+            viewModel.generateMaze(_rows, _cols);
+//            mazeDisplayerFXML.drawMaze(maze.getMazeArray());
         });
 
     }
-
 
     public void openFile(ActionEvent actionEvent) {
         FileChooser fc = new FileChooser();
@@ -78,18 +74,7 @@ public class MazeViewController implements Initializable
 
     public void keyPressed(KeyEvent keyEvent)
     {
-        int row = mazeDisplayerFXML.getPlayerRow();
-        int col = mazeDisplayerFXML.getPlayerCol();
-
-        switch (keyEvent.getCode())
-        {
-            case UP -> row -= 1;
-            case DOWN -> row += 1;
-            case RIGHT -> col += 1;
-            case LEFT -> col -= 1;
-        }
-        setPlayerPosition(row, col);
-
+        viewModel.movePlayer(keyEvent);
         keyEvent.consume();
     }
 
@@ -145,4 +130,27 @@ public class MazeViewController implements Initializable
         });
     }
 
+    public void update(Observable observable, Object arg)
+    {
+        String change = (String) arg;
+        switch (change)
+        {
+            case "maze generated" -> mazeGenerated();
+            case "maze solved" -> mazeSolved();
+            case "player moved" -> playerMoved();
+        }
+    }
+
+    private void mazeGenerated()
+    {
+        mazeDisplayerFXML.drawMaze(viewModel.getMaze().getMazeArray());
+        playerMoved();
+    }
+
+    private void playerMoved() { setPlayerPosition(viewModel.getPlayerRow(), viewModel.getPlayerCol()); }
+
+    private void mazeSolved()
+    {
+        mazeDisplayerFXML.setSolution(viewModel.getSolution());
+    }
 }

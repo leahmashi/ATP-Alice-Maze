@@ -1,39 +1,41 @@
 package View.controllers;
 
+
+import Model.IModel;
+import Model.MyModel;
+import View.AView;
 import View.IView;
-import View.MazeDisplayer;
-import algorithms.mazeGenerators.*;
-import algorithms.mazeGenerators.Maze;
+import ViewModel.MyViewModel;
+
+import algrorithms.mazeGenerators.AMazeGenerator;
+import algrorithms.mazeGenerators.MyMazeGenerator;
+import algrorithms.mazeGenerators.SimpleMazeGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Callback;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class chooseMazeViewController
+public class chooseMazeViewController extends AView implements Initializable
 {
     private static MediaPlayer mediaPlayer;
     private int rows;
     private int cols;
-    private Maze maze;
     private AMazeGenerator mg;
-    private String mazeChoice;
     @FXML
     public TextField EnterRowsText;
     @FXML
@@ -42,7 +44,7 @@ public class chooseMazeViewController
     public ChoiceBox primChoice;
 
 
-    public void initialize()
+    public void initialize(URL url, ResourceBundle resourceBundle)
     {
         Media musicFile = new Media(new File("resources/AliceChooseMazeMusic.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(musicFile);
@@ -64,43 +66,6 @@ public class chooseMazeViewController
         alert.show();
     }
 
-//    public void generateMaze(ActionEvent actionEvent) throws IOException
-//    {
-//        String colsInput = EnterColsText.getText();
-//        String rowsInput = EnterRowsText.getText();
-//        try {
-//            rows = Integer.parseInt(rowsInput);
-//            cols = Integer.parseInt(colsInput);
-//            mazeChoice = (String) primChoice.getValue();
-//            if (mazeChoice == null)
-//                raiseErrorWindow("Please choose a maze type");
-//            else
-//                mg = ChooseMaze(mazeChoice);
-//        }
-//        catch (Exception e)
-//        {
-//            raiseErrorWindow("One or more inputs isn't a positive number, please try again");
-//        }
-//
-//        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
-//        MazeViewController controller = new MazeViewController(rows, cols, mg);
-//        loader.setController(controller);
-//        Parent root = loader.load();
-//        root.setId("maze");
-//        Stage MazeWindowStage = new Stage();
-//        Scene MazeWindowScene = new Scene(root, 900, 650);
-//        MazeWindowStage.setTitle("mazeScene");
-//        MazeWindowStage.setScene(MazeWindowScene);
-//
-//        MazeWindowStage.show();
-//
-//        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> {
-//            mediaPlayer.stop();
-//        });
-//
-//        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-//    }
-
     public void generateMaze(ActionEvent actionEvent) throws IOException
     {
         String colsInput = EnterColsText.getText();
@@ -108,7 +73,7 @@ public class chooseMazeViewController
         try {
             rows = Integer.parseInt(rowsInput);
             cols = Integer.parseInt(colsInput);
-            mazeChoice = (String) primChoice.getValue();
+            String mazeChoice = (String) primChoice.getValue();
             if (mazeChoice == null)
                 raiseErrorWindow("Please choose a maze type");
             else
@@ -124,14 +89,15 @@ public class chooseMazeViewController
         Parent root = fxmlLoader.load();
         MazeViewController controller = fxmlLoader.getController();
         controller.initData(rows, cols, mg);
+        IModel model = new MyModel(mg);
+        MyViewModel viewModel = new MyViewModel(model);
+        IView view = fxmlLoader.getController();
+        view.setViewModel(viewModel);
         Scene MazeWindowScene = new Scene(root);
         MazeWindowStage.setScene(MazeWindowScene);
         MazeWindowStage.show();
 
-        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> {
-            mediaPlayer.stop();
-        });
-
+        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
     }
 
@@ -145,9 +111,7 @@ public class chooseMazeViewController
         MainWindowStage.setScene(MainWindowScene);
         MainWindowStage.show();
 
-        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> {
-            mediaPlayer.stop();
-        });
+        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
 
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
@@ -165,15 +129,11 @@ public class chooseMazeViewController
 
     private AMazeGenerator ChooseMaze(String mazeChoice)
     {
-        switch(mazeChoice)
-        {
-            case "Simple":
-                mg = new SimpleMazeGenerator();
-                break;
-            case "Randomized Prim":
-                mg = new MyMazeGenerator();
-                break;
+        switch (mazeChoice) {
+            case "Simple" -> mg = new SimpleMazeGenerator();
+            case "Randomized Prim" -> mg = new MyMazeGenerator();
         }
         return mg;
     }
+
 }

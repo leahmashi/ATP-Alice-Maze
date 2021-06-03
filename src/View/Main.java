@@ -1,5 +1,8 @@
 package View;
 
+import Model.IModel;
+import Model.MyModel;
+import ViewModel.MyViewModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,11 +31,11 @@ public class Main extends Application {
             }
         });
 
-        primaryStage.setOnHidden(e -> {
-            mediaPlayer.stop();
-        });
+        primaryStage.setOnHidden(e -> mediaPlayer.stop());
 
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
+        Parent root = fxmlLoader.load();
         root.setId("mainWindow");
         Scene mainScene = new Scene(root, 900, 650);
         mainScene.getStylesheets().addAll(this.getClass().getResource("CSSs/MainStyle.css").toExternalForm());
@@ -41,7 +44,6 @@ public class Main extends Application {
         primaryStage.show();
 
     }
-
 
     public static void main(String[] args) { launch(args); }
 }
