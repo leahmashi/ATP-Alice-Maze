@@ -1,21 +1,19 @@
 package View;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
+import algrorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class MazeDisplayer extends Canvas
 {
-    private int[][] maze;
+    private int[][] mazeArr;
+    private Solution solution;
     // player position:
     private int playerRow = 0;
     private int playerCol = 0;
@@ -23,9 +21,9 @@ public class MazeDisplayer extends Canvas
     StringProperty imageFileNameWall = new SimpleStringProperty();
     StringProperty imageFileNamePlayer = new SimpleStringProperty();
 
-    public void drawMaze(int[][] maze)
+    public void drawMaze(int[][] mazeArr)
     {
-        this.maze = maze;
+        this.mazeArr = mazeArr;
         draw();
     }
 
@@ -40,21 +38,19 @@ public class MazeDisplayer extends Canvas
     }
 
     public String getImageFileNameWall() { return imageFileNameWall.get(); }
-    public String imageFileNameWallProperty() { return imageFileNameWall.get(); }
     public void setImageFileNameWall(String imageFileNameWall) { this.imageFileNameWall.set(imageFileNameWall); }
     public String getImageFileNamePlayer() { return imageFileNamePlayer.get(); }
-    public String imageFileNamePlayerProperty() { return imageFileNamePlayer.get(); }
     public void setImageFileNamePlayer(String imageFileNamePlayer) { this.imageFileNamePlayer.set(imageFileNamePlayer); }
 
 
     private void draw()
     {
-        if(maze != null)
+        if(mazeArr != null)
         {
             double canvasHeight = getHeight();
             double canvasWidth = getWidth();
-            int rows = maze.length;
-            int cols = maze[0].length;
+            int rows = mazeArr.length;
+            int cols = mazeArr[0].length;
 
             double cellHeight = canvasHeight / rows;
             double cellWidth = canvasWidth / cols;
@@ -62,46 +58,33 @@ public class MazeDisplayer extends Canvas
             GraphicsContext graphicsContext = getGraphicsContext2D();
             //clear the canvas:
             graphicsContext.clearRect(0, 0, canvasWidth, canvasHeight);
-            Image image = new Image("grassHedgeWall.jpg");
-            graphicsContext.setFill(new ImagePattern(image));
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    if(maze[i][j] == 1){
-                        //if it is a wall:
-                        double x = j * cellWidth;
-                        double y = i * cellHeight;
-                        graphicsContext.fillRect(x, y, cellWidth, cellHeight);
-                    }
-                }
-            }
-
+            drawMazeWalls(graphicsContext, cellHeight, cellWidth, rows, cols);
+            if (solution != null)
+                drawSolution(graphicsContext, cellHeight, cellWidth);
             drawPlayer(graphicsContext, cellHeight, cellWidth);
         }
     }
 
+    private void drawSolution(GraphicsContext graphicsContext, double cellHeight, double cellWidth)
+    {
+        //TODO: fill solution with roses
+    }
+
     private void drawMazeWalls(GraphicsContext graphicsContext, double cellHeight, double cellWidth, int rows, int cols)
     {
-        graphicsContext.setFill(Color.RED);
-
         Image wallImage = null;
-        try
-        {
-            wallImage = new Image(new FileInputStream(getImageFileNameWall()));
-        } catch (FileNotFoundException e)
-        {
-            System.out.println("There is no wall image file");
-        }
+        try { wallImage = new Image(new FileInputStream(getImageFileNameWall())); }
+        catch (FileNotFoundException e) { System.out.println("There is no wall image file"); }
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if(maze[i][j] == 1){
-                    //if it is a wall:
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                if(mazeArr[i][j] == 1) //if it is a wall
+                {
                     double x = j * cellWidth;
                     double y = i * cellHeight;
-                    if(wallImage == null)
+                    if (wallImage == null)
                         graphicsContext.fillRect(x, y, cellWidth, cellHeight);
                     else
                         graphicsContext.drawImage(wallImage, x, y, cellWidth, cellHeight);
@@ -130,12 +113,9 @@ public class MazeDisplayer extends Canvas
             graphicsContext.drawImage(playerImage, x, y, cellWidth, cellHeight);
     }
 
-    public void drawClicked()
+    public void setSolution(Solution solution)
     {
-        GraphicsContext gc = getGraphicsContext2D();
-        gc.clearRect(0, 0, getWidth(), getHeight());
-        Image image = new Image("grassHedgeWall.jpg");
-        gc.setFill(new ImagePattern(image));
-        gc.fillRect(0, 0, getWidth(), getHeight());
+        this.solution = solution;
+//        displaySolution();
     }
 }
