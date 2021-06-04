@@ -112,7 +112,6 @@ public class chooseMazeViewController extends AView implements Initializable
         MainWindowStage.show();
 
         ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
-
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
         Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());

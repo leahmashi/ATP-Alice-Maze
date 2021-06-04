@@ -56,7 +56,6 @@ public class MazeViewController extends AView implements Initializable
 //        playerRow.textProperty().bind(updatePlayerRow);
 //        playerCol.textProperty().bind(updatePlayerCol);
         Platform.runLater(() -> {
-
             viewModel.generateMaze(_rows, _cols);
 //            mazeDisplayerFXML.drawMaze(maze.getMazeArray());
         });
@@ -72,8 +71,10 @@ public class MazeViewController extends AView implements Initializable
         //...
     }
 
+    @FXML
     public void keyPressed(KeyEvent keyEvent)
     {
+        System.out.println("hello from keyPressed");
         viewModel.movePlayer(keyEvent);
         keyEvent.consume();
     }
@@ -85,10 +86,7 @@ public class MazeViewController extends AView implements Initializable
         setUpdatePlayerCol(col);
     }
 
-    public void mouseClicked(MouseEvent mouseEvent)
-    {
-        mazeDisplayerFXML.requestFocus();
-    }
+    public void mouseClicked(MouseEvent mouseEvent) { mazeDisplayerFXML.requestFocus(); }
 
     void initData(int rows, int cols, AMazeGenerator mg)
     {
@@ -107,17 +105,14 @@ public class MazeViewController extends AView implements Initializable
         MainWindowStage.setScene(MainWindowScene);
         MainWindowStage.show();
 
-//        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> {
-//            mediaPlayer.stop();
-//        });
-
+//        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
 
         Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());
         mediaPlayer = new MediaPlayer(musicFile);
         mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
+        mediaPlayer.setOnEndOfMedia( new Runnable() {
             @Override
             public void run() {
                 mediaPlayer.seek(Duration.ZERO);
@@ -125,11 +120,10 @@ public class MazeViewController extends AView implements Initializable
             }
         });
 
-        MainWindowStage.getScene().getWindow().setOnHidden(e -> {
-            mediaPlayer.stop();
-        });
+        MainWindowStage.getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
     }
 
+    @Override
     public void update(Observable observable, Object arg)
     {
         String change = (String) arg;
@@ -138,6 +132,7 @@ public class MazeViewController extends AView implements Initializable
             case "maze generated" -> mazeGenerated();
             case "maze solved" -> mazeSolved();
             case "player moved" -> playerMoved();
+            default -> System.out.println("Not implemented change: " + change);
         }
     }
 
