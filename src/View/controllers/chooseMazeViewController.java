@@ -14,14 +14,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -43,7 +46,7 @@ public class chooseMazeViewController extends AView implements Initializable
     @FXML
     public ChoiceBox primChoice;
 
-
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         Media musicFile = new Media(new File("resources/AliceChooseMazeMusic.mp3").toURI().toString());
@@ -94,6 +97,7 @@ public class chooseMazeViewController extends AView implements Initializable
         IView view = fxmlLoader.getController();
         view.setViewModel(viewModel);
         Scene MazeWindowScene = new Scene(root);
+
         MazeWindowStage.setScene(MazeWindowScene);
         MazeWindowStage.show();
 
@@ -114,16 +118,7 @@ public class chooseMazeViewController extends AView implements Initializable
         ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
-        Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());
-        mediaPlayer = new MediaPlayer(musicFile);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                mediaPlayer.seek(Duration.ZERO);
-                mediaPlayer.play();
-            }
-        });
+
     }
 
     private AMazeGenerator ChooseMaze(String mazeChoice)

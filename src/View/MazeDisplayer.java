@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -97,7 +98,7 @@ public class MazeDisplayer extends Canvas
     {
         double x = getPlayerCol() * cellWidth;
         double y = getPlayerRow() * cellHeight;
-//        graphicsContext.setFill(Color.GREEN);
+        graphicsContext.setFill(Color.LAVENDER);
 
         Image playerImage = null;
         try
@@ -109,8 +110,13 @@ public class MazeDisplayer extends Canvas
         }
         if(playerImage == null)
             graphicsContext.fillRect(x, y, cellWidth, cellHeight);
+//        else
+//            graphicsContext.drawImage(playerImage, x, y, cellWidth, cellHeight);
         else
+        {
+
             graphicsContext.drawImage(playerImage, x, y, cellWidth, cellHeight);
+        }
     }
 
     public void setSolution(Solution solution)
@@ -118,4 +124,5 @@ public class MazeDisplayer extends Canvas
         this.solution = solution;
 //        displaySolution();
     }
+
 }

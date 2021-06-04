@@ -33,7 +33,6 @@ public class Main extends Application {
 
         primaryStage.setOnHidden(e -> mediaPlayer.stop());
 
-//        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
         Parent root = fxmlLoader.load();
         root.setId("mainWindow");
