@@ -1,8 +1,5 @@
 package View;
 
-import Model.IModel;
-import Model.MyModel;
-import ViewModel.MyViewModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,18 +17,19 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());
-        mediaPlayer = new MediaPlayer(musicFile);
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                mediaPlayer.seek(Duration.ZERO);
-                mediaPlayer.play();
-            }
-        });
-
-        primaryStage.setOnHidden(e -> mediaPlayer.stop());
+//        Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());
+//        mediaPlayer = new MediaPlayer(musicFile);
+//
+//        mediaPlayer.setAutoPlay(true);
+//        mediaPlayer.setOnEndOfMedia(new Runnable() {
+//            @Override
+//            public void run() {
+//                mediaPlayer.seek(Duration.ZERO);
+//                mediaPlayer.play();
+//            }
+//        });
+//
+//        primaryStage.setOnHidden(e -> mediaPlayer.stop());
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
         Parent root = fxmlLoader.load();

@@ -12,14 +12,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -30,13 +34,12 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class MazeViewController extends AView implements Initializable
+public class MazeViewController extends AView
 {
     public AMazeGenerator generator;
     public int _rows;
     public int _cols;
-    private static MediaPlayer mediaPlayer;
-//    public MyViewModel viewModel;
+//    private static MediaPlayer mediaPlayer;
 
     @FXML
     private MazeDisplayer mazeDisplayerFXML;
@@ -54,13 +57,11 @@ public class MazeViewController extends AView implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-//        playerRow.textProperty().bind(updatePlayerRow);
-//        playerCol.textProperty().bind(updatePlayerCol);
-
         Platform.runLater(() -> {
             viewModel.generateMaze(_rows, _cols);
             Media musicFile = new Media(new File("resources/WhiteRabbitMusic.mp3").toURI().toString());
             mediaPlayer = new MediaPlayer(musicFile);
+            setMediaPlayer(mediaPlayer);
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setOnEndOfMedia(new Runnable() {
                 @Override
@@ -69,8 +70,6 @@ public class MazeViewController extends AView implements Initializable
                     mediaPlayer.play();
                 }
             });
-
-
         });
     }
 
@@ -97,6 +96,8 @@ public class MazeViewController extends AView implements Initializable
         setUpdatePlayerCol(col);
     }
 
+
+    @FXML
     public void mouseClicked(MouseEvent mouseEvent) { mazeDisplayerFXML.requestFocus(); }
 
     void initData(int rows, int cols, AMazeGenerator mg)
@@ -106,6 +107,7 @@ public class MazeViewController extends AView implements Initializable
         generator = mg;
     }
 
+    @FXML
     public void returnToMain(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
@@ -122,6 +124,7 @@ public class MazeViewController extends AView implements Initializable
 
         Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());
         mediaPlayer = new MediaPlayer(musicFile);
+        setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setOnEndOfMedia( new Runnable() {
             @Override
@@ -158,5 +161,10 @@ public class MazeViewController extends AView implements Initializable
     private void mazeSolved()
     {
         mazeDisplayerFXML.setSolution(viewModel.getSolution());
+    }
+
+    public void zoom(ScrollEvent scrollEvent)
+    {
+        mazeDisplayerFXML.zoom(scrollEvent);
     }
 }

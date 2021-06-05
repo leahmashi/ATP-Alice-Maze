@@ -4,8 +4,7 @@
     -fx-background-repeat: no-repeat;
 }
 
-
-Button {
+#solveMaze, #generateMaze, #continueButton {
     -fx-text-fill: white;
     -fx-font-family: "Calibari";
     -fx-font-size: 15px;
@@ -14,7 +13,7 @@ Button {
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
 
-Button:hover {
+#solveMaze:hover, #generateMaze:hover, #continueButton:hover {
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
