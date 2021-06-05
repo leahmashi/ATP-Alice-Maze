@@ -4,33 +4,15 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
-public class Main extends Application {
-
-    MediaPlayer mediaPlayer;
+public class Main extends Application
+{
 
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-//        Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());
-//        mediaPlayer = new MediaPlayer(musicFile);
-//
-//        mediaPlayer.setAutoPlay(true);
-//        mediaPlayer.setOnEndOfMedia(new Runnable() {
-//            @Override
-//            public void run() {
-//                mediaPlayer.seek(Duration.ZERO);
-//                mediaPlayer.play();
-//            }
-//        });
-//
-//        primaryStage.setOnHidden(e -> mediaPlayer.stop());
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
         Parent root = fxmlLoader.load();
         root.setId("mainWindow");

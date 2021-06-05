@@ -63,13 +63,16 @@ public class MazeViewController extends AView
             mediaPlayer = new MediaPlayer(musicFile);
             setMediaPlayer(mediaPlayer);
             mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setOnEndOfMedia(new Runnable() {
-                @Override
-                public void run() {
-                    mediaPlayer.seek(Duration.ZERO);
-                    mediaPlayer.play();
-                }
-            });
+            if (!isOff)
+            {
+                mediaPlayer.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        mediaPlayer.seek(Duration.ZERO);
+                        mediaPlayer.play();
+                    }
+                });
+            }
         });
     }
 
@@ -126,13 +129,16 @@ public class MazeViewController extends AView
         mediaPlayer = new MediaPlayer(musicFile);
         setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnEndOfMedia( new Runnable() {
-            @Override
-            public void run() {
-                mediaPlayer.seek(Duration.ZERO);
-                mediaPlayer.play();
-            }
-        });
+        if (!isOff)
+        {
+            mediaPlayer.setOnEndOfMedia( new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.seek(Duration.ZERO);
+                    mediaPlayer.play();
+                }
+            });
+        }
 
         MainWindowStage.getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
     }
