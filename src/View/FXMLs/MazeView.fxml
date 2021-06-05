@@ -28,28 +28,52 @@
         </Button>
     </bottom>
     <center>
-        <Pane BorderPane.alignment="CENTER" >
+        <ScrollPane BorderPane.alignment="CENTER" fx:id="pane" pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER">
 <!--                <padding>-->
 <!--                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>-->
 <!--                </padding>-->
-            <MazeDisplayer fx:id="mazeDisplayerFXML" height="575.0" imageFileNamePlayer="./resources/RabbitCharacter.jpg"
-                           imageFileNameWall="./resources/grassHedgeWall.jpg" onMouseClicked="#mouseClicked" onKeyPressed="#keyPressed" width="900.0" />
-        </Pane>
+            <MazeDisplayer fx:id="mazeDisplayerFXML" height="575.0" imageFileNamePlayer="./resources/AliceCards.jpg"
+                           imageFileNameWall="./resources/grassHedgeWall.jpg" onScroll="#zoom" onMouseClicked="#mouseClicked" onKeyPressed="#keyPressed" width="900.0" />
+        </ScrollPane>
     </center>
     <top>
         <VBox BorderPane.alignment="CENTER">
             <MenuBar>
-                <Menu mnemonicParsing="false" text="File">
-                    <MenuItem mnemonicParsing="false" text="New"/>
-                    <MenuItem mnemonicParsing="false" text="Save"/>
-                    <MenuItem mnemonicParsing="false" text="Load"/>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <Button text="File" prefWidth="60.0"/>
+                    </graphic>
+                    <MenuItem mnemonicParsing="false" text="New" onAction="#createNewFile"/>
+                    <MenuItem mnemonicParsing="false" text="Save" onAction="#saveFile"/>
+                    <MenuItem mnemonicParsing="false" text="Load" onAction="#loadFile"/>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Options">
-                    <MenuItem mnemonicParsing="false" text="Properties"/>
+                <Menu mnemonicParsing="false" >
+                    <graphic>
+                        <Button text="Options" prefWidth="60.0"/>
+                    </graphic>
+                    <MenuItem mnemonicParsing="false" text="Properties" onAction="#showProperties"/>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help"/>
-                <Menu mnemonicParsing="false" text="About"/>
-                <Menu mnemonicParsing="false" text="Exit"/>
+                <!--                <Menu mnemonicParsing="false" text="Settings" onAction="#showSettings" />-->
+                <Menu>
+                    <graphic>
+                        <Button text="Settings" onAction="#showSettings" prefWidth="60.0"/>
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false" >
+                    <graphic>
+                        <Button text="Help" onAction="#showHelp" prefWidth="60.0"/>
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <Button text="About" onAction="#showAbout" prefWidth="60.0"/>
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false" >
+                    <graphic>
+                        <Button text="Exit" onAction="#exitProgram" prefWidth="60.0"/>
+                    </graphic>
+                </Menu>
             </MenuBar>
         </VBox>
     </top>

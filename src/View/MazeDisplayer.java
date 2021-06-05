@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
@@ -15,6 +16,7 @@ public class MazeDisplayer extends Canvas
 {
     private int[][] mazeArr;
     private Solution solution;
+    private double zoomFactor = 1.05;
     // player position:
     private int playerRow = 0;
     private int playerCol = 0;
@@ -110,13 +112,8 @@ public class MazeDisplayer extends Canvas
         }
         if(playerImage == null)
             graphicsContext.fillRect(x, y, cellWidth, cellHeight);
-//        else
-//            graphicsContext.drawImage(playerImage, x, y, cellWidth, cellHeight);
         else
-        {
-
             graphicsContext.drawImage(playerImage, x, y, cellWidth, cellHeight);
-        }
     }
 
     public void setSolution(Solution solution)
@@ -125,4 +122,18 @@ public class MazeDisplayer extends Canvas
 //        displaySolution();
     }
 
+    public void zoom(ScrollEvent scrollEvent)
+    {
+        if (scrollEvent.getDeltaY() < 0)
+        {
+            setHeight(getHeight() / zoomFactor);
+            setWidth(getWidth() / zoomFactor);
+        }
+        else
+        {
+            setWidth(getWidth() * zoomFactor);
+            setHeight(getHeight() * zoomFactor);
+        }
+        draw();
+    }
 }

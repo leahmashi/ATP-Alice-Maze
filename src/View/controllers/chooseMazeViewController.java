@@ -13,18 +13,14 @@ import algrorithms.mazeGenerators.SimpleMazeGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -33,9 +29,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class chooseMazeViewController extends AView implements Initializable
+public class chooseMazeViewController extends AView
 {
-    private static MediaPlayer mediaPlayer;
     private int rows;
     private int cols;
     private AMazeGenerator mg;
@@ -51,6 +46,7 @@ public class chooseMazeViewController extends AView implements Initializable
     {
         Media musicFile = new Media(new File("resources/AliceChooseMazeMusic.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(musicFile);
+        setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setOnEndOfMedia(new Runnable() {
             @Override
@@ -59,7 +55,6 @@ public class chooseMazeViewController extends AView implements Initializable
                 mediaPlayer.play();
             }
         });
-
     }
 
     public void raiseErrorWindow(String text)
@@ -73,7 +68,8 @@ public class chooseMazeViewController extends AView implements Initializable
     {
         String colsInput = EnterColsText.getText();
         String rowsInput = EnterRowsText.getText();
-        try {
+        try
+        {
             rows = Integer.parseInt(rowsInput);
             cols = Integer.parseInt(colsInput);
             String mazeChoice = (String) primChoice.getValue();
@@ -91,12 +87,12 @@ public class chooseMazeViewController extends AView implements Initializable
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
         Parent root = fxmlLoader.load();
         MazeViewController controller = fxmlLoader.getController();
+        Scene MazeWindowScene = new Scene(root);
         controller.initData(rows, cols, mg);
         IModel model = new MyModel(mg);
         MyViewModel viewModel = new MyViewModel(model);
         IView view = fxmlLoader.getController();
         view.setViewModel(viewModel);
-        Scene MazeWindowScene = new Scene(root);
 
         MazeWindowStage.setScene(MazeWindowScene);
         MazeWindowStage.show();
@@ -117,7 +113,6 @@ public class chooseMazeViewController extends AView implements Initializable
 
         ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-
 
     }
 

@@ -4,67 +4,25 @@
     -fx-background-repeat: no-repeat;
 }
 
-#chooseRowsLabel {
+#chooseRowsLabel, #chooseColsLabel, #chooseMazeType, #returnToText, #MainWindowText {
     -fx-text-fill: white;
     -fx-font-family: "Calibari";
     -fx-font-size: 15px;
     -fx-font-weight: bold italic;
 }
 
-#chooseColsLabel {
-    -fx-text-fill: white;
-    -fx-font-family: "Calibari";
-    -fx-font-size: 15px;
-    -fx-font-weight: bold italic;
-}
-
-#EnterRowsText {
+#EnterRowsText, #EnterColsText {
     -fx-text-fill: black;
     -fx-font-family: "Calibari";
     -fx-font-size: 12px;
     -fx-font-weight: bold italic;
 }
 
-#chooseMazeType {
-    -fx-text-fill: white;
-    -fx-font-family: "Calibari";
-    -fx-font-size: 15px;
-    -fx-font-weight: bold italic;
-}
-
-#EnterColsText {
-    -fx-text-fill: black;
-    -fx-font-family: "Calibari";
-    -fx-font-size: 12px;
-    -fx-font-weight: bold italic;
-}
-
-#primChoice {
+#primChoice, #simpleChoice {
     -fx-text-fill: black;
     -fx-font-family: "Calibari";
     -fx-font-size: 15px;
     -fx-font-weight: bold italic;
-}
-
-#simpleChoice {
-    -fx-text-fill: black;
-    -fx-font-family: "Calibari";
-    -fx-font-size: 15px;
-    -fx-font-weight: bold italic;
-}
-
-#returnToText {
-  -fx-text-fill: white;
-  -fx-font-family: "Calibari";
-  -fx-font-size: 15px;
-  -fx-font-weight: bold italic;
-}
-
-#MainWindowText {
-  -fx-text-fill: white;
-  -fx-font-family: "Calibari";
-  -fx-font-size: 15px;
-  -fx-font-weight: bold italic;
 }
 
 Button {
