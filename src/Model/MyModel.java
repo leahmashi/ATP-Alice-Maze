@@ -31,6 +31,7 @@ public class MyModel extends Observable implements IModel
     public void generateMaze(int rows, int cols)
     {
         //call generating server
+
         maze = mg.generate(rows, cols);
         playerCol = 0;
         playerRow = 0;

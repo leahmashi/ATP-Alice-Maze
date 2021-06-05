@@ -3,6 +3,7 @@ package View.controllers;
 
 import View.AView;
 import View.MazeDisplayer;
+import ViewModel.MyViewModel;
 import algrorithms.mazeGenerators.AMazeGenerator;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -55,11 +56,22 @@ public class MazeViewController extends AView implements Initializable
     {
 //        playerRow.textProperty().bind(updatePlayerRow);
 //        playerCol.textProperty().bind(updatePlayerCol);
+
         Platform.runLater(() -> {
             viewModel.generateMaze(_rows, _cols);
-//            mazeDisplayerFXML.drawMaze(maze.getMazeArray());
-        });
+            Media musicFile = new Media(new File("resources/WhiteRabbitMusic.mp3").toURI().toString());
+            mediaPlayer = new MediaPlayer(musicFile);
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.seek(Duration.ZERO);
+                    mediaPlayer.play();
+                }
+            });
 
+
+        });
     }
 
     public void openFile(ActionEvent actionEvent) {
@@ -74,7 +86,6 @@ public class MazeViewController extends AView implements Initializable
     @FXML
     public void keyPressed(KeyEvent keyEvent)
     {
-        System.out.println("hello from keyPressed");
         viewModel.movePlayer(keyEvent);
         keyEvent.consume();
     }
@@ -105,7 +116,7 @@ public class MazeViewController extends AView implements Initializable
         MainWindowStage.setScene(MainWindowScene);
         MainWindowStage.show();
 
-//        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
+        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
 

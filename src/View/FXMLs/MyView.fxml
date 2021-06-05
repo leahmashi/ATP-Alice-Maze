@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <BorderPane prefHeight="650.0" prefWidth="900.0" stylesheets="@../CSSs/MainStyle.css" xmlns="http://javafx.com/javafx/16"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MyViewController">
     <bottom>
@@ -21,23 +20,17 @@
     <top>
         <VBox BorderPane.alignment="CENTER">
             <MenuBar>
-                <menus>
-                    <Menu mnemonicParsing="false" text="File">
-                        <items>
-                            <MenuItem mnemonicParsing="false" text="New" />
-                            <MenuItem mnemonicParsing="false" text="Save" />
-                            <MenuItem mnemonicParsing="false" text="Load" />
-                        </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Options">
-                        <items>
-                            <MenuItem mnemonicParsing="false" text="Properties" />
-                        </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Help" />
-                    <Menu mnemonicParsing="false" text="About" />
-                    <Menu mnemonicParsing="false" text="Exit" />
-                </menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <MenuItem mnemonicParsing="false" text="New"/>
+                    <MenuItem mnemonicParsing="false" text="Save"/>
+                    <MenuItem mnemonicParsing="false" text="Load"/>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Options">
+                    <MenuItem mnemonicParsing="false" text="Properties"/>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help"/>
+                <Menu mnemonicParsing="false" text="About"/>
+                <Menu mnemonicParsing="false" text="Exit"/>
             </MenuBar>
         </VBox>
     </top>

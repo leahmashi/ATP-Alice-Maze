@@ -32,8 +32,8 @@
 <!--                <padding>-->
 <!--                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>-->
 <!--                </padding>-->
-            <MazeDisplayer fx:id="mazeDisplayerFXML" height="575.0" imageFileNamePlayer="./resources/AliceCharacter.jpg"
-                           imageFileNameWall="./resources/grassHedgeWall.jpg" onKeyPressed="#keyPressed" width="900.0" />
+            <MazeDisplayer fx:id="mazeDisplayerFXML" height="575.0" imageFileNamePlayer="./resources/RabbitCharacter.jpg"
+                           imageFileNameWall="./resources/grassHedgeWall.jpg" onMouseClicked="#mouseClicked" onKeyPressed="#keyPressed" width="900.0" />
         </Pane>
     </center>
     <top>
