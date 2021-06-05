@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 
 public class ToggleSwitch extends HBox
 {
-
     private final Label label = new Label();
     private final Button button = new Button();
 
@@ -22,7 +21,7 @@ public class ToggleSwitch extends HBox
 
     private void init() {
 
-        label.setText("ON");
+        label.setText("OFF");
 
         getChildren().addAll(label, button);
         button.setOnAction((e) -> {
@@ -62,6 +61,7 @@ public class ToggleSwitch extends HBox
                 label.setText("OFF");
                 setStyle("-fx-background-color: grey;");
                 button.toFront();
+
             }
             else
             {

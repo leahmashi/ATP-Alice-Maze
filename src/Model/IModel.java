@@ -1,8 +1,9 @@
 package Model;
 
 
-import algrorithms.mazeGenerators.Maze;
-import algrorithms.search.Solution;
+import algorithms.mazeGenerators.Maze;
+import algorithms.search.Solution;
+
 
 import java.util.Observer;
 
@@ -12,7 +13,7 @@ public interface IModel
     Maze getMaze();
     void solveMaze();
     Solution getSolution();
-    void updatePlayerLocation(MovementDirection direction);
+    void updatePlayerLocation(MovementDirection direction);// responsible for finish line
     int getPlayerRow();
     int getPlayerCol();
     void assignObserver(Observer observer);

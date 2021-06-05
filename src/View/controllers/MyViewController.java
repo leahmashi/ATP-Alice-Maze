@@ -63,8 +63,8 @@ public class MyViewController extends AView
         clipStage.setOnHidden(e -> mediaPlayer.stop());
         mediaPlayer.setAutoPlay(true);
 
-        if (isOff)
-            mediaPlayer.setMute(true);
+//        if (isOff)
+//            mediaPlayer.setMute(true);
 
         addContinueButton(group, clipStage);
         Scene clipScene = new Scene(group, 900, 650);
@@ -127,10 +127,5 @@ public class MyViewController extends AView
         });
     }
 
-    public void solveMaze(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Solving maze...");
-        alert.show();
-//        viewModel.solveMaze();
-    }
+
 }

@@ -1,15 +1,17 @@
 package View.controllers;
 
 
+//import Model.ClientStrategyGenerateMaze;
 import Model.IModel;
 import Model.MyModel;
+import Server.Configurations;
 import View.AView;
 import View.IView;
 import ViewModel.MyViewModel;
 
-import algrorithms.mazeGenerators.AMazeGenerator;
-import algrorithms.mazeGenerators.MyMazeGenerator;
-import algrorithms.mazeGenerators.SimpleMazeGenerator;
+import algorithms.mazeGenerators.AMazeGenerator;
+import algorithms.mazeGenerators.MyMazeGenerator;
+import algorithms.mazeGenerators.SimpleMazeGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,9 +33,11 @@ import java.util.ResourceBundle;
 
 public class chooseMazeViewController extends AView
 {
+    private Configurations configurations;
     private int rows;
     private int cols;
     private AMazeGenerator mg;
+//    private ClientStrategyGenerateMaze clientGenerate;
     @FXML
     public TextField EnterRowsText;
     @FXML
@@ -44,6 +48,7 @@ public class chooseMazeViewController extends AView
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        configurations = Configurations.getInstance();
         Media musicFile = new Media(new File("resources/AliceChooseMazeMusic.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(musicFile);
         setMediaPlayer(mediaPlayer);
@@ -69,6 +74,7 @@ public class chooseMazeViewController extends AView
 
     public void generateMaze(ActionEvent actionEvent) throws IOException
     {
+
         String colsInput = EnterColsText.getText();
         String rowsInput = EnterRowsText.getText();
         try
@@ -79,7 +85,7 @@ public class chooseMazeViewController extends AView
             if (mazeChoice == null)
                 raiseErrorWindow("Please choose a maze type");
             else
-                mg = ChooseMaze(mazeChoice);
+                ChooseMaze(mazeChoice);
         }
         catch (Exception e)
         {
@@ -91,8 +97,10 @@ public class chooseMazeViewController extends AView
         Parent root = fxmlLoader.load();
         MazeViewController controller = fxmlLoader.getController();
         Scene MazeWindowScene = new Scene(root);
-        controller.initData(rows, cols, mg);
-        IModel model = new MyModel(mg);
+        controller.initData(rows, cols);
+//        IModel model = new MyModel(mg);
+        IModel model = new MyModel(rows, cols);
+
         MyViewModel viewModel = new MyViewModel(model);
         IView view = fxmlLoader.getController();
         view.setViewModel(viewModel);
@@ -122,8 +130,8 @@ public class chooseMazeViewController extends AView
     private AMazeGenerator ChooseMaze(String mazeChoice)
     {
         switch (mazeChoice) {
-            case "Simple" -> mg = new SimpleMazeGenerator();
-            case "Randomized Prim" -> mg = new MyMazeGenerator();
+            case "Simple" -> configurations.setMazeGeneratingAlgorithm("SimpleMazeGenerator");
+            case "Randomized Prim" -> configurations.setMazeGeneratingAlgorithm("MyMazeGenerator");
         }
         return mg;
     }

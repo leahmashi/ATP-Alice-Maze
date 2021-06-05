@@ -11,7 +11,7 @@
             <HBox.margin>
                <Insets bottom="10.0" />
             </HBox.margin></Button>
-            <Button fx:id="solveMaze" cancelButton="true" onAction="#solveMaze" prefHeight="60.0" prefWidth="130.0" text="Solve Maze" BorderPane.alignment="BOTTOM_RIGHT">
+            <Button fx:id="solveMaze" cancelButton="true"  prefHeight="60.0" prefWidth="130.0" text="Solve Maze" BorderPane.alignment="BOTTOM_RIGHT">
             <HBox.margin>
                <Insets bottom="10.0" />
             </HBox.margin></Button>

@@ -8,8 +8,9 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16"
             xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../CSSs/MazeStyle.css" fx:controller="View.controllers.MazeViewController">
     <bottom>
+        <HBox alignment="CENTER" spacing="10">
         <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0"
-                onAction="#returnToMain">
+                onAction="#returnToMain" BorderPane.alignment="BOTTOM_LEFT">
             <graphic>
                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                       prefHeight="45.0" prefWidth="120.0">
@@ -26,6 +27,11 @@
                 </VBox>
             </graphic>
         </Button>
+            <Button fx:id="solveMaze" onAction="#solveMaze" prefHeight="60.0" prefWidth="130.0" text="solve maze" BorderPane.alignment="BOTTOM_RIGHT">
+                <HBox.margin>
+                    <Insets bottom="10.0" />
+                </HBox.margin></Button>
+        </HBox>
     </bottom>
     <center>
         <ScrollPane BorderPane.alignment="CENTER" fx:id="pane" pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER">

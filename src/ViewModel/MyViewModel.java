@@ -2,8 +2,8 @@ package ViewModel;
 
 import Model.IModel;
 import Model.MovementDirection;
-import algrorithms.mazeGenerators.Maze;
-import algrorithms.search.Solution;
+import algorithms.mazeGenerators.Maze;
+import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;

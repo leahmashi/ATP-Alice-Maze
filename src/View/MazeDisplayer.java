@@ -1,6 +1,6 @@
 package View;
 
-import algrorithms.search.Solution;
+import algorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;

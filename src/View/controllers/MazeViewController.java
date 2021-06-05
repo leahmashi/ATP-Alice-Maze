@@ -4,7 +4,7 @@ package View.controllers;
 import View.AView;
 import View.MazeDisplayer;
 import ViewModel.MyViewModel;
-import algrorithms.mazeGenerators.AMazeGenerator;
+import algorithms.mazeGenerators.AMazeGenerator;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -16,6 +16,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -36,10 +37,8 @@ import java.util.ResourceBundle;
 
 public class MazeViewController extends AView
 {
-    public AMazeGenerator generator;
     public int _rows;
     public int _cols;
-//    private static MediaPlayer mediaPlayer;
 
     @FXML
     private MazeDisplayer mazeDisplayerFXML;
@@ -97,17 +96,35 @@ public class MazeViewController extends AView
         mazeDisplayerFXML.setPlayerPosition(row, col);
         setUpdatePlayerRow(row);
         setUpdatePlayerCol(col);
+        if(row == viewModel.getMaze().getGoalPosition().getRowIndex() && col == viewModel.getMaze().getGoalPosition().getColumnIndex())
+        {
+            Stage MazeWindowStage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/FinishLineView.fxml"));
+            Parent root = null;
+            try
+            {
+                root = fxmlLoader.load();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            //MazeViewController controller = fxmlLoader.getController();
+            Scene MazeWindowScene = new Scene(root);
+            MazeWindowStage.setScene(MazeWindowScene);
+            MazeWindowStage.show();
+        }
+
     }
 
 
     @FXML
     public void mouseClicked(MouseEvent mouseEvent) { mazeDisplayerFXML.requestFocus(); }
 
-    void initData(int rows, int cols, AMazeGenerator mg)
+    void initData(int rows, int cols)
     {
         _rows = rows;
         _cols = cols;
-        generator = mg;
     }
 
     @FXML
@@ -164,9 +181,18 @@ public class MazeViewController extends AView
 
     private void playerMoved() { setPlayerPosition(viewModel.getPlayerRow(), viewModel.getPlayerCol()); }
 
+    @FXML
     private void mazeSolved()
     {
         mazeDisplayerFXML.setSolution(viewModel.getSolution());
+    }
+
+    @FXML
+    public void solveMaze(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Solving maze...");
+        alert.show();
+        viewModel.solveMaze();
     }
 
     public void zoom(ScrollEvent scrollEvent)
