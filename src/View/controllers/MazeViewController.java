@@ -3,16 +3,12 @@ package View.controllers;
 
 import View.AView;
 import View.MazeDisplayer;
-import ViewModel.MyViewModel;
-import algorithms.mazeGenerators.AMazeGenerator;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,11 +16,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -61,9 +54,9 @@ public class MazeViewController extends AView
             Media musicFile = new Media(new File("resources/WhiteRabbitMusic.mp3").toURI().toString());
             mediaPlayer = new MediaPlayer(musicFile);
             setMediaPlayer(mediaPlayer);
-            mediaPlayer.setAutoPlay(true);
             if (!isOff)
             {
+                mediaPlayer.setAutoPlay(true);
                 mediaPlayer.setOnEndOfMedia(new Runnable() {
                     @Override
                     public void run() {
@@ -145,9 +138,9 @@ public class MazeViewController extends AView
         Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());
         mediaPlayer = new MediaPlayer(musicFile);
         setMediaPlayer(mediaPlayer);
-        mediaPlayer.setAutoPlay(true);
         if (!isOff)
         {
+            mediaPlayer.setAutoPlay(true);
             mediaPlayer.setOnEndOfMedia( new Runnable() {
                 @Override
                 public void run() {
@@ -182,10 +175,7 @@ public class MazeViewController extends AView
     private void playerMoved() { setPlayerPosition(viewModel.getPlayerRow(), viewModel.getPlayerCol()); }
 
     @FXML
-    private void mazeSolved()
-    {
-        mazeDisplayerFXML.setSolution(viewModel.getSolution());
-    }
+    private void mazeSolved() { mazeDisplayerFXML.setSolution(viewModel.getSolution()); }
 
     @FXML
     public void solveMaze(ActionEvent actionEvent) {
@@ -195,8 +185,5 @@ public class MazeViewController extends AView
         viewModel.solveMaze();
     }
 
-    public void zoom(ScrollEvent scrollEvent)
-    {
-        mazeDisplayerFXML.zoom(scrollEvent);
-    }
+    public void zoom(ScrollEvent scrollEvent) { mazeDisplayerFXML.zoom(scrollEvent); }
 }

@@ -1,40 +1,35 @@
 package Model;
 
 
-
 import Client.Client;
 import IO.MyDecompressorInputStream;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
-import algorithms.mazeGenerators.AMazeGenerator;
 import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.MyMazeGenerator;
-import algorithms.search.AState;
 import algorithms.search.Solution;
 import Client.IClientStrategy;
-
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+
 public class MyModel extends Observable implements IModel
 {
+    //class members
     private Maze maze;
     private Solution solution;
     private int playerRow;
     private int playerCol;
-    private AMazeGenerator mg;
     Server mazeGeneratingServer;
     Server solveSearchProblemSolver;
 
-    public MyModel(int rows, int cols)
+    //constructor
+    public MyModel()
     {
-        this.mg = mg;
         mazeGeneratingServer = new Server(5400, 1000, new ServerStrategyGenerateMaze());
         solveSearchProblemSolver = new Server(5401,1000, new ServerStrategySolveSearchProblem());
 
@@ -42,20 +37,34 @@ public class MyModel extends Observable implements IModel
         mazeGeneratingServer.start();
     }
 
+
     @Override
-    public void assignObserver(Observer observer)
-    {
-        this.addObserver(observer);
-    }
+    public void assignObserver(Observer observer) { this.addObserver(observer); }
+
+
+
+    //getters
+    @Override
+    public Maze getMaze() { return maze; }
+
+    @Override
+    public Solution getSolution() { return solution; }
+
+    @Override
+    public int getPlayerRow() { return playerRow; }
+
+    @Override
+    public int getPlayerCol() { return playerCol; }
+
+
 
     @Override
     public void generateMaze(int rows, int cols)
     {
-        //call generating server
         try
         {
-
-            Client client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
+            Client client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy()
+            {
                 @Override
                 public void clientStrategy(InputStream inFromServer, OutputStream outToServer)
                 {
@@ -69,10 +78,9 @@ public class MyModel extends Observable implements IModel
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
                         InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                        byte[] decompressedMaze = new byte[2500+12 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze
+                        byte[] decompressedMaze = new byte[(rows*cols)+12 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze
                         is.read(decompressedMaze); //Fill decompressedMaze with bytes
                         maze = new Maze(decompressedMaze);
-                        //maze.print();
                     } catch (Exception e)
                     {
                         e.printStackTrace();
@@ -90,11 +98,7 @@ public class MyModel extends Observable implements IModel
         notifyObservers("maze generated");
     }
 
-    @Override
-    public Maze getMaze()
-    {
-        return maze;
-    }
+
 
     @Override
     public void solveMaze()
@@ -111,18 +115,9 @@ public class MyModel extends Observable implements IModel
                         ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
-                        maze.print();
                         toServer.writeObject(maze); //send maze to server
                         toServer.flush();
                         solution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
-
-                        //Print Maze Solution retrieved from the server
-                        System.out.println(String.format("Solution steps: %s", solution));
-                        ArrayList<AState> mazeSolutionSteps = solution.getSolutionPath();
-                        for (int i = 0; i < mazeSolutionSteps.size(); i++)
-                        {
-                            System.out.println(String.format("%s. %s", i, mazeSolutionSteps.get(i).toString()));
-                        }
                     } catch (Exception e)
                     {
                         e.printStackTrace();
@@ -139,11 +134,7 @@ public class MyModel extends Observable implements IModel
     }
 
 
-    @Override
-    public Solution getSolution()
-    {
-        return solution;
-    }
+
 
     @Override
     public void updatePlayerLocation(MovementDirection direction)
@@ -193,18 +184,5 @@ public class MyModel extends Observable implements IModel
         setChanged();
         notifyObservers("player moved");
     }
-
-    @Override
-    public int getPlayerRow()
-    {
-        return playerRow;
-    }
-
-    @Override
-    public int getPlayerCol()
-    {
-        return playerCol;
-    }
-
 
 }

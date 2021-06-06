@@ -1,7 +1,6 @@
 package View.controllers;
 
 
-//import Model.ClientStrategyGenerateMaze;
 import Model.IModel;
 import Model.MyModel;
 import Server.Configurations;
@@ -10,8 +9,6 @@ import View.IView;
 import ViewModel.MyViewModel;
 
 import algorithms.mazeGenerators.AMazeGenerator;
-import algorithms.mazeGenerators.MyMazeGenerator;
-import algorithms.mazeGenerators.SimpleMazeGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,13 +28,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class chooseMazeViewController extends AView
 {
     private Configurations configurations;
     private int rows;
     private int cols;
-    private AMazeGenerator mg;
-//    private ClientStrategyGenerateMaze clientGenerate;
+
     @FXML
     public TextField EnterRowsText;
     @FXML
@@ -52,9 +49,9 @@ public class chooseMazeViewController extends AView
         Media musicFile = new Media(new File("resources/AliceChooseMazeMusic.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(musicFile);
         setMediaPlayer(mediaPlayer);
-        mediaPlayer.setAutoPlay(true);
         if (!isOff)
         {
+            mediaPlayer.setAutoPlay(true);
             mediaPlayer.setOnEndOfMedia(new Runnable() {
                 @Override
                 public void run() {
@@ -74,7 +71,6 @@ public class chooseMazeViewController extends AView
 
     public void generateMaze(ActionEvent actionEvent) throws IOException
     {
-
         String colsInput = EnterColsText.getText();
         String rowsInput = EnterRowsText.getText();
         try
@@ -98,9 +94,7 @@ public class chooseMazeViewController extends AView
         MazeViewController controller = fxmlLoader.getController();
         Scene MazeWindowScene = new Scene(root);
         controller.initData(rows, cols);
-//        IModel model = new MyModel(mg);
-        IModel model = new MyModel(rows, cols);
-
+        IModel model = new MyModel();
         MyViewModel viewModel = new MyViewModel(model);
         IView view = fxmlLoader.getController();
         view.setViewModel(viewModel);
@@ -127,13 +121,11 @@ public class chooseMazeViewController extends AView
 
     }
 
-    private AMazeGenerator ChooseMaze(String mazeChoice)
+    private void ChooseMaze(String mazeChoice)
     {
         switch (mazeChoice) {
             case "Simple" -> configurations.setMazeGeneratingAlgorithm("SimpleMazeGenerator");
             case "Randomized Prim" -> configurations.setMazeGeneratingAlgorithm("MyMazeGenerator");
         }
-        return mg;
     }
-
 }
