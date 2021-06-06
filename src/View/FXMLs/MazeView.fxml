@@ -38,8 +38,8 @@
 <!--                <padding>-->
 <!--                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>-->
 <!--                </padding>-->
-            <MazeDisplayer fx:id="mazeDisplayerFXML" height="575.0" imageFileNamePlayer="./resources/AliceCards.jpg"
-                           imageFileNameWall="./resources/grassHedgeWall.jpg" onScroll="#zoom" onMouseClicked="#mouseClicked" onKeyPressed="#keyPressed" width="900.0" />
+            <MazeDisplayer fx:id="mazeDisplayerFXML" height="575.0" imageFileNamePlayer="./resources/images/AliceCards.jpg"
+                           imageFileNameWall="./resources/images/grassHedgeWall.jpg" onScroll="#zoom" onMouseClicked="#mouseClicked" onKeyPressed="#keyPressed" width="900.0" />
         </ScrollPane>
     </center>
     <top>

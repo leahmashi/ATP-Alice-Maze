@@ -4,8 +4,11 @@ import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -46,5 +49,23 @@ public abstract class AView implements IView, Observer, Initializable
     public void exitProgram(ActionEvent actionEvent) { menuBarOptions.exitProgram(actionEvent); }
 
     public void setMediaPlayer(MediaPlayer mediaPlayer) { this.mediaPlayer = mediaPlayer; }
+
+    public void setMusic(Media musicFile)
+    {
+//        Media musicFile = new Media(getClass().getClassLoader().getResource(mp3File).toString());
+        mediaPlayer = new MediaPlayer(musicFile);
+        setMediaPlayer(mediaPlayer);
+        if (!isOff)
+        {
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.seek(Duration.ZERO);
+                    mediaPlayer.play();
+                }
+            });
+        }
+    }
 
 }

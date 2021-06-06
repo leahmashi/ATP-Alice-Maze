@@ -27,25 +27,13 @@ public class MyViewController extends AView
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());
-        mediaPlayer = new MediaPlayer(musicFile);
-        setMediaPlayer(mediaPlayer);
-        if (!isOff)
-        {
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setOnEndOfMedia(new Runnable() {
-                @Override
-                public void run() {
-                    mediaPlayer.seek(Duration.ZERO);
-                    mediaPlayer.play();
-                }
-            });
-        }
+        Media musicFile = new Media(getClass().getClassLoader().getResource("music/AliceMainWindowMusic.mp3").toString());
+        setMusic(musicFile);
     }
 
     public void generateMaze(ActionEvent event)
     {
-        Media media = new Media(new File("resources/WhiteRabbitClip.mp4").toURI().toString());
+        Media media = new Media(new File("resources/clips/WhiteRabbitClip.mp4").toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         Group group = new Group();
         MediaView mediaView = new MediaView(mediaPlayer);

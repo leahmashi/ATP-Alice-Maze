@@ -51,20 +51,8 @@ public class MazeViewController extends AView
     {
         Platform.runLater(() -> {
             viewModel.generateMaze(_rows, _cols);
-            Media musicFile = new Media(new File("resources/WhiteRabbitMusic.mp3").toURI().toString());
-            mediaPlayer = new MediaPlayer(musicFile);
-            setMediaPlayer(mediaPlayer);
-            if (!isOff)
-            {
-                mediaPlayer.setAutoPlay(true);
-                mediaPlayer.setOnEndOfMedia(new Runnable() {
-                    @Override
-                    public void run() {
-                        mediaPlayer.seek(Duration.ZERO);
-                        mediaPlayer.play();
-                    }
-                });
-            }
+            Media musicFile = new Media(new File("resources/music/PaintingTheRosesRed.mp3").toURI().toString());
+            setMusic(musicFile);
         });
     }
 
@@ -135,7 +123,7 @@ public class MazeViewController extends AView
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
 
-        Media musicFile = new Media(getClass().getClassLoader().getResource("AliceMainWindowMusic.mp3").toString());
+        Media musicFile = new Media(getClass().getClassLoader().getResource("music/AliceMainWindowMusic.mp3").toString());
         mediaPlayer = new MediaPlayer(musicFile);
         setMediaPlayer(mediaPlayer);
         if (!isOff)

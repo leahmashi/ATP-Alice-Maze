@@ -46,20 +46,8 @@ public class chooseMazeViewController extends AView
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         configurations = Configurations.getInstance();
-        Media musicFile = new Media(new File("resources/AliceChooseMazeMusic.mp3").toURI().toString());
-        mediaPlayer = new MediaPlayer(musicFile);
-        setMediaPlayer(mediaPlayer);
-        if (!isOff)
-        {
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setOnEndOfMedia(new Runnable() {
-                @Override
-                public void run() {
-                    mediaPlayer.seek(Duration.ZERO);
-                    mediaPlayer.play();
-                }
-            });
-        }
+        Media musicFile = new Media(new File("resources/music/AliceChooseMazeMusic.mp3").toURI().toString());
+        setMusic(musicFile);
     }
 
     public void raiseErrorWindow(String text)
