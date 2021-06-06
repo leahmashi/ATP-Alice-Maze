@@ -10,42 +10,45 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0"
             stylesheets="@../CSSs/ChooseMazeStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.chooseMazeViewController">
     <top>
-        <MenuBar>
-            <Menu mnemonicParsing="false">
-                <graphic>
-                    <Button text="File" prefWidth="60.0"/>
-                </graphic>
-                <MenuItem mnemonicParsing="false" text="New" onAction="#createNewFile"/>
-                <MenuItem mnemonicParsing="false" text="Save" onAction="#saveFile"/>
-                <MenuItem mnemonicParsing="false" text="Load" onAction="#loadFile"/>
-            </Menu>
-            <Menu mnemonicParsing="false" >
-                <graphic>
-                    <Button text="Options" prefWidth="60.0"/>
-                </graphic>
-                <MenuItem mnemonicParsing="false" text="Properties" onAction="#showProperties"/>
-            </Menu>
-            <Menu>
-                <graphic>
-                    <Button text="Settings" onAction="#showSettings" prefWidth="60.0"/>
-                </graphic>
-            </Menu>
-            <Menu mnemonicParsing="false" >
-                <graphic>
-                    <Button text="Help" onAction="#showHelp" prefWidth="60.0"/>
-                </graphic>
-            </Menu>
-            <Menu mnemonicParsing="false">
-                <graphic>
-                    <Button text="About" onAction="#showAbout" prefWidth="60.0"/>
-                </graphic>
-            </Menu>
-            <Menu mnemonicParsing="false" >
-                <graphic>
-                    <Button text="Exit" onAction="#exitProgram" prefWidth="60.0"/>
-                </graphic>
-            </Menu>
-        </MenuBar>
+        <VBox BorderPane.alignment="CENTER">
+            <MenuBar>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <Button text="File" prefWidth="60.0"/>
+                    </graphic>
+                    <MenuItem mnemonicParsing="false" text="New" onAction="#createNewFile"/>
+                    <MenuItem mnemonicParsing="false" text="Save" disable="true"/>
+                    <MenuItem mnemonicParsing="false" text="Load" onAction="#loadFile"/>
+                </Menu>
+                <Menu mnemonicParsing="false" >
+                    <graphic>
+                        <Button text="Options" prefWidth="60.0"/>
+                    </graphic>
+                    <MenuItem mnemonicParsing="false" text="Properties" onAction="#showProperties"/>
+                </Menu>
+                <!--                <Menu mnemonicParsing="false" text="Settings" onAction="#showSettings" />-->
+                <Menu>
+                    <graphic>
+                        <Button text="Settings" onAction="#showSettings" prefWidth="60.0"/>
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false" >
+                    <graphic>
+                        <Button text="Help" onAction="#showHelp" prefWidth="60.0"/>
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <Button text="About" onAction="#showAbout" prefWidth="60.0"/>
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false" >
+                    <graphic>
+                        <Button text="Exit" onAction="#exitProgram" prefWidth="60.0"/>
+                    </graphic>
+                </Menu>
+            </MenuBar>
+        </VBox>
     </top>
    <center>
        <GridPane prefHeight="620.0" prefWidth="900.0" BorderPane.alignment="CENTER">
@@ -80,10 +83,10 @@
                    </items>
                </ChoiceBox>
                <Button layoutX="45.0" layoutY="235.0" onAction="#generateMaze" prefHeight="45.0" prefWidth="120.0"
-                       text="Go!"/>
+                       text="Go!" fx:id="Go"/>
            </AnchorPane>
-         <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" GridPane.rowIndex="3"
-                onAction="#returnToMain">
+         <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0" GridPane.rowIndex="4"
+                 GridPane.columnIndex="0" BorderPane.alignment="BOTTOM_LEFT" onAction="#returnToMain" fx:id="returnToMain">
             <graphic>
                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                       prefHeight="45.0" prefWidth="120.0">

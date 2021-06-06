@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Observable;
@@ -50,20 +52,21 @@ public class MazeViewController extends AView
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         Platform.runLater(() -> {
+
             viewModel.generateMaze(_rows, _cols);
             Media musicFile = new Media(new File("resources/music/PaintingTheRosesRed.mp3").toURI().toString());
             setMusic(musicFile);
         });
     }
 
-    public void openFile(ActionEvent actionEvent) {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Open maze");
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Maze files (*.maze)", "*.maze"));
-        fc.setInitialDirectory(new File("./resources"));
-        File chosen = fc.showOpenDialog(null);
-        //...
-    }
+//    public void openFile(ActionEvent actionEvent) {
+//        FileChooser fc = new FileChooser();
+//        fc.setTitle("Open maze");
+//        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Maze files (*.maze)", "*.maze"));
+//        fc.setInitialDirectory(new File("./resources"));
+//        File chosen = fc.showOpenDialog(null);
+//        //...
+//    }
 
     @FXML
     public void keyPressed(KeyEvent keyEvent)
@@ -102,17 +105,27 @@ public class MazeViewController extends AView
     @FXML
     public void mouseClicked(MouseEvent mouseEvent) { mazeDisplayerFXML.requestFocus(); }
 
-    void initData(int rows, int cols)
+    public void initData(int rows, int cols)
     {
         _rows = rows;
         _cols = cols;
     }
 
     @FXML
-    public void returnToMain(ActionEvent actionEvent) throws IOException
+    public void returnToMain(ActionEvent actionEvent)
     {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
+        Parent root = null;
+        try
+        {
+            root = fxmlLoader.load();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         root.setId("mainWindow");
+        MyViewController controller = fxmlLoader.getController();
+        viewModel.addObserver(controller);
         Stage MainWindowStage = new Stage();
         Scene MainWindowScene = new Scene(root, 900, 650);
         MainWindowStage.setTitle("mainScene");
@@ -174,4 +187,66 @@ public class MazeViewController extends AView
     }
 
     public void zoom(ScrollEvent scrollEvent) { mazeDisplayerFXML.zoom(scrollEvent); }
+
+    @FXML
+    public void saveFile(ActionEvent actionEvent)
+    {
+        Stage saveStage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
+//
+//        //convert the maze to bytes
+//        byte[] mazeByteArray = viewModel.getMaze().toByteArray();
+//
+//        //compress the bytes
+//        byte[] compressedByteArray = compressEight(mazeByteArray);
+//
+        File file = fileChooser.showSaveDialog(saveStage);
+        if (file != null)
+        {
+            viewModel.saveMaze(file);
+        }
+
+
+    }
+
+    private void saveTextToFile(byte[] mazeByteArray, File file)
+    {
+        try (FileOutputStream out = new FileOutputStream(file))
+        {
+            out.write(mazeByteArray);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private byte[] compressEight(byte[] uncompressed)
+    {
+        int toCompressSize = uncompressed.length - 12;
+        int size = (int) Math.ceil(toCompressSize / 8.0);
+        byte[] compress = new byte[size + 12];
+        System.arraycopy(uncompressed, 0, compress, 0, 12);
+        int compressIndex = 12;
+        int uncompressIndex = 12;
+        while (compressIndex < compress.length)
+        {
+            int min = Math.min(toCompressSize, 8);
+            String binaryString = "";
+            for (int i = 0; i < min; i++)
+            {
+                if (uncompressed[uncompressIndex] == 1)
+                    binaryString = binaryString.concat("1");
+                else
+                    binaryString = binaryString.concat("0");
+                uncompressIndex++;
+            }
+            int decimal = Integer.parseInt(binaryString, 2);
+            compress[compressIndex] = Integer.valueOf(decimal).byteValue();
+            toCompressSize = toCompressSize - min;
+            compressIndex++;
+        }
+        return compress;
+    }
 }

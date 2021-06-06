@@ -1,14 +1,8 @@
 package View.controllers;
 
 
-import Model.IModel;
-import Model.MyModel;
 import Server.Configurations;
 import View.AView;
-import View.IView;
-import ViewModel.MyViewModel;
-
-import algorithms.mazeGenerators.AMazeGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +49,7 @@ public class chooseMazeViewController extends AView
         alert.show();
     }
 
-    public void generateMaze(ActionEvent actionEvent) throws IOException
+    public void generateMaze(ActionEvent actionEvent) throws IOException //TODO: change to try catch
     {
         String colsInput = EnterColsText.getText();
         String rowsInput = EnterRowsText.getText();
@@ -74,18 +66,20 @@ public class chooseMazeViewController extends AView
         catch (Exception e)
         {
             raiseErrorWindow("One or more inputs isn't a positive number, please try again");
+            return; //stay on choose scene
         }
 
         Stage MazeWindowStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
         Parent root = fxmlLoader.load();
+        root.setId("mazeScene");
         MazeViewController controller = fxmlLoader.getController();
+        viewModel.addObserver(controller);
         Scene MazeWindowScene = new Scene(root);
         controller.initData(rows, cols);
-        IModel model = new MyModel();
-        MyViewModel viewModel = new MyViewModel(model);
-        IView view = fxmlLoader.getController();
-        view.setViewModel(viewModel);
+        MazeWindowStage.setOnCloseRequest(e -> {  //TODO: event for close the window
+            System.exit(0);
+        });
 
         MazeWindowStage.setScene(MazeWindowScene);
         MazeWindowStage.show();
@@ -94,16 +88,9 @@ public class chooseMazeViewController extends AView
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
     }
 
-    public void returnToMain(ActionEvent actionEvent) throws IOException
+    public void returnToMain(ActionEvent actionEvent)
     {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
-        root.setId("mainWindow");
-        Stage MainWindowStage = new Stage();
-        Scene MainWindowScene = new Scene(root, 900, 650);
-        MainWindowStage.setTitle("mainScene");
-        MainWindowStage.setScene(MainWindowScene);
-        MainWindowStage.show();
-
+        changeScene("View/FXMLs/MyView.fxml", "mainScene", "mainWindow");
         ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
@@ -111,7 +98,8 @@ public class chooseMazeViewController extends AView
 
     private void ChooseMaze(String mazeChoice)
     {
-        switch (mazeChoice) {
+        switch (mazeChoice)
+        {
             case "Simple" -> configurations.setMazeGeneratingAlgorithm("SimpleMazeGenerator");
             case "Randomized Prim" -> configurations.setMazeGeneratingAlgorithm("MyMazeGenerator");
         }

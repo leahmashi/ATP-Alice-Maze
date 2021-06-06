@@ -124,16 +124,21 @@ public class MazeDisplayer extends Canvas
 
     public void zoom(ScrollEvent scrollEvent)
     {
-        if (scrollEvent.getDeltaY() < 0)
+        if (scrollEvent.isControlDown())
         {
-            setHeight(getHeight() / zoomFactor);
-            setWidth(getWidth() / zoomFactor);
+            if (scrollEvent.getDeltaY() < 0)
+            {
+                setHeight(getHeight() / zoomFactor);
+                setWidth(getWidth() / zoomFactor);
+            }
+            else
+            {
+                setWidth(getWidth() * zoomFactor);
+                setHeight(getHeight() * zoomFactor);
+            }
+            draw();
         }
-        else
-        {
-            setWidth(getWidth() * zoomFactor);
-            setHeight(getHeight() * zoomFactor);
-        }
-        draw();
+        if (scrollEvent.getDeltaY() == 0) { }
+
     }
 }

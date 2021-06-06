@@ -4,12 +4,14 @@ import Model.IModel;
 import Model.MovementDirection;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
+import javafx.event.ActionEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
 
+import java.io.File;
 import java.util.*;
 
 public class MyViewModel extends Observable implements Observer
@@ -65,6 +67,10 @@ public class MyViewModel extends Observable implements Observer
         }
         model.updatePlayerLocation(direction);
     }
+
+    public void saveMaze(File file) { this.model.saveMaze(file); }
+
+    public void loadMaze(String fileName, ActionEvent actionEvent) { this.model.loadMaze(fileName); }
 }
 
 //TODO: check if relevant multiKey class

@@ -2,14 +2,25 @@ package Model;
 
 
 import Client.Client;
+import IO.MyCompressorOutputStream;
 import IO.MyDecompressorInputStream;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
+import View.IView;
+import View.controllers.MazeViewController;
+import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
 import Client.IClientStrategy;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -37,10 +48,79 @@ public class MyModel extends Observable implements IModel
         mazeGeneratingServer.start();
     }
 
+    public MyModel(byte[] mazeByteArray)
+    {
+        this.maze = new Maze(mazeByteArray);
+        setChanged();
+        notifyObservers("maze generated");
+    }
 
     @Override
     public void assignObserver(Observer observer) { this.addObserver(observer); }
 
+    @Override
+    public void saveMaze(File file)
+    {
+        try
+        {
+            OutputStream outputStream = new MyCompressorOutputStream(new FileOutputStream(file));
+            outputStream.write(maze.toByteArray());
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void loadMaze(String fileName)
+    {
+        byte[] savedMazeBytes = new byte[0];
+        try
+        {
+            InputStream inputStream = new MyDecompressorInputStream(new FileInputStream(fileName));
+            savedMazeBytes = new byte[fileName.length() * 8 + 12];
+            inputStream.read(savedMazeBytes);
+            inputStream.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        this.maze = new Maze(savedMazeBytes);
+        playerRow = this.maze.getStartPosition().getRowIndex();
+        playerCol = this.maze.getStartPosition().getColumnIndex();
+        setChanged();
+        notifyObservers("maze generated");
+
+        Stage MazeWindowStage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        root.setId("mazeScene");
+        MazeViewController controller = fxmlLoader.getController();
+        Scene MazeWindowScene = new Scene(root);
+        controller.initData(maze.getTotalRows(), maze.getTotalCols());
+        MazeWindowStage.setOnCloseRequest(e -> {  //TODO: event for close the window
+            System.exit(0);
+        });
+
+//        IModel model = new MyModel();
+        MyViewModel viewModel = new MyViewModel(this);
+        IView view = fxmlLoader.getController();
+        view.setViewModel(viewModel);
+
+        MazeWindowStage.setScene(MazeWindowScene);
+        MazeWindowStage.show();
+
+//        ((MenuItem)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
+//        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+    }
 
 
     //getters
@@ -55,8 +135,6 @@ public class MyModel extends Observable implements IModel
 
     @Override
     public int getPlayerCol() { return playerCol; }
-
-
 
     @Override
     public void generateMaze(int rows, int cols)

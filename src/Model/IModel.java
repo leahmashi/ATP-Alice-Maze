@@ -3,8 +3,10 @@ package Model;
 
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
+import javafx.event.ActionEvent;
 
 
+import java.io.File;
 import java.util.Observer;
 
 public interface IModel
@@ -17,4 +19,6 @@ public interface IModel
     int getPlayerRow();
     int getPlayerCol();
     void assignObserver(Observer observer);
+    void saveMaze(File file);
+    void loadMaze(String fileName);
 }

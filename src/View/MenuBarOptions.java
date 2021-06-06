@@ -1,35 +1,69 @@
 package View;
 
+import IO.MyDecompressorInputStream;
+import Model.IModel;
+import Model.MyModel;
+import View.controllers.MazeViewController;
+import ViewModel.MyViewModel;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.*;
+
 
 public class MenuBarOptions
 {
     private static ToggleButton toggleButton = new ToggleButton("ON");
 
     @FXML
-    public void createNewFile(ActionEvent actionEvent)
+    public void createNewFile(ActionEvent actionEvent, MediaPlayer mediaPlayer)
     {
+        Parent root = null;
+        try
+        {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/ChooseMazeView.fxml"));
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            //TODO: what happens when cant be created?
+        }
+        root.setId("chooseMaze");
+        Stage ChooseMazeStage = new Stage();
+        Scene ChooseMazeScene = new Scene(root, 900, 650);
+        ChooseMazeStage.setTitle("chooseMazeScene");
+        ChooseMazeStage.setScene(ChooseMazeScene);
+        ChooseMazeStage.show();
 
+        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
+        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().hide();
     }
 
     @FXML
-    public void saveFile(ActionEvent actionEvent)
+    public void loadFile(ActionEvent actionEvent, MediaPlayer mediaPlayer, MyViewModel viewModel)
     {
+        Stage loadStage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load");
+        File file = fileChooser.showOpenDialog(loadStage);
+        if (file != null)
+        {
+            viewModel.loadMaze(file.toString(), actionEvent);
+        }
 
-    }
-
-    @FXML
-    public void loadFile(ActionEvent actionEvent)
-    {
-
+        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
+        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().hide();
     }
 
     @FXML
@@ -47,16 +81,11 @@ public class MenuBarOptions
         dialogVBox.getChildren().add(toggleButton);
         toggleButton.setId("toggleButton");
         toggleButton.getStylesheets().addAll(this.getClass().getResource("CSSs/ToggleButton.css").toExternalForm());
-        toggleButton.setOnAction((e) -> {
-            setMusic(mediaPlayer, e);
-        });
+        toggleButton.setOnAction((e) -> setMusic(mediaPlayer, e));
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
         dialog.setScene(dialogScene);
         dialog.show();
-        if (toggleButton.isSelected())
-            return false;
-        else
-            return true;
+        return !toggleButton.isSelected();
 
     }
 
