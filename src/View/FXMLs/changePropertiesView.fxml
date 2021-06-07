@@ -31,10 +31,10 @@
                       </GridPane.margin>
                       <items>
                           <FXCollections fx:id="choiceBoxSolver" fx:factory="observableArrayList">
-                              <String fx:value="Depth First Search" />
-                              <String fx:value="Breadth First Search" />
-                              <String fx:value="Best First Search" />
-                              <String fx:value=""/>
+                              <String fx:id="DFSChoice" fx:value="Depth First Search" />
+                              <String fx:id="BFSChoice" fx:value="Breadth First Search" />
+                              <String fx:id="BestChoice" fx:value="Best First Search" />
+                              <String fx:value="" />
                           </FXCollections>
                       </items>
                   </ChoiceBox>
@@ -43,9 +43,9 @@
                           <Insets top="100.0" />
                       </GridPane.margin>
                   </TextField>
-                  <Label text="Enter number of threads:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label fx:id="EnterThreadsNum" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="180.0" text="Enter number of threads:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                       <GridPane.margin>
-                          <Insets bottom="50.0" left="25.0" top="100.0" />
+                          <Insets bottom="50.0" left="10.0" top="100.0" />
                       </GridPane.margin>
                   </Label>
                   <ChoiceBox fx:id="mazeGenerator" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -54,24 +54,23 @@
                       </GridPane.margin>
                       <items>
                           <FXCollections fx:id="choiceBoxGenerator" fx:factory="observableArrayList">
-                              <String fx:value="Simple" />
-                              <String fx:value="Randomized Prim" />
-                              <String fx:value=""/>
+                              <String fx:id="simpleChoice" fx:value="Simple" />
+                              <String fx:id="primChoice" fx:value="Randomized Prim" />
+                              <String fx:value="" />
                           </FXCollections>
                       </items>
                   </ChoiceBox>
-                  <Label text="choose Maze generator type:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Label fx:id="chooseGeneratorLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="230.0" text="choose Maze generator type:" GridPane.columnIndex="2" GridPane.rowIndex="2">
                       <GridPane.margin>
-                          <Insets bottom="40.0" left="15.0" />
+                          <Insets bottom="40.0" />
                       </GridPane.margin>
                   </Label>
-                  <Label text="choose Solving algorithm:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Label fx:id="chooseSolverLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" text="choose Solving algorithm:" GridPane.columnIndex="2" GridPane.rowIndex="3">
                       <GridPane.margin>
-                          <Insets bottom="105.0" left="22.0" />
+                          <Insets bottom="105.0" />
                       </GridPane.margin>
                   </Label>
-               <Button mnemonicParsing="false" fx:id="saveChanges" text="save changes" GridPane.columnIndex="2" GridPane.rowIndex="4"
-                        onAction="#saveNewProperties">
+               <Button fx:id="saveChanges" mnemonicParsing="false" onAction="#saveNewProperties" text="save changes" GridPane.columnIndex="2" GridPane.rowIndex="4">
                   <GridPane.margin>
                      <Insets bottom="150.0" left="50.0" />
                   </GridPane.margin>

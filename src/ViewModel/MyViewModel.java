@@ -3,6 +3,7 @@ package ViewModel;
 import Model.IModel;
 import Model.MovementDirection;
 import View.AView;
+import View.controllers.ChangePropertiesController;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
 import javafx.event.ActionEvent;
@@ -79,7 +80,7 @@ public class MyViewModel extends Observable implements Observer
 
     public void saveMaze(File file) { this.model.saveMaze(file); }
 
-    public void loadMaze(String fileName, ActionEvent actionEvent) { this.model.loadMaze(fileName); }
+    public void loadMaze(String fileName) { this.model.loadMaze(fileName); }
 
     public void showProperties(Window parentWindow, MediaPlayer mediaPlayer)
     {
@@ -94,6 +95,8 @@ public class MyViewModel extends Observable implements Observer
         }
         root.setId("changeProperties");
         Stage changePropertiesStage = new Stage();
+        ChangePropertiesController controller = fxmlLoader.getController();
+        controller.initData(parentWindow);
         Scene changePropertiesScene = new Scene(root, 900, 650);
         changePropertiesStage.setTitle("changeProperties");
         changePropertiesStage.setScene(changePropertiesScene);

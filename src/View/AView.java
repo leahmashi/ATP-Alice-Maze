@@ -14,10 +14,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
 public abstract class AView implements IView, Observer, Initializable
 {
@@ -59,7 +57,6 @@ public abstract class AView implements IView, Observer, Initializable
 
     public void setMusic(Media musicFile)
     {
-//        Media musicFile = new Media(getClass().getClassLoader().getResource(mp3File).toString());
         mediaPlayer = new MediaPlayer(musicFile);
         setMediaPlayer(mediaPlayer);
         if (!isOff)

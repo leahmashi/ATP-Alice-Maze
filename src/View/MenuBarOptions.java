@@ -1,15 +1,9 @@
 package View;
 
-import IO.MyDecompressorInputStream;
-import Model.IModel;
-import Model.MyModel;
-import View.controllers.MazeViewController;
 import ViewModel.MyViewModel;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -60,7 +54,7 @@ public class MenuBarOptions
         File file = fileChooser.showOpenDialog(loadStage);
         if (file != null)
         {
-            viewModel.loadMaze(file.toString(), actionEvent);
+            viewModel.loadMaze(file.toString());
         }
 
         ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
@@ -72,8 +66,8 @@ public class MenuBarOptions
     {
         Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
         viewModel.showProperties(window, mediaPlayer);
-        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
-        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().hide();
+        window.setOnHidden(e -> mediaPlayer.stop());
+        window.hide();
     }
 
     @FXML
