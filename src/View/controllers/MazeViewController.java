@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +33,7 @@ public class MazeViewController extends AView
 {
     public int _rows;
     public int _cols;
+    public boolean _isLoaded;
 
     @FXML
     private MazeDisplayer mazeDisplayerFXML;
@@ -52,8 +52,8 @@ public class MazeViewController extends AView
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         Platform.runLater(() -> {
-
-            viewModel.generateMaze(_rows, _cols);
+            if (!_isLoaded)
+                viewModel.generateMaze(_rows, _cols);
             Media musicFile = new Media(new File("resources/music/PaintingTheRosesRed.mp3").toURI().toString());
             setMusic(musicFile);
         });
@@ -105,10 +105,11 @@ public class MazeViewController extends AView
     @FXML
     public void mouseClicked(MouseEvent mouseEvent) { mazeDisplayerFXML.requestFocus(); }
 
-    public void initData(int rows, int cols)
+    public void initData(int rows, int cols, boolean isLoaded)
     {
         _rows = rows;
         _cols = cols;
+        _isLoaded = isLoaded;
     }
 
     @FXML

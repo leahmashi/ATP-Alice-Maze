@@ -2,6 +2,7 @@ package Model;
 
 
 import Client.Client;
+import Client.IClientStrategy;
 import IO.MyCompressorOutputStream;
 import IO.MyDecompressorInputStream;
 import Server.Server;
@@ -12,15 +13,11 @@ import View.controllers.MazeViewController;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
-import Client.IClientStrategy;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -76,7 +73,7 @@ public class MyModel extends Observable implements IModel
     @Override
     public void loadMaze(String fileName)
     {
-        byte[] savedMazeBytes = new byte[0];
+        byte[] savedMazeBytes = {};
         try
         {
             InputStream inputStream = new MyDecompressorInputStream(new FileInputStream(fileName));
@@ -91,8 +88,6 @@ public class MyModel extends Observable implements IModel
         this.maze = new Maze(savedMazeBytes);
         playerRow = this.maze.getStartPosition().getRowIndex();
         playerCol = this.maze.getStartPosition().getColumnIndex();
-        setChanged();
-        notifyObservers("maze generated");
 
         Stage MazeWindowStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
@@ -105,15 +100,16 @@ public class MyModel extends Observable implements IModel
         root.setId("mazeScene");
         MazeViewController controller = fxmlLoader.getController();
         Scene MazeWindowScene = new Scene(root);
-        controller.initData(maze.getTotalRows(), maze.getTotalCols());
+        controller.initData(maze.getTotalRows(), maze.getTotalCols(), true);
         MazeWindowStage.setOnCloseRequest(e -> {  //TODO: event for close the window
             System.exit(0);
         });
 
-//        IModel model = new MyModel();
         MyViewModel viewModel = new MyViewModel(this);
         IView view = fxmlLoader.getController();
         view.setViewModel(viewModel);
+        setChanged();
+        notifyObservers("maze generated");
 
         MazeWindowStage.setScene(MazeWindowScene);
         MazeWindowStage.show();

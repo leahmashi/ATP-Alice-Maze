@@ -76,7 +76,7 @@ public class chooseMazeViewController extends AView
         MazeViewController controller = fxmlLoader.getController();
         viewModel.addObserver(controller);
         Scene MazeWindowScene = new Scene(root);
-        controller.initData(rows, cols);
+        controller.initData(rows, cols, false);
         MazeWindowStage.setOnCloseRequest(e -> {  //TODO: event for close the window
             System.exit(0);
         });
