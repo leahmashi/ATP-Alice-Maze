@@ -23,7 +23,6 @@ import java.util.ResourceBundle;
 
 public class chooseMazeViewController extends AView
 {
-    private Configurations configurations;
     private int rows;
     private int cols;
 

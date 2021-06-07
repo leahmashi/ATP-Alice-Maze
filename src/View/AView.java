@@ -1,5 +1,6 @@
 package View;
 
+import Server.Configurations;
 import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,8 +14,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 public abstract class AView implements IView, Observer, Initializable
 {
@@ -22,6 +25,8 @@ public abstract class AView implements IView, Observer, Initializable
     protected MenuBarOptions menuBarOptions = new MenuBarOptions();
     protected MediaPlayer mediaPlayer;
     protected static boolean isOff;
+    protected Configurations configurations;
+
 
     public void setViewModel(MyViewModel viewModel)
     {
@@ -40,7 +45,7 @@ public abstract class AView implements IView, Observer, Initializable
     @FXML
     public void loadFile(ActionEvent actionEvent) { menuBarOptions.loadFile(actionEvent, mediaPlayer, viewModel); } //TODO: check what happens in scenes before Maze view + problem with audio
     @FXML
-    public void showProperties(ActionEvent actionEvent) { menuBarOptions.showProperties(actionEvent); }
+    public void showProperties(ActionEvent actionEvent) { menuBarOptions.showProperties(actionEvent, viewModel, mediaPlayer); }
     @FXML
     public void showSettings(ActionEvent actionEvent) { isOff = menuBarOptions.showSettings(actionEvent, mediaPlayer); }
     @FXML

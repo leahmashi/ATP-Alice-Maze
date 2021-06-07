@@ -2,16 +2,25 @@ package ViewModel;
 
 import Model.IModel;
 import Model.MovementDirection;
+import View.AView;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class MyViewModel extends Observable implements Observer
@@ -71,6 +80,30 @@ public class MyViewModel extends Observable implements Observer
     public void saveMaze(File file) { this.model.saveMaze(file); }
 
     public void loadMaze(String fileName, ActionEvent actionEvent) { this.model.loadMaze(fileName); }
+
+    public void showProperties(Window parentWindow, MediaPlayer mediaPlayer)
+    {
+        Parent root = null;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/changePropertiesView.fxml"));
+        try
+        {
+            root = fxmlLoader.load();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        root.setId("changeProperties");
+        Stage changePropertiesStage = new Stage();
+        Scene changePropertiesScene = new Scene(root, 900, 650);
+        changePropertiesStage.setTitle("changeProperties");
+        changePropertiesStage.setScene(changePropertiesScene);
+        changePropertiesStage.show();
+
+        changePropertiesStage.setOnHidden(e -> {
+            mediaPlayer.stop();
+            ((Stage) parentWindow.getScene().getWindow()).show();
+        });
+    }
 }
 
 //TODO: check if relevant multiKey class

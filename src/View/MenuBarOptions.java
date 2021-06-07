@@ -19,6 +19,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.*;
 
@@ -67,9 +68,12 @@ public class MenuBarOptions
     }
 
     @FXML
-    public void showProperties(ActionEvent actionEvent)
+    public void showProperties(ActionEvent actionEvent, MyViewModel viewModel, MediaPlayer mediaPlayer)
     {
-
+        Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
+        viewModel.showProperties(window, mediaPlayer);
+        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
+        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().hide();
     }
 
     @FXML

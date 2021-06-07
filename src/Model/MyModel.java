@@ -8,6 +8,7 @@ import IO.MyDecompressorInputStream;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
+import Server.Configurations;
 import View.IView;
 import View.controllers.MazeViewController;
 import ViewModel.MyViewModel;
@@ -34,6 +35,7 @@ public class MyModel extends Observable implements IModel
     private int playerCol;
     Server mazeGeneratingServer;
     Server solveSearchProblemSolver;
+    private Configurations configurations;
 
     //constructor
     public MyModel()
@@ -43,13 +45,6 @@ public class MyModel extends Observable implements IModel
 
         solveSearchProblemSolver.start();
         mazeGeneratingServer.start();
-    }
-
-    public MyModel(byte[] mazeByteArray)
-    {
-        this.maze = new Maze(mazeByteArray);
-        setChanged();
-        notifyObservers("maze generated");
     }
 
     @Override
@@ -257,6 +252,11 @@ public class MyModel extends Observable implements IModel
         playerCol = newPlayerCol;
         setChanged();
         notifyObservers("player moved");
+    }
+
+    void showProperties()
+    {
+        configurations = Configurations.getInstance();
     }
 
 }
