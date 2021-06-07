@@ -11,17 +11,17 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 
@@ -58,21 +58,31 @@ public class ChangePropertiesController extends AView
                 threadsAmount = Integer.parseInt(threadsNum);
                 if (threadsAmount <= 0)
                 {
-                    raiseErrorWindow("Please enter an integer value for number of threads");
+                    raisePopupWindow("Please enter an integer value for number of threads", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
                     return;
                 }
-                configurations.setThreadPoolSize(threadsNum); //TODO: check size
-                if (configurations.getThreadPoolSize() == threadsAmount)
+
+
+                configurations.setThreadPoolSize(threadsNum);
+
+                Properties p = new Properties();
+                p.load(new FileInputStream("resources/config.properties"));
+
+                if (p.getProperty("threadPoolSize").equals(threadsNum))
                     successSetThreadNum = true;
             }
         }
         catch (Exception e)
         {
-            raiseErrorWindow("Please enter an integer value for number of threads");
+            raisePopupWindow("Please enter an integer value for number of threads", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+
+//            raiseErrorWindow("Please enter an integer value for number of threads");
             return;
         }
         if ((solvingAlgoChoice == null || solvingAlgoChoice == "") && (mazeGeneratorChoice == null || mazeGeneratorChoice == "") && threadsNum == "")
-            raiseErrorWindow("Please enter a property value you want to change");
+            raisePopupWindow("Please enter an integer value for number of threads", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+
+//        raiseErrorWindow("Please enter a property value you want to change");
         else
         {
             if (solvingAlgoChoice != null)
@@ -85,7 +95,9 @@ public class ChangePropertiesController extends AView
             }
         }
         if (successSetGenerator || successSetSolver || successSetThreadNum)
-            raiseSetSuccessWindow();
+            raisePopupWindow("the properties were saved successfully", "resources/clips/success.mp4", Alert.AlertType.INFORMATION);
+
+//        raiseSetSuccessWindow();
     }
 
     private boolean setGenerator(String mazeGeneratorChoice)
@@ -131,9 +143,24 @@ public class ChangePropertiesController extends AView
 
     private void raiseSetSuccessWindow()
     {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("success!");
-        alert.show();
+        Media media = new Media(new File("resources/clips/success.mp4").toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getDialogPane().setMinHeight(200);
+        alert.getDialogPane().setMinWidth(200);
+        Label label = new Label("success!");
+        AnchorPane content = new AnchorPane();
+        content.getChildren().addAll(label, mediaView);
+        DoubleProperty width = mediaView.fitWidthProperty();
+        DoubleProperty height = mediaView.fitHeightProperty();
+        width.bind(Bindings.selectDouble(alert.getDialogPane().sceneProperty(), "width"));
+        height.bind(Bindings.selectDouble(alert.getDialogPane().sceneProperty(), "height"));
+        mediaView.setPreserveRatio(true);
+        alert.getDialogPane().setContent(content);
+        alert.setOnShowing(e -> mediaPlayer.play());
+        alert.showAndWait();
     }
 
     public void raiseErrorWindow(String text)
@@ -142,6 +169,30 @@ public class ChangePropertiesController extends AView
         mediaPlayer = new MediaPlayer(media);
         MediaView mediaView = new MediaView(mediaPlayer);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getDialogPane().setMinHeight(200);
+        alert.getDialogPane().setMinWidth(200);
+        Label label = new Label(text);
+        AnchorPane content = new AnchorPane();
+        content.getChildren().addAll(label, mediaView);
+        DoubleProperty width = mediaView.fitWidthProperty();
+        DoubleProperty height = mediaView.fitHeightProperty();
+        width.bind(Bindings.selectDouble(alert.getDialogPane().sceneProperty(), "width"));
+        height.bind(Bindings.selectDouble(alert.getDialogPane().sceneProperty(), "height"));
+        mediaView.setPreserveRatio(true);
+        alert.getDialogPane().setContent(content);
+        alert.setOnShowing(e -> mediaPlayer.play());
+        alert.showAndWait();
+    }
+
+
+    public void raisePopupWindow(String text, String path, Alert.AlertType type)
+    {
+        Media media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+        Alert alert = new Alert(type);
+        alert.getDialogPane().setMinHeight(200);
+        alert.getDialogPane().setMinWidth(200);
         Label label = new Label(text);
         AnchorPane content = new AnchorPane();
         content.getChildren().addAll(label, mediaView);

@@ -10,7 +10,8 @@ import java.util.ResourceBundle;
 public class FinishLineViewController extends AView
 {
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
 
     }
     @FXML

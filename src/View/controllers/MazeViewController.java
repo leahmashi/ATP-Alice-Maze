@@ -82,6 +82,7 @@ public class MazeViewController extends AView
         setUpdatePlayerCol(col);
         if(row == viewModel.getMaze().getGoalPosition().getRowIndex() && col == viewModel.getMaze().getGoalPosition().getColumnIndex())
         {
+            Media finishLineMedia = new Media(new File("resources/clips/FinishLineClip.mp4").toURI().toString());
             Stage MazeWindowStage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/FinishLineView.fxml"));
             Parent root = null;
@@ -94,7 +95,9 @@ public class MazeViewController extends AView
                 e.printStackTrace();
             }
             //MazeViewController controller = fxmlLoader.getController();
+            root.setId("FinishLineWindow");
             Scene MazeWindowScene = new Scene(root);
+            MazeWindowStage.setTitle("Success");
             MazeWindowStage.setScene(MazeWindowScene);
             MazeWindowStage.show();
         }
