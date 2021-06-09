@@ -5,9 +5,15 @@ import Model.MovementDirection;
 import View.controllers.ChangePropertiesController;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -22,6 +28,7 @@ import java.util.Observer;
 public class MyViewModel extends Observable implements Observer
 {
     private IModel model;
+
 
     @Override
     public void update(java.util.Observable o, Object arg)
@@ -49,12 +56,10 @@ public class MyViewModel extends Observable implements Observer
 
     public void movePlayer(KeyEvent keyEvent)
     {
-        MovementDirection direction; //add diagonal movement and movement by numpad
-        //TODO: two arrows together for diagonal?
-//        KeyCombination keyCombinationUpLeft = new MultiKeyCombi(KeyCode.UP, KeyCode.LEFT);
-//        KeyCombination keyCombinationUpRight = new MultiKeyCombi(KeyCode.UP, KeyCode.RIGHT);
-//        KeyCombination keyCombinationDownLeft = new MultiKeyCombi(KeyCode.DOWN, KeyCode.LEFT);
-//        KeyCombination keyCombinationDownRight = new MultiKeyCombi(KeyCode.DOWN, KeyCode.RIGHT);
+        MovementDirection direction;
+
+        //TODO: add multiKey?
+
         switch (keyEvent.getCode())
         {
             case UP, NUMPAD8 -> direction = MovementDirection.UP;
@@ -77,7 +82,7 @@ public class MyViewModel extends Observable implements Observer
 
     public boolean loadMaze(File file) { return this.model.loadMaze(file); }
 
-    public void showProperties(Window parentWindow, MediaPlayer mediaPlayer)
+    public void  showProperties(Window parentWindow, MediaPlayer mediaPlayer)
     {
         Media parentStageMedia = mediaPlayer.getMedia();
         Parent root = null;
@@ -92,9 +97,6 @@ public class MyViewModel extends Observable implements Observer
         root.setId("changeProperties");
         Stage changePropertiesStage = new Stage();
         ChangePropertiesController controller = fxmlLoader.getController();
-//        FXMLLoader parentFxmlLoader = (FXMLLoader) parentWindow.getScene().getUserData();
-//        IView parentController = parentFxmlLoader.getController();
-//        parentController.setMusic(parentStageMedia);
         Scene changePropertiesScene = new Scene(root, 900, 650);
         changePropertiesStage.setTitle("changeProperties");
         changePropertiesStage.setScene(changePropertiesScene);
@@ -108,20 +110,4 @@ public class MyViewModel extends Observable implements Observer
     }
 }
 
-//TODO: check if relevant multiKey class
-//class MultiKeyCombi extends KeyCombination
-//{
-//    private static List<KeyCode> codes = new ArrayList<KeyCode>();
-//    private List<KeyCode> neededCodes;
-//
-//    public MultiKeyCombi(KeyCode... codes)
-//    {
-//        neededCodes = Arrays.asList(codes);
-//    }
-//
-//    @Override
-//    public boolean match(KeyEvent keyEvent)
-//    {
-//        return codes.containsAll(neededCodes);
-//    }
-//}
+

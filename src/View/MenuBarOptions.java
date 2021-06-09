@@ -161,10 +161,6 @@ public class MenuBarOptions
     }
 
     @FXML
-    public void exitProgram()
-    {
-        System.exit(0);
-    }
-
+    public void exitProgram() { System.exit(0); }
 
 }

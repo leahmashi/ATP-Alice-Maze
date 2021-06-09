@@ -5,7 +5,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../CSSs/MainStyle.css"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MyViewController"
-            prefHeight="650.0" prefWidth="900.0">
+            prefHeight="650.0" prefWidth="900.0" >
     <bottom>
         <HBox alignment="CENTER" spacing="10" fillHeight="true" >
             <Button fx:id="generateMaze" onAction="#generateMaze" prefHeight="60.0" prefWidth="130.0" text="Generate Maze" HBox.hgrow="ALWAYS" BorderPane.alignment="BOTTOM_LEFT"/>

@@ -48,7 +48,7 @@ public class chooseMazeViewController extends AView
         alert.show();
     }
 
-    public void generateMaze(ActionEvent actionEvent) throws IOException //TODO: change to try catch
+    public void generateMaze(ActionEvent actionEvent)
     {
         String colsInput = EnterColsText.getText();
         String rowsInput = EnterRowsText.getText();
@@ -70,13 +70,18 @@ public class chooseMazeViewController extends AView
 
         Stage MazeWindowStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
-        Parent root = fxmlLoader.load();
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         root.setId("mazeScene");
         MazeViewController controller = fxmlLoader.getController();
         viewModel.addObserver(controller);
         Scene MazeWindowScene = new Scene(root);
         controller.initData(rows, cols, false);
-        MazeWindowStage.setOnCloseRequest(e -> {  //TODO: event for close the window
+        MazeWindowStage.setOnCloseRequest(e -> {
             System.exit(0);
         });
 

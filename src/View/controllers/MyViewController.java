@@ -32,8 +32,8 @@ public class MyViewController extends AView
     {
         Stage clipStage = new Stage();
         BorderPane borderPane = new BorderPane();
-        addClip(clipStage, borderPane);
-        addContinueButton(borderPane, clipStage);
+        addClip(clipStage, borderPane, "resources/clips/WhiteRabbitClip.mp4", "View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
+        addContinueButton(borderPane, clipStage, "View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
         Scene clipScene = new Scene(borderPane, 900, 650);
         clipScene.getStylesheets().add("View/CSSs/MainStyle.css"); //TODO fix button size and location
         clipStage.setScene(clipScene);
@@ -41,55 +41,5 @@ public class MyViewController extends AView
         clipStage.show();
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
-
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                Stage chooseMazeStage = changeScene("View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
-                chooseMazeStage.setOnCloseRequest(e -> {  //TODO: event for close the window
-                    System.exit(0);
-                });
-                clipStage.hide();
-            }
-        });
-    }
-
-    private void addClip(Stage clipStage, BorderPane borderPane)
-    {
-        Media media = new Media(new File("resources/clips/WhiteRabbitClip.mp4").toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        MediaView mediaView = new MediaView(mediaPlayer);
-        borderPane.setCenter(mediaView);
-
-        mediaView.fitWidthProperty().bind(clipStage.widthProperty()); //TODO fix resize view
-        mediaView.fitHeightProperty().bind(clipStage.heightProperty());
-        clipStage.setOnHidden(e -> mediaPlayer.stop());
-        mediaPlayer.setAutoPlay(true);
-
-        if (isOff)
-            mediaPlayer.setMute(true);
-    }
-
-    private void addContinueButton(BorderPane borderPane, Stage clipStage)
-    {
-        Button continueButton = new Button("continue");
-        continueButton.setId("continueButton");
-        BorderPane borderLeft = new BorderPane();
-        BorderPane borderLeftCenter = new BorderPane();
-        borderLeftCenter.setCenter(continueButton);
-        AnchorPane insiderAnchorPane = new AnchorPane();
-        insiderAnchorPane.getChildren().add(borderLeftCenter);
-        borderLeft.setCenter(insiderAnchorPane);
-        continueButton.prefHeight(60);
-        continueButton.prefWidth(130);
-        borderPane.setBottom(borderLeft);
-
-        continueButton.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                changeScene("View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
-                clipStage.hide();
-            }
-        });
     }
 }

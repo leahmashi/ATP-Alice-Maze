@@ -34,7 +34,7 @@ public class Main extends Application
         primaryStage.setScene(mainScene);
         primaryStage.show();
 
-        primaryStage.setOnCloseRequest(e -> {  //TODO: event for close the window
+        primaryStage.setOnCloseRequest(e -> {
             System.exit(0);
         });
 

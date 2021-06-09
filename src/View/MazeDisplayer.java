@@ -1,6 +1,8 @@
 package View;
 
 import algorithms.mazeGenerators.Maze;
+import algorithms.search.AState;
+import algorithms.search.MazeState;
 import algorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -12,22 +14,24 @@ import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class MazeDisplayer extends Canvas
 {
     private int[][] mazeArr;
     private Solution solution;
-    private double zoomFactor = 1.05;
-    //end position:
+    // end position:
     private int endRow;
     private  int endCol;
     // player position:
     private int playerRow = 0;
     private int playerCol = 0;
-    // wall and player images:
+    // images:
     StringProperty imageFileNameWall = new SimpleStringProperty();
     StringProperty imageFileNamePlayer = new SimpleStringProperty();
-    StringProperty imageFileEndPoint = new SimpleStringProperty();
+    StringProperty imageFileNameEndPoint = new SimpleStringProperty();
+    StringProperty imageFileNameSol = new SimpleStringProperty();
+
 
     public void drawMaze(Maze maze)
     {
@@ -48,13 +52,13 @@ public class MazeDisplayer extends Canvas
     }
 
     public String getImageFileNameWall() { return imageFileNameWall.get(); }
-    public void setImageFileNameWall(String imageFileNameWall) { this.imageFileNameWall.set(imageFileNameWall); }
     public String getImageFileNamePlayer() { return imageFileNamePlayer.get(); }
+    public String getImageFileNameEndPoint() { return imageFileNameEndPoint.get(); }
+    public String getImageFileNameSol() { return imageFileNameSol.get(); }
+    public void setImageFileNameWall(String imageFileNameWall) { this.imageFileNameWall.set(imageFileNameWall); }
     public void setImageFileNamePlayer(String imageFileNamePlayer) { this.imageFileNamePlayer.set(imageFileNamePlayer); }
-    public String getImageFileEndPoint() { return imageFileEndPoint.get(); }
-    public void setImageFileEndPoint(String imageFileEndPoint) { this.imageFileEndPoint.set(imageFileEndPoint); }
-
-
+    public void setImageFileNameEndPoint(String imageFileNameEndPoint) { this.imageFileNameEndPoint.set(imageFileNameEndPoint); }
+    public void setImageFileNameSol(String imageFileNameSol) { this.imageFileNameSol.set(imageFileNameSol); }
 
     private void draw()
     {
@@ -82,7 +86,7 @@ public class MazeDisplayer extends Canvas
     private void drawEndPoint(GraphicsContext graphicsContext, double cellHeight, double cellWidth)
     {
         Image endPointImage = null;
-        try { endPointImage = new Image(new FileInputStream(getImageFileEndPoint())); }
+        try { endPointImage = new Image(new FileInputStream(getImageFileNameEndPoint())); }
         catch (FileNotFoundException e) { System.out.println("There is no end image file"); }
         double x = endCol * cellWidth;
         double y = endRow * cellHeight;
@@ -91,7 +95,26 @@ public class MazeDisplayer extends Canvas
 
     private void drawSolution(GraphicsContext graphicsContext, double cellHeight, double cellWidth)
     {
-        //TODO: fill solution with roses
+        int playerRow = getPlayerRow();
+        int playerCol = getPlayerCol();
+
+        Image solPathImage = null;
+        try { solPathImage = new Image(new FileInputStream(getImageFileNameSol())); }
+        catch (FileNotFoundException e) { System.out.println("There is no sol image file"); }
+        ArrayList<AState> solutionPath = solution.getSolutionPath();
+        for (int i = 0; i < solutionPath.size(); i++)
+        {
+            int row = ((MazeState) solutionPath.get(i)).getPosition().getRowIndex();
+            int col = ((MazeState) solutionPath.get(i)).getPosition().getColumnIndex();
+            if ((row == playerRow && col == playerCol) || (row == endRow && col == endCol))
+                continue;
+            double x = col * cellWidth;
+            double y = row * cellHeight;
+            if (solPathImage == null)
+                graphicsContext.fillRect(x, y, cellWidth, cellHeight);
+            else
+                graphicsContext.drawImage(solPathImage, x, y, cellWidth, cellHeight);
+        }
     }
 
     private void drawMazeWalls(GraphicsContext graphicsContext, double cellHeight, double cellWidth, int rows, int cols)
@@ -142,13 +165,14 @@ public class MazeDisplayer extends Canvas
     public void setSolution(Solution solution)
     {
         this.solution = solution;
-//        displaySolution();
+        draw();
     }
 
-    public void zoom(ScrollEvent scrollEvent)
+    public void zoom(ScrollEvent scrollEvent) //TODO: check problem with VRam
     {
         if (scrollEvent.isControlDown())
         {
+            double zoomFactor = 1.05;
             if (scrollEvent.getDeltaY() < 0)
             {
                 setHeight(getHeight() / zoomFactor);

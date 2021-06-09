@@ -2,6 +2,7 @@ package View.controllers;
 
 
 import View.AView;
+import View.IView;
 import View.MazeDisplayer;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,9 +17,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +44,10 @@ public class MazeViewController extends AView
     //getters & setters
     public void setUpdatePlayerRow(int updatePlayerRow) { this.updatePlayerRow.set(updatePlayerRow + ""); }
     public void setUpdatePlayerCol(int updatePlayerCol) { this.updatePlayerCol.set(updatePlayerCol + ""); }
-
+    public String getUpdatePlayerRow() { return updatePlayerRow.get(); }
+    public StringProperty updatePlayerRowProperty() { return updatePlayerRow; }
+    public String getUpdatePlayerCol() { return updatePlayerCol.get(); }
+    public StringProperty updatePlayerColProperty() { return updatePlayerCol; }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -66,30 +72,24 @@ public class MazeViewController extends AView
         mazeDisplayerFXML.setPlayerPosition(row, col);
         setUpdatePlayerRow(row);
         setUpdatePlayerCol(col);
-        if(row == viewModel.getMaze().getGoalPosition().getRowIndex() && col == viewModel.getMaze().getGoalPosition().getColumnIndex())
+        if (row == viewModel.getMaze().getGoalPosition().getRowIndex() && col == viewModel.getMaze().getGoalPosition().getColumnIndex())
         {
-            Media finishLineMedia = new Media(new File("resources/clips/FinishLineClip.mp4").toURI().toString());
-            Stage MazeWindowStage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/FinishLineView.fxml"));
-            Parent root = null;
-            try
-            {
-                root = fxmlLoader.load();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            //MazeViewController controller = fxmlLoader.getController();
-            root.setId("FinishLineWindow");
-            Scene MazeWindowScene = new Scene(root);
-            MazeWindowStage.setTitle("Success");
-            MazeWindowStage.setScene(MazeWindowScene);
-            MazeWindowStage.show();
+            Stage clipStage = new Stage();
+            BorderPane borderPane = new BorderPane();
+            addClip(clipStage, borderPane, "resources/clips/finalStageClip.mp4", "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
+            addContinueButton(borderPane, clipStage, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
+            Scene clipScene = new Scene(borderPane, 900, 650);
+            clipScene.getStylesheets().add("View/CSSs/finalStageStyle.css");
+            clipStage.setScene(clipScene);
+            clipStage.setTitle("veryMerryUnbirthday");
+            //TODO: fix window size so button isn't cropped
+            clipStage.showAndWait();
+
+            Window currWindow = mazeDisplayerFXML.getScene().getWindow();
+            currWindow.setOnHidden(e -> mediaPlayer.stop());
+            currWindow.hide();
         }
-
     }
-
 
     @FXML
     public void mouseClicked() { mazeDisplayerFXML.requestFocus(); }
@@ -184,6 +184,10 @@ public class MazeViewController extends AView
             else
                 raisePopupWindow("The maze wasn't saved please choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
         }
+    }
+
+    public void dragMouse(MouseEvent mouseEvent)
+    {
 
     }
 }

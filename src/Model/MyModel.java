@@ -65,7 +65,6 @@ public class MyModel extends Observable implements IModel
                 return true;
             } catch (IOException e)
             {
-                e.printStackTrace(); //TODO: remove at end
                 return false;
             }
         }
@@ -191,8 +190,6 @@ public class MyModel extends Observable implements IModel
         notifyObservers("maze generated");
     }
 
-
-
     @Override
     public void solveMaze()
     {
@@ -225,9 +222,6 @@ public class MyModel extends Observable implements IModel
         setChanged();
         notifyObservers("maze solved");
     }
-
-
-
 
     @Override
     public void updatePlayerLocation(MovementDirection direction)
@@ -276,11 +270,6 @@ public class MyModel extends Observable implements IModel
         playerCol = newPlayerCol;
         setChanged();
         notifyObservers("player moved");
-    }
-
-    void showProperties()
-    {
-        configurations = Configurations.getInstance();
     }
 
 }

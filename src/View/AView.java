@@ -5,13 +5,18 @@ import ViewModel.MyViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -39,10 +44,7 @@ public abstract class AView implements IView, Observer, Initializable
     }
 
     @Override
-    public void update(Observable o, Object arg)
-    {
-        //TODO: update function
-    }
+    public void update(Observable o, Object arg) { }
 
     @FXML
     public void createNewFile(ActionEvent actionEvent)
@@ -143,6 +145,54 @@ public abstract class AView implements IView, Observer, Initializable
             setMusic(oldMedia);
         });
         alert.showAndWait();
+    }
+
+    protected void addClip(Stage clipStage, BorderPane borderPane, String mediaName, String nextSceneFxml, String nextStageTitle, String nextRootID)
+    {
+        Media media = new Media(new File(mediaName).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+        mediaView.setPreserveRatio(true);
+        borderPane.setCenter(mediaView);
+
+        //TODO fix resize view
+        mediaView.fitWidthProperty().bind(clipStage.widthProperty());
+        mediaView.fitHeightProperty().bind(clipStage.heightProperty());
+        clipStage.setOnHidden(e -> mediaPlayer.stop());
+        mediaPlayer.setAutoPlay(true);
+
+        if (isOff)
+            mediaPlayer.setMute(true);
+
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run()
+            {
+                changeScene(nextSceneFxml, nextStageTitle, nextRootID);
+                clipStage.hide();
+            }
+        });
+    }
+
+
+    protected void addContinueButton(BorderPane borderPane, Stage clipStage, String nextSceneFxml, String nextStageTitle, String nextRootID)
+    {
+        Button continueButton = new Button("continue");
+        continueButton.setId("continueButton");
+        continueButton.prefHeight(60);
+        continueButton.prefWidth(130);
+        VBox vBox = new VBox(4);
+        vBox.setAlignment(Pos.TOP_CENTER);
+        vBox.getChildren().add(continueButton);
+        borderPane.setBottom(vBox);
+
+        continueButton.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                changeScene(nextSceneFxml, nextStageTitle, nextRootID);
+                clipStage.hide();
+            }
+        });
     }
 
 }
