@@ -3,6 +3,7 @@ package ViewModel;
 import Model.IModel;
 import Model.MovementDirection;
 import View.AView;
+import View.IView;
 import View.controllers.ChangePropertiesController;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
@@ -15,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -84,6 +86,7 @@ public class MyViewModel extends Observable implements Observer
 
     public void showProperties(Window parentWindow, MediaPlayer mediaPlayer)
     {
+        Media parentStageMedia = mediaPlayer.getMedia();
         Parent root = null;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/changePropertiesView.fxml"));
         try
@@ -96,7 +99,9 @@ public class MyViewModel extends Observable implements Observer
         root.setId("changeProperties");
         Stage changePropertiesStage = new Stage();
         ChangePropertiesController controller = fxmlLoader.getController();
-        controller.initData(parentWindow);
+//        FXMLLoader parentFxmlLoader = (FXMLLoader) parentWindow.getScene().getUserData();
+//        IView parentController = parentFxmlLoader.getController();
+//        parentController.setMusic(parentStageMedia);
         Scene changePropertiesScene = new Scene(root, 900, 650);
         changePropertiesStage.setTitle("changeProperties");
         changePropertiesStage.setScene(changePropertiesScene);
@@ -104,6 +109,7 @@ public class MyViewModel extends Observable implements Observer
 
         changePropertiesStage.setOnHidden(e -> {
             mediaPlayer.stop();
+            controller.setMusic(parentStageMedia);
             ((Stage) parentWindow.getScene().getWindow()).show();
         });
     }

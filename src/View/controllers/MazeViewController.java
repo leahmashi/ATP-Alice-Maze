@@ -141,19 +141,7 @@ public class MazeViewController extends AView
 
 
         Media musicFile = new Media(getClass().getClassLoader().getResource("music/AliceMainWindowMusic.mp3").toString());
-        mediaPlayer = new MediaPlayer(musicFile);
-        setMediaPlayer(mediaPlayer);
-        if (!isOff)
-        {
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setOnEndOfMedia( new Runnable() {
-                @Override
-                public void run() {
-                    mediaPlayer.seek(Duration.ZERO);
-                    mediaPlayer.play();
-                }
-            });
-        }
+        setMusic(musicFile);
 
         MainWindowStage.getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
     }
@@ -173,7 +161,7 @@ public class MazeViewController extends AView
 
     private void mazeGenerated()
     {
-        mazeDisplayerFXML.drawMaze(viewModel.getMaze().getMazeArray());
+        mazeDisplayerFXML.drawMaze(viewModel.getMaze());
         playerMoved();
     }
 

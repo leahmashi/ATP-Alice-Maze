@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
@@ -38,7 +39,6 @@ public class ChangePropertiesController extends AView
     @FXML
     ChoiceBox<String> mazeGenerator;
     private int threadsAmount;
-    private Window _parentWindow;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -56,10 +56,28 @@ public class ChangePropertiesController extends AView
 
         boolean successSetSolver = false;
         boolean successSetGenerator = false;
-        boolean successSetThreadNum = setThreadNum(threadsNum);
+        boolean successSetThreadNum = false;
 
-        if (successSetThreadNum == false)
+        try
+        {
+            if (threadsNum != "")
+            {
+                threadsAmount = Integer.parseInt(threadsNum);
+                if (threadsAmount <= 0)
+                    throw new Exception();
+
+                configurations.setThreadPoolSize(threadsNum);
+                Properties properties = new Properties();
+                properties.load(new FileInputStream("resources/config.properties"));
+                if (properties.getProperty("threadPoolSize").equals(threadsNum))
+                    successSetThreadNum = true;
+            }
+        }
+        catch (Exception e)
+        {
+            raisePopupWindow("Please enter an integer value for number of threads", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
             return;
+        }
 
         if ((solvingAlgoChoice == null || solvingAlgoChoice == "") && (mazeGeneratorChoice == null || mazeGeneratorChoice == "") && threadsNum == "")
             raisePopupWindow("Please enter a property value you want to change", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
@@ -77,33 +95,6 @@ public class ChangePropertiesController extends AView
         if (successSetGenerator || successSetSolver || successSetThreadNum)
             raisePopupWindow("the properties were saved successfully", "resources/clips/SuccessClip.mp4", Alert.AlertType.INFORMATION);
 
-        FXMLLoader loader = (FXMLLoader) _parentWindow.getScene().getUserData();
-        IView controller = loader.getController();
-        //TODO: return to original window
-    }
-
-    private boolean setThreadNum(String threadsNum)
-    {
-        try
-        {
-            if (threadsNum != "")
-            {
-                threadsAmount = Integer.parseInt(threadsNum);
-                if (threadsAmount <= 0)
-                    throw new Exception();
-
-                configurations.setThreadPoolSize(threadsNum);
-                Properties properties = new Properties();
-                properties.load(new FileInputStream("resources/config.properties"));
-                if (properties.getProperty("threadPoolSize").equals(threadsNum))
-                    return true;
-            }
-        }
-        catch (Exception e)
-        {
-            raisePopupWindow("Please enter an integer value for number of threads", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
-        }
-        return false;
     }
 
 
@@ -178,10 +169,5 @@ public class ChangePropertiesController extends AView
             setMusic(oldMedia);
         });
         alert.showAndWait();
-    }
-
-    public void initData(Window parentWindow)
-    {
-        _parentWindow = parentWindow;
     }
 }

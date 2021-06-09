@@ -1,6 +1,9 @@
 package View;
 
+import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
@@ -17,16 +20,22 @@ public class MazeDisplayer extends Canvas
     private int[][] mazeArr;
     private Solution solution;
     private double zoomFactor = 1.05;
+    //end position:
+    private int endRow;
+    private  int endCol;
     // player position:
     private int playerRow = 0;
     private int playerCol = 0;
     // wall and player images:
     StringProperty imageFileNameWall = new SimpleStringProperty();
     StringProperty imageFileNamePlayer = new SimpleStringProperty();
+    StringProperty imageFileEndPoint = new SimpleStringProperty();
 
-    public void drawMaze(int[][] mazeArr)
+    public void drawMaze(Maze maze)
     {
-        this.mazeArr = mazeArr;
+        this.mazeArr = maze.getMazeArray();
+        this.endRow = maze.getGoalPosition().getRowIndex();
+        this.endCol = maze.getGoalPosition().getColumnIndex();
         draw();
     }
 
@@ -44,6 +53,9 @@ public class MazeDisplayer extends Canvas
     public void setImageFileNameWall(String imageFileNameWall) { this.imageFileNameWall.set(imageFileNameWall); }
     public String getImageFileNamePlayer() { return imageFileNamePlayer.get(); }
     public void setImageFileNamePlayer(String imageFileNamePlayer) { this.imageFileNamePlayer.set(imageFileNamePlayer); }
+    public String getImageFileEndPoint() { return imageFileEndPoint.get(); }
+    public void setImageFileEndPoint(String imageFileEndPoint) { this.imageFileEndPoint.set(imageFileEndPoint); }
+
 
 
     private void draw()
@@ -65,7 +77,18 @@ public class MazeDisplayer extends Canvas
             if (solution != null)
                 drawSolution(graphicsContext, cellHeight, cellWidth);
             drawPlayer(graphicsContext, cellHeight, cellWidth);
+            drawEndPoint(graphicsContext, cellHeight, cellWidth);
         }
+    }
+
+    private void drawEndPoint(GraphicsContext graphicsContext, double cellHeight, double cellWidth)
+    {
+        Image endPointImage = null;
+        try { endPointImage = new Image(new FileInputStream(getImageFileEndPoint())); }
+        catch (FileNotFoundException e) { System.out.println("There is no end image file"); }
+        double x = endCol * cellWidth;
+        double y = endRow * cellHeight;
+        graphicsContext.drawImage(endPointImage, x, y, cellWidth, cellHeight);
     }
 
     private void drawSolution(GraphicsContext graphicsContext, double cellHeight, double cellWidth)
@@ -79,14 +102,16 @@ public class MazeDisplayer extends Canvas
         try { wallImage = new Image(new FileInputStream(getImageFileNameWall())); }
         catch (FileNotFoundException e) { System.out.println("There is no wall image file"); }
 
+        double x;
+        double y;
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
             {
                 if(mazeArr[i][j] == 1) //if it is a wall
                 {
-                    double x = j * cellWidth;
-                    double y = i * cellHeight;
+                    x = j * cellWidth;
+                    y = i * cellHeight;
                     if (wallImage == null)
                         graphicsContext.fillRect(x, y, cellWidth, cellHeight);
                     else
@@ -131,14 +156,21 @@ public class MazeDisplayer extends Canvas
                 setHeight(getHeight() / zoomFactor);
                 setWidth(getWidth() / zoomFactor);
             }
-            else
+            else if (scrollEvent.getDeltaY() > 0)
             {
                 setWidth(getWidth() * zoomFactor);
                 setHeight(getHeight() * zoomFactor);
             }
+            else if (scrollEvent.getDeltaY() == 0)
+            {
+                return;
+            }
             draw();
         }
-        if (scrollEvent.getDeltaY() == 0) { }
-
+        scrollEvent.consume();
     }
+
 }
+
+
+

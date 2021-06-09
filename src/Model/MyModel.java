@@ -14,9 +14,11 @@ import View.controllers.MazeViewController;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -109,8 +111,7 @@ public class MyModel extends Observable implements IModel
         MazeWindowStage.setScene(MazeWindowScene);
         MazeWindowStage.show();
 
-//        ((MenuItem)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
-//        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
     }
 
 

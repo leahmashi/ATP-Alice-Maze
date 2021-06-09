@@ -45,7 +45,10 @@ public class MyViewController extends AView
         mediaPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                changeScene("View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
+                Stage chooseMazeStage = changeScene("View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
+                chooseMazeStage.setOnCloseRequest(e -> {  //TODO: event for close the window
+                    System.exit(0);
+                });
                 clipStage.hide();
             }
         });
