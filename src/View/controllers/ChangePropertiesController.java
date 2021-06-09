@@ -2,7 +2,6 @@ package View.controllers;
 
 import Server.Configurations;
 import View.AView;
-import View.IView;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.mazeGenerators.SimpleMazeGenerator;
 import algorithms.search.BestFirstSearch;
@@ -11,8 +10,6 @@ import algorithms.search.DepthFirstSearch;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -20,8 +17,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -137,37 +132,5 @@ public class ChangePropertiesController extends AView
                 break;
         }
         return false;
-    }
-
-    public void raisePopupWindow(String text, String path, Alert.AlertType type)
-    {
-        Media oldMedia = mediaPlayer.getMedia();
-        MediaPlayer oldMediaPlayer = mediaPlayer;
-        Media media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        MediaView mediaView = new MediaView(mediaPlayer);
-        setMediaPlayer(mediaPlayer);
-        Alert alert = new Alert(type);
-        alert.getDialogPane().setMinHeight(250);
-        alert.getDialogPane().setMinWidth(200);
-        AnchorPane content = new AnchorPane();
-        content.getChildren().addAll(mediaView);
-        DoubleProperty width = mediaView.fitWidthProperty();
-        DoubleProperty height = mediaView.fitHeightProperty();
-        width.bind(Bindings.selectDouble(alert.getDialogPane().sceneProperty(), "width"));
-        height.bind(Bindings.selectDouble(alert.getDialogPane().sceneProperty(), "height"));
-        mediaView.setPreserveRatio(true);
-        alert.getDialogPane().setContent(content);
-        alert.setTitle("popupWindow");
-        alert.setHeaderText(text);
-        alert.setOnShowing(e -> {
-            oldMediaPlayer.stop();
-            mediaPlayer.play();
-        });
-        alert.setOnCloseRequest(event -> {
-            mediaPlayer.stop();
-            setMusic(oldMedia);
-        });
-        alert.showAndWait();
     }
 }

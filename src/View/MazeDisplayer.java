@@ -2,8 +2,6 @@ package View;
 
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;

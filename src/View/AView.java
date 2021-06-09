@@ -2,17 +2,23 @@ package View;
 
 import Server.Configurations;
 import ViewModel.MyViewModel;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
@@ -39,11 +45,24 @@ public abstract class AView implements IView, Observer, Initializable
     }
 
     @FXML
-    public void createNewFile(ActionEvent actionEvent) { menuBarOptions.createNewFile(actionEvent, mediaPlayer); }
+    public void createNewFile(ActionEvent actionEvent)
+    {
+        boolean success = menuBarOptions.createNewFile(actionEvent, mediaPlayer);
+        if (!success)
+            raisePopupWindow("couldn't create new maze", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+    }
+
     @FXML
-    public void loadFile(ActionEvent actionEvent) { menuBarOptions.loadFile(actionEvent, mediaPlayer, viewModel); } //TODO: check what happens in scenes before Maze view + problem with audio
+    public void loadFile(ActionEvent actionEvent)
+    {
+        boolean success = menuBarOptions.loadFile(actionEvent, mediaPlayer, viewModel);
+        if (!success)
+            raisePopupWindow("couldn't load file choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+    }
+
     @FXML
     public void showProperties(ActionEvent actionEvent) { menuBarOptions.showProperties(actionEvent, viewModel, mediaPlayer); }
+
     @FXML
     public void showSettings(ActionEvent actionEvent) { isOff = menuBarOptions.showSettings(mediaPlayer); }
     @FXML
@@ -92,6 +111,38 @@ public abstract class AView implements IView, Observer, Initializable
         stage.setScene(scene);
         stage.show();
         return stage;
+    }
+
+    public void raisePopupWindow(String text, String path, Alert.AlertType type)
+    {
+        Media oldMedia = mediaPlayer.getMedia();
+        MediaPlayer oldMediaPlayer = mediaPlayer;
+        Media media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+        setMediaPlayer(mediaPlayer);
+        Alert alert = new Alert(type);
+        alert.getDialogPane().setMinHeight(250);
+        alert.getDialogPane().setMinWidth(200);
+        AnchorPane content = new AnchorPane();
+        content.getChildren().addAll(mediaView);
+        DoubleProperty width = mediaView.fitWidthProperty();
+        DoubleProperty height = mediaView.fitHeightProperty();
+        width.bind(Bindings.selectDouble(alert.getDialogPane().sceneProperty(), "width"));
+        height.bind(Bindings.selectDouble(alert.getDialogPane().sceneProperty(), "height"));
+        mediaView.setPreserveRatio(true);
+        alert.getDialogPane().setContent(content);
+        alert.setTitle("popupWindow");
+        alert.setHeaderText(text);
+        alert.setOnShowing(e -> {
+            oldMediaPlayer.stop();
+            mediaPlayer.play();
+        });
+        alert.setOnCloseRequest(event -> {
+            mediaPlayer.stop();
+            setMusic(oldMedia);
+        });
+        alert.showAndWait();
     }
 
 }

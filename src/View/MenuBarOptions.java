@@ -6,7 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
@@ -15,7 +18,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 
 public class MenuBarOptions
@@ -23,7 +27,7 @@ public class MenuBarOptions
     private static ToggleButton toggleButton = new ToggleButton("ON");
 
     @FXML
-    public void createNewFile(ActionEvent actionEvent, MediaPlayer mediaPlayer)
+    public boolean createNewFile(ActionEvent actionEvent, MediaPlayer mediaPlayer)
     {
         Parent root = null;
         try
@@ -31,8 +35,10 @@ public class MenuBarOptions
             root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/ChooseMazeView.fxml"));
         } catch (IOException e)
         {
-            e.printStackTrace();
-            //TODO: what happens when cant be created?
+            e.printStackTrace(); //TODO: remove at end
+            //TODO: raise popup window
+            return false;
+
         }
         root.setId("chooseMaze");
         Stage ChooseMazeStage = new Stage();
@@ -43,22 +49,27 @@ public class MenuBarOptions
 
         ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
         ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().hide();
+        return true;
     }
 
     @FXML
-    public void loadFile(ActionEvent actionEvent, MediaPlayer mediaPlayer, MyViewModel viewModel)
+    public boolean loadFile(ActionEvent actionEvent, MediaPlayer mediaPlayer, MyViewModel viewModel)
     {
         Stage loadStage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Load");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Maze files (*.maze)", "*.maze"));
         File file = fileChooser.showOpenDialog(loadStage);
         if (file != null)
         {
-            viewModel.loadMaze(file.toString());
+            boolean success = viewModel.loadMaze(file);
+            if (!success)
+                return false;
         }
 
         ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
         ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().hide();
+        return true;
     }
 
     @FXML

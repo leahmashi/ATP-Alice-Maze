@@ -17,13 +17,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Observable;
@@ -42,9 +39,7 @@ public class MazeViewController extends AView
     StringProperty updatePlayerCol = new SimpleStringProperty();
 
     //getters & setters
-    public String getUpdatePlayerRow() { return updatePlayerRow.get(); }
     public void setUpdatePlayerRow(int updatePlayerRow) { this.updatePlayerRow.set(updatePlayerRow + ""); }
-    public String getUpdatePlayerCol() { return updatePlayerCol.get(); }
     public void setUpdatePlayerCol(int updatePlayerCol) { this.updatePlayerCol.set(updatePlayerCol + ""); }
 
 
@@ -58,15 +53,6 @@ public class MazeViewController extends AView
             setMusic(musicFile);
         });
     }
-
-//    public void openFile(ActionEvent actionEvent) {
-//        FileChooser fc = new FileChooser();
-//        fc.setTitle("Open maze");
-//        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Maze files (*.maze)", "*.maze"));
-//        fc.setInitialDirectory(new File("./resources"));
-//        File chosen = fc.showOpenDialog(null);
-//        //...
-//    }
 
     @FXML
     public void keyPressed(KeyEvent keyEvent)
@@ -106,7 +92,7 @@ public class MazeViewController extends AView
 
 
     @FXML
-    public void mouseClicked(MouseEvent mouseEvent) { mazeDisplayerFXML.requestFocus(); }
+    public void mouseClicked() { mazeDisplayerFXML.requestFocus(); }
 
     public void initData(int rows, int cols, boolean isLoaded)
     {
@@ -171,7 +157,7 @@ public class MazeViewController extends AView
     private void mazeSolved() { mazeDisplayerFXML.setSolution(viewModel.getSolution()); }
 
     @FXML
-    public void solveMaze(ActionEvent actionEvent) {
+    public void solveMaze() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Solving maze...");
         alert.show();
@@ -181,64 +167,23 @@ public class MazeViewController extends AView
     public void zoom(ScrollEvent scrollEvent) { mazeDisplayerFXML.zoom(scrollEvent); }
 
     @FXML
-    public void saveFile(ActionEvent actionEvent)
+    public void saveFile()
     {
+        boolean success;
         Stage saveStage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
-//
-//        //convert the maze to bytes
-//        byte[] mazeByteArray = viewModel.getMaze().toByteArray();
-//
-//        //compress the bytes
-//        byte[] compressedByteArray = compressEight(mazeByteArray);
-//
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Maze files (*.maze)", "*.maze"));
+        fileChooser.setInitialFileName("*.maze");
         File file = fileChooser.showSaveDialog(saveStage);
         if (file != null)
         {
-            viewModel.saveMaze(file);
+            success = viewModel.saveMaze(file);
+            if (success)
+                raisePopupWindow("The maze was saved successfully", "resources/clips/SuccessClip.mp4", Alert.AlertType.INFORMATION);
+            else
+                raisePopupWindow("The maze wasn't saved please choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
         }
 
-
-    }
-
-    private void saveTextToFile(byte[] mazeByteArray, File file)
-    {
-        try (FileOutputStream out = new FileOutputStream(file))
-        {
-            out.write(mazeByteArray);
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private byte[] compressEight(byte[] uncompressed)
-    {
-        int toCompressSize = uncompressed.length - 12;
-        int size = (int) Math.ceil(toCompressSize / 8.0);
-        byte[] compress = new byte[size + 12];
-        System.arraycopy(uncompressed, 0, compress, 0, 12);
-        int compressIndex = 12;
-        int uncompressIndex = 12;
-        while (compressIndex < compress.length)
-        {
-            int min = Math.min(toCompressSize, 8);
-            String binaryString = "";
-            for (int i = 0; i < min; i++)
-            {
-                if (uncompressed[uncompressIndex] == 1)
-                    binaryString = binaryString.concat("1");
-                else
-                    binaryString = binaryString.concat("0");
-                uncompressIndex++;
-            }
-            int decimal = Integer.parseInt(binaryString, 2);
-            compress[compressIndex] = Integer.valueOf(decimal).byteValue();
-            toCompressSize = toCompressSize - min;
-            compressIndex++;
-        }
-        return compress;
     }
 }

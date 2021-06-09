@@ -57,7 +57,6 @@
                     </graphic>
                     <MenuItem mnemonicParsing="false" text="Properties" onAction="#showProperties"/>
                 </Menu>
-                <!--                <Menu mnemonicParsing="false" text="Settings" onAction="#showSettings" />-->
                 <Menu>
                     <graphic>
                         <Button text="Settings" onAction="#showSettings" prefWidth="60.0"/>

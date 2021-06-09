@@ -2,29 +2,22 @@ package ViewModel;
 
 import Model.IModel;
 import Model.MovementDirection;
-import View.AView;
-import View.IView;
 import View.controllers.ChangePropertiesController;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Observable;
+import java.util.Observer;
 
 public class MyViewModel extends Observable implements Observer
 {
@@ -80,9 +73,9 @@ public class MyViewModel extends Observable implements Observer
         model.updatePlayerLocation(direction);
     }
 
-    public void saveMaze(File file) { this.model.saveMaze(file); }
+    public boolean saveMaze(File file) { return this.model.saveMaze(file); }
 
-    public void loadMaze(String fileName) { this.model.loadMaze(fileName); }
+    public boolean loadMaze(File file) { return this.model.loadMaze(file); }
 
     public void showProperties(Window parentWindow, MediaPlayer mediaPlayer)
     {

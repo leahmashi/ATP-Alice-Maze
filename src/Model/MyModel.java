@@ -5,25 +5,24 @@ import Client.Client;
 import Client.IClientStrategy;
 import IO.MyCompressorOutputStream;
 import IO.MyDecompressorInputStream;
+import Server.Configurations;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
-import Server.Configurations;
 import View.IView;
 import View.controllers.MazeViewController;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -53,28 +52,40 @@ public class MyModel extends Observable implements IModel
     public void assignObserver(Observer observer) { this.addObserver(observer); }
 
     @Override
-    public void saveMaze(File file)
+    public boolean saveMaze(File file)
     {
-        try
+        if (file.getName().endsWith(".maze"))
         {
-            OutputStream outputStream = new MyCompressorOutputStream(new FileOutputStream(file));
-            outputStream.write(maze.toByteArray());
-            outputStream.flush();
-            outputStream.close();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
+            try
+            {
+                OutputStream outputStream = new MyCompressorOutputStream(new FileOutputStream(file));
+                outputStream.write(maze.toByteArray());
+                outputStream.flush();
+                outputStream.close();
+                return true;
+            } catch (IOException e)
+            {
+                e.printStackTrace(); //TODO: remove at end
+                return false;
+            }
         }
+        else
+            return false;
+
     }
 
     @Override
-    public void loadMaze(String fileName)
+    public boolean loadMaze(File file)
     {
+        if (!legalFile(file.toString()))
+            return false;
         byte[] savedMazeBytes = {};
         try
         {
-            InputStream inputStream = new MyDecompressorInputStream(new FileInputStream(fileName));
-            savedMazeBytes = new byte[fileName.length() * 8 + 12];
+            FileInputStream fileInputStream = new FileInputStream(file.toString());
+            InputStream inputStream = new MyDecompressorInputStream(fileInputStream);
+            byte[] savedMazeBytesCompressed = Files.readAllBytes(file.toPath());
+            savedMazeBytes = new byte[((savedMazeBytesCompressed.length - 12) * 8) + 12];
             inputStream.read(savedMazeBytes);
             inputStream.close();
         } catch (IOException e)
@@ -86,6 +97,12 @@ public class MyModel extends Observable implements IModel
         playerRow = this.maze.getStartPosition().getRowIndex();
         playerCol = this.maze.getStartPosition().getColumnIndex();
 
+        changeToMazeScene();
+        return true;
+    }
+
+    private void changeToMazeScene()
+    {
         Stage MazeWindowStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
         Parent root = null;
@@ -98,10 +115,7 @@ public class MyModel extends Observable implements IModel
         MazeViewController controller = fxmlLoader.getController();
         Scene MazeWindowScene = new Scene(root);
         controller.initData(maze.getTotalRows(), maze.getTotalCols(), true);
-        MazeWindowStage.setOnCloseRequest(e -> {  //TODO: event for close the window
-            System.exit(0);
-        });
-
+        MazeWindowStage.setOnCloseRequest(e -> System.exit(0));
         MyViewModel viewModel = new MyViewModel(this);
         IView view = fxmlLoader.getController();
         view.setViewModel(viewModel);
@@ -110,8 +124,17 @@ public class MyModel extends Observable implements IModel
 
         MazeWindowStage.setScene(MazeWindowScene);
         MazeWindowStage.show();
+    }
 
-
+    private boolean legalFile(String fileName)
+    {
+        int dotIndex = fileName.lastIndexOf(".");
+        if (dotIndex >= 0 && dotIndex < fileName.length())
+        {
+            String suffix = fileName.substring(dotIndex + 1);
+            return suffix.equals("maze");
+        }
+        return false;
     }
 
 
