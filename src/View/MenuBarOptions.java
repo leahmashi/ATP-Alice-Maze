@@ -4,12 +4,12 @@ import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
@@ -20,23 +20,29 @@ import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class MenuBarOptions
 {
-    private static ToggleButton toggleButton = new ToggleButton("ON");
+    private static final ToggleButton musicSwitch = new ToggleButton("ON");
+    private static Label musicLabel;
+    private static Slider slider;
 
     @FXML
     public boolean createNewFile(ActionEvent actionEvent, MediaPlayer mediaPlayer)
     {
-        Parent root = null;
+        Parent root;
         try
         {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("View/FXMLs/ChooseMazeView.fxml"));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("View/FXMLs/ChooseMazeView.fxml")));
         } catch (IOException e)
         {
-            e.printStackTrace(); //TODO: remove at end
-            //TODO: raise popup window
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            String text = "File is missing";
+            alert.setContentText(text);
+            alert.showAndWait();
             return false;
 
         }
@@ -85,32 +91,55 @@ public class MenuBarOptions
     public boolean showSettings(MediaPlayer mediaPlayer)
     {
         Stage dialog = new Stage();
+        dialog.setTitle("Music Setting");
         dialog.initModality(Modality.APPLICATION_MODAL);
-        VBox dialogVBox = new VBox(20);
-        dialogVBox.getChildren().add(toggleButton);
-        toggleButton.setId("toggleButton");
-        toggleButton.getStylesheets().addAll(this.getClass().getResource("CSSs/ToggleButton.css").toExternalForm());
-        toggleButton.setOnAction((e) -> setMusic(mediaPlayer, e));
-        Scene dialogScene = new Scene(dialogVBox, 300, 200);
-        dialog.setScene(dialogScene);
-        dialog.show();
-        return !toggleButton.isSelected();
-
+        AnchorPane pane = new AnchorPane();
+        //toggle switch
+        musicLabel = new Label("Music ON");
+        HBox hbox = new HBox(2);
+        hbox.setPadding(new Insets(0, 10, 10, 10));
+        hbox.setSpacing(10);
+        hbox.getChildren().addAll(musicSwitch, musicLabel);
+        //slider
+        Label label = new Label("Volume");
+        slider = new Slider();
+        slider.setMax(100);
+        slider.setValue(100);
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(40, 60, 60, 60));
+        vbox.setSpacing(10);
+        vbox.getChildren().addAll(hbox, label, slider);
+        pane.getChildren().addAll(vbox);
+        musicSwitch.setOnAction(actionEvent -> setMusic(mediaPlayer, actionEvent));
+        slider.valueProperty().addListener(observable -> {
+            if (slider.isValueChanging())
+                mediaPlayer.setVolume(slider.getValue() / 100.0);
+        });
+        Scene scene = new Scene(pane);
+        dialog.setScene(scene);
+        dialog.showAndWait();
+        return musicSwitch.isSelected();
     }
 
     private void setMusic(MediaPlayer mediaPlayer, ActionEvent actionEvent)
     {
-        if (toggleButton.isSelected()) //TODO style the toggle button and add label
+        if (musicSwitch.isSelected()) //TODO style the toggle button and add label
         {
             mediaPlayer.stop();
             actionEvent.consume();
-            toggleButton.setText("OFF");
+            musicSwitch.setText("OFF");
+            musicLabel.setText("Music OFF");
+            slider.setValue(0);
         }
         else
         {
             mediaPlayer.play();
             actionEvent.consume();
-            toggleButton.setText("ON");
+            musicSwitch.setText("ON");
+            musicLabel.setText("Music ON");
+            slider.setValue(100);
         }
     }
 
@@ -133,7 +162,7 @@ public class MenuBarOptions
         alert.setContentText(text);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
-        alert.setTitle("Instruction");
+        alert.setTitle("Instructions");
         alert.showAndWait();
     }
 
@@ -141,15 +170,15 @@ public class MenuBarOptions
     public void showAbout()
     {
         String text = """
-                we are Leah and Shahar students information system degree in Ben-Gurion university
-                Shahar love to code in his available time
-                Leah\s
-                we use these algorithm:
-                1. Randomized prim - we use this algorithm to create random maze
-                2. Simple maze - we use this algorithm to create simple maze
-                3. Best first search - we use this algorithm to solve the maze. this is the fastest algorithm that solve the maze
-                4. Breadth first search - we use this algorithm to solve the maze
-                5. Depth first search - we use this algorithm to solve the maze. this is the slowest algorithm to solve the maze
+                Leah and Shahar are students from information systems in Ben-Gurion university
+                Shahar loves to code in his available time
+                Leah is a disney lover, and likes to dance and sing in her spare time
+                They used these algorithms to create and solve the maze:
+                1. Randomized prim - allows the user to create a random maze based on this algorithm.
+                2. Simple maze - allows the user to create a simple maze
+                3. Best first search - allows the user to solve the maze with the cheapest path (moving diagonal is cheaper)
+                4. Breadth first search - allows the user to solve the maze in the shortest time.
+                5. Depth first search - allows the user to solve the maze with a random path.
                 """;
         Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
         alert.setContentText(text);

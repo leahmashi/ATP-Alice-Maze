@@ -5,7 +5,6 @@ import Model.MyModel;
 import View.controllers.MyViewController;
 import ViewModel.MyViewModel;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +17,7 @@ public class Main extends Application
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-//        Platform.setImplicitExit(true);
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
         Parent root = fxmlLoader.load();
         root.setId("mainWindow");
@@ -34,9 +33,7 @@ public class Main extends Application
         primaryStage.setScene(mainScene);
         primaryStage.show();
 
-        primaryStage.setOnCloseRequest(e -> {
-            System.exit(0);
-        });
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
 
     }
 
