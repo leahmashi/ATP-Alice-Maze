@@ -23,8 +23,6 @@ import java.util.ResourceBundle;
 
 public class chooseMazeViewController extends AView
 {
-    private int rows;
-    private int cols;
 
     @FXML
     public TextField EnterRowsText;
@@ -41,55 +39,58 @@ public class chooseMazeViewController extends AView
         setMusic(musicFile);
     }
 
-    public void raiseErrorWindow(String text)
-    {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(text);
-        alert.show();
-    }
-
     public void generateMaze(ActionEvent actionEvent)
     {
         String colsInput = EnterColsText.getText();
         String rowsInput = EnterRowsText.getText();
+        int rows;
+        int cols;
         try
         {
             rows = Integer.parseInt(rowsInput);
             cols = Integer.parseInt(colsInput);
+            if (rows <= 2 || cols <= 2)
+            {
+                raisePopupWindow("One or more inputs isn't a positive number over 2, please try again", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+                return;
+            }
             String mazeChoice = (String) primChoice.getValue();
             if (mazeChoice == null)
-                raiseErrorWindow("Please choose a maze type");
+            {
+                raisePopupWindow("Please choose a maze type", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+                return;
+            }
             else
                 ChooseMaze(mazeChoice);
         }
         catch (Exception e)
         {
-            raiseErrorWindow("One or more inputs isn't a positive number, please try again");
+            raisePopupWindow("One or more inputs isn't a positive number over 2, please try again", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
             return; //stay on choose scene
         }
 
         Stage MazeWindowStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = fxmlLoader.load();
+            root.setId("mazeScene");
+            MazeViewController controller = fxmlLoader.getController();
+            viewModel.addObserver(controller);
+            Scene MazeWindowScene = new Scene(root);
+            controller.initData(rows, cols, false);
+            MazeWindowStage.setScene(MazeWindowScene);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        root.setId("mazeScene");
-        MazeViewController controller = fxmlLoader.getController();
-        viewModel.addObserver(controller);
-        Scene MazeWindowScene = new Scene(root);
-        controller.initData(rows, cols, false);
-        MazeWindowStage.setOnCloseRequest(e -> {
-            System.exit(0);
-        });
 
-        MazeWindowStage.setScene(MazeWindowScene);
+        MazeWindowStage.setOnCloseRequest(e -> System.exit(0));
         MazeWindowStage.show();
 
         ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
+
     }
 
     public void returnToMain(ActionEvent actionEvent)
@@ -97,7 +98,6 @@ public class chooseMazeViewController extends AView
         changeScene("View/FXMLs/MyView.fxml", "mainScene", "mainWindow");
         ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-
     }
 
     private void ChooseMaze(String mazeChoice)

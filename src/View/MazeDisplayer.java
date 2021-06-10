@@ -20,6 +20,7 @@ public class MazeDisplayer extends Canvas
 {
     private int[][] mazeArr;
     private Solution solution;
+    private int scrollCount;
     // end position:
     private int endRow;
     private  int endCol;
@@ -172,26 +173,32 @@ public class MazeDisplayer extends Canvas
     {
         if (scrollEvent.isControlDown())
         {
+            System.out.println(scrollCount);
+
             double zoomFactor = 1.05;
             if (scrollEvent.getDeltaY() < 0)
             {
+                scrollCount--;
                 setHeight(getHeight() / zoomFactor);
                 setWidth(getWidth() / zoomFactor);
             }
             else if (scrollEvent.getDeltaY() > 0)
             {
+                if (scrollCount > (mazeArr.length + mazeArr[0].length) / 9)
+                {
+                    scrollEvent.consume();
+                    return;
+                }
+                scrollCount++;
                 setWidth(getWidth() * zoomFactor);
                 setHeight(getHeight() * zoomFactor);
             }
             else if (scrollEvent.getDeltaY() == 0)
-            {
                 return;
-            }
             draw();
         }
         scrollEvent.consume();
     }
-
 }
 
 

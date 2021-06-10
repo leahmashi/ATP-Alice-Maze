@@ -2,16 +2,13 @@ package View.controllers;
 
 
 import View.AView;
-import View.IView;
 import View.MazeDisplayer;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
@@ -25,8 +22,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -109,29 +106,12 @@ public class MazeViewController extends AView
     @FXML
     public void returnToMain(ActionEvent actionEvent)
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
-        Parent root = null;
-        try
-        {
-            root = fxmlLoader.load();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        root.setId("mainWindow");
-        MyViewController controller = fxmlLoader.getController();
-        viewModel.addObserver(controller);
-        Stage MainWindowStage = new Stage();
-        Scene MainWindowScene = new Scene(root, 900, 650);
-        MainWindowStage.setTitle("mainScene");
-        MainWindowStage.setScene(MainWindowScene);
-        MainWindowStage.show();
+        Stage MainWindowStage = changeScene("View/FXMLs/MyView.fxml", "mainScene", "mainWindow");
 
         ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
-
-        Media musicFile = new Media(getClass().getClassLoader().getResource("music/AliceMainWindowMusic.mp3").toString());
+        Media musicFile = new Media(Objects.requireNonNull(getClass().getClassLoader().getResource("music/AliceMainWindowMusic.mp3")).toString());
         setMusic(musicFile);
 
         MainWindowStage.getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
@@ -193,6 +173,6 @@ public class MazeViewController extends AView
 
     public void dragMouse(MouseEvent mouseEvent)
     {
-
+        //TODO: if we have time
     }
 }

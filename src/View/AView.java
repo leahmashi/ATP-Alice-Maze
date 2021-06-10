@@ -5,7 +5,6 @@ import ViewModel.MyViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,8 +39,8 @@ public abstract class AView implements IView, Observer, Initializable
 
     public void setViewModel(MyViewModel viewModel)
     {
-        this.viewModel = viewModel;
-        this.viewModel.addObserver(this);
+        AView.viewModel = viewModel;
+        AView.viewModel.addObserver(this);
     }
 
     @Override
@@ -102,34 +101,31 @@ public abstract class AView implements IView, Observer, Initializable
         if (!isOff)
         {
             mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setOnEndOfMedia(new Runnable() {
-                @Override
-                public void run() {
-                    mediaPlayer.seek(Duration.ZERO);
-                    mediaPlayer.play();
-                }
+            mediaPlayer.setOnEndOfMedia(() -> {
+                mediaPlayer.seek(Duration.ZERO);
+                mediaPlayer.play();
             });
         }
     }
 
     public Stage changeScene(String fxmlFile, String stageTitle, String rootID)
     {
-        Parent root = null;
+        Stage stage = new Stage();
+        Parent root;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlFile));
         try
         {
             root = fxmlLoader.load();
-        } catch (IOException e)
-        {
+            root.setId(rootID);
+            AView controller = fxmlLoader.getController();
+            Scene scene = new Scene(root, 900, 650);
+            viewModel.addObserver(controller);
+            stage.setTitle(stageTitle);
+            stage.setOnCloseRequest(e -> System.exit(0));
+            stage.setScene(scene);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        root.setId(rootID);
-        AView controller = fxmlLoader.getController();
-        Stage stage = new Stage();
-        Scene scene = new Scene(root, 900, 650);
-        viewModel.addObserver(controller);
-        stage.setTitle(stageTitle);
-        stage.setScene(scene);
         stage.show();
         return stage;
     }
@@ -180,17 +176,15 @@ public abstract class AView implements IView, Observer, Initializable
         mediaView.fitWidthProperty().bind(clipStage.widthProperty());
         mediaView.fitHeightProperty().bind(clipStage.heightProperty());
         clipStage.setOnHidden(e -> mediaPlayer.stop());
+        clipStage.setOnCloseRequest(e -> System.exit(0));
         mediaPlayer.setAutoPlay(true);
         if (isOff)
             mediaPlayer.setMute(true);
 
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run()
-            {
-                changeScene(nextSceneFxml, nextStageTitle, nextRootID);
-                clipStage.hide();
-            }
+        mediaPlayer.setOnEndOfMedia(() -> {
+            changeScene(nextSceneFxml, nextStageTitle, nextRootID);
+            clipStage.hide();
+            clipStage.close();
         });
     }
 
@@ -206,12 +200,11 @@ public abstract class AView implements IView, Observer, Initializable
         vBox.getChildren().add(continueButton);
         borderPane.setBottom(vBox);
 
-        continueButton.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                changeScene(nextSceneFxml, nextStageTitle, nextRootID);
-                clipStage.hide();
-            }
+        continueButton.setOnAction(actionEvent -> {
+            mediaPlayer.stop();
+            changeScene(nextSceneFxml, nextStageTitle, nextRootID);
+            clipStage.hide();
+            clipStage.close();
         });
     }
 
