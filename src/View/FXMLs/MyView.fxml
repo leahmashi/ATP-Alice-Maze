@@ -3,17 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../CSSs/MainStyle.css"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MyViewController"
-            prefHeight="650.0" prefWidth="900.0" >
-    <bottom>
-        <HBox alignment="CENTER" spacing="10" fillHeight="true" >
-            <Button fx:id="generateMaze" onAction="#generateMaze" prefHeight="60.0" prefWidth="130.0" text="Generate Maze" HBox.hgrow="ALWAYS" BorderPane.alignment="BOTTOM_LEFT"/>
-            <Button fx:id="solveMaze" cancelButton="true" prefHeight="60.0" prefWidth="130.0" text="Solve Maze" HBox.hgrow="ALWAYS" BorderPane.alignment="BOTTOM_RIGHT"/>
-        </HBox>
-    </bottom>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" stylesheets="@../CSSs/MainStyle.css"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MyViewController">
     <top>
-        <VBox BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS" fillWidth="true">
+        <VBox fillWidth="true" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
             <MenuBar>
                 <Menu mnemonicParsing="false">
                     <graphic>
@@ -52,4 +45,12 @@
             </MenuBar>
         </VBox>
     </top>
+   <bottom>
+          <HBox alignment="CENTER" spacing="50.0" BorderPane.alignment="CENTER">
+              <Button fx:id="generateMaze" alignment="CENTER" onAction="#generateMaze" prefHeight="60.0" prefWidth="130.0" text="Generate Maze" textAlignment="CENTER" />
+              <Button fx:id="LoadMaze" alignment="CENTER" onAction="#loadFile" prefHeight="60.0" prefWidth="130.0" text="Load maze" textAlignment="CENTER" />
+              <Button fx:id="Properties" alignment="CENTER" onAction="#showProperties" prefHeight="60.0" prefWidth="130.0" text="Properties" textAlignment="CENTER" />
+              <Button fx:id="Help" alignment="CENTER" onAction="#showHelp" prefHeight="60.0" prefWidth="130.0" text="Help" textAlignment="CENTER" />
+          </HBox>
+   </bottom>
 </BorderPane>

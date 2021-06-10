@@ -4,10 +4,17 @@
     -fx-background-repeat: no-repeat;
 }
 
-#chooseRowsLabel, #chooseColsLabel, #chooseMazeType, #returnToText, #MainWindowText {
+#chooseRowsLabel, #chooseColsLabel, #chooseMazeType {
     -fx-text-fill: white;
     -fx-font-family: "Calibari";
     -fx-font-size: 15px;
+    -fx-font-weight: bold italic;
+}
+
+#returnToText, #MainWindowText {
+    -fx-text-fill: white;
+    -fx-font-family: "Calibari";
+    -fx-font-size: 13px;
     -fx-font-weight: bold italic;
 }
 
@@ -18,14 +25,7 @@
     -fx-font-weight: bold italic;
 }
 
-#primChoice, #simpleChoice {
-    -fx-text-fill: black;
-    -fx-font-family: "Calibari";
-    -fx-font-size: 15px;
-    -fx-font-weight: bold italic;
-}
-
-#returnToMain, #Go {
+#returnToMain, #Go, #loadMaze {
     -fx-text-fill: white;
     -fx-font-family: "Calibari";
     -fx-font-size: 13px;
@@ -34,7 +34,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
 
-#returnToMain:hover, #Go:hover {
+#returnToMain:hover, #Go:hover, #loadMaze:hover {
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;

@@ -69,6 +69,7 @@ public abstract class AView implements IView, Observer, Initializable
             return;
         }
         //mediaPlayer.setVolume(volume);
+        //TODO: fix music from main window
     }
 
     @FXML

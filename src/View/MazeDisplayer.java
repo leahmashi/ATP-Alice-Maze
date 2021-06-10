@@ -169,7 +169,7 @@ public class MazeDisplayer extends Canvas
         draw();
     }
 
-    public void zoom(ScrollEvent scrollEvent) //TODO: check problem with VRam
+    public void zoom(ScrollEvent scrollEvent) //TODO: remove limit at end
     {
         if (scrollEvent.isControlDown())
         {

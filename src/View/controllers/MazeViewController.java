@@ -175,4 +175,6 @@ public class MazeViewController extends AView
     {
         //TODO: if we have time
     }
+
+    //TODO: check resize and draw
 }

@@ -2,110 +2,96 @@
 
 <?import java.lang.*?>
 <?import javafx.collections.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0"
-            stylesheets="@../CSSs/ChooseMazeStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.chooseMazeViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" stylesheets="@../CSSs/ChooseMazeStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.chooseMazeViewController">
     <top>
         <VBox BorderPane.alignment="CENTER">
             <MenuBar>
                 <Menu mnemonicParsing="false">
                     <graphic>
-                        <Button text="File" prefWidth="60.0"/>
+                        <Button prefWidth="60.0" text="File" />
                     </graphic>
-                    <MenuItem mnemonicParsing="false" text="New" onAction="#createNewFile"/>
-                    <MenuItem mnemonicParsing="false" text="Save" disable="true"/>
-                    <MenuItem mnemonicParsing="false" text="Load" onAction="#loadFile"/>
+                    <MenuItem mnemonicParsing="false" onAction="#createNewFile" text="New" />
+                    <MenuItem disable="true" mnemonicParsing="false" text="Save" />
+                    <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Load" />
                 </Menu>
-                <Menu mnemonicParsing="false" >
+                <Menu mnemonicParsing="false">
                     <graphic>
-                        <Button text="Options" prefWidth="60.0"/>
+                        <Button prefWidth="60.0" text="Options" />
                     </graphic>
-                    <MenuItem mnemonicParsing="false" text="Properties" onAction="#showProperties"/>
+                    <MenuItem mnemonicParsing="false" onAction="#showProperties" text="Properties" />
                 </Menu>
                 <Menu>
                     <graphic>
-                        <Button text="Settings" onAction="#showSettings" prefWidth="60.0"/>
-                    </graphic>
-                </Menu>
-                <Menu mnemonicParsing="false" >
-                    <graphic>
-                        <Button text="Help" onAction="#showHelp" prefWidth="60.0"/>
+                        <Button onAction="#showSettings" prefWidth="60.0" text="Settings" />
                     </graphic>
                 </Menu>
                 <Menu mnemonicParsing="false">
                     <graphic>
-                        <Button text="About" onAction="#showAbout" prefWidth="60.0"/>
+                        <Button onAction="#showHelp" prefWidth="60.0" text="Help" />
                     </graphic>
                 </Menu>
-                <Menu mnemonicParsing="false" >
+                <Menu mnemonicParsing="false">
                     <graphic>
-                        <Button text="Exit" onAction="#exitProgram" prefWidth="60.0"/>
+                        <Button onAction="#showAbout" prefWidth="60.0" text="About" />
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <Button onAction="#exitProgram" prefWidth="60.0" text="Exit" />
                     </graphic>
                 </Menu>
             </MenuBar>
         </VBox>
     </top>
-   <center>
-       <GridPane prefHeight="620.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-           <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-           </columnConstraints>
-           <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-           </rowConstraints>
-           <AnchorPane prefHeight="272.0" prefWidth="169.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <Ellipse fill="WHITE" layoutX="105.0" layoutY="140.0" opacity="0.1" radiusX="105.0" radiusY="132.0"
-                        stroke="BLACK" strokeType="INSIDE"/>
-               <Label fx:id="chooseRowsLabel" layoutX="35.0" layoutY="38.0" text="Enter Rows number:"
-                      textAlignment="CENTER"/>
-               <TextField fx:id="EnterRowsText" layoutX="30.0" layoutY="63.0" promptText="enter rows here"/>
-               <Label fx:id="chooseColsLabel" layoutX="35.0" layoutY="101.0" text="Enter cols number:"/>
-               <TextField fx:id="EnterColsText" layoutX="30.0" layoutY="120.0" promptText="enter cols here"/>
-               <Label fx:id="chooseMazeType" layoutX="35.0" layoutY="159.0" text="Choose maze type:"/>
-               <ChoiceBox fx:id="primChoice" layoutX="30.0" layoutY="184.0" prefHeight="25" prefWidth="150.0">
-                   <items>
-                       <FXCollections fx:id="choiceBoxMaze" fx:factory="observableArrayList">
-                           <String fx:value="Simple"/>
-                           <String fx:value="Randomized Prim"/>
-                       </FXCollections>
-                   </items>
-               </ChoiceBox>
-               <Button layoutX="45.0" layoutY="235.0" onAction="#generateMaze" prefHeight="45.0" prefWidth="120.0"
-                       text="Go!" fx:id="Go"/>
-           </AnchorPane>
-         <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0" GridPane.rowIndex="4"
-                 GridPane.columnIndex="0" BorderPane.alignment="BOTTOM_LEFT" onAction="#returnToMain" fx:id="returnToMain">
-            <graphic>
-                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                      prefHeight="45.0" prefWidth="120.0">
-                    <Label text="return to" fx:id="returnToText">
-                       <VBox.margin>
-                           <Insets left="30.0"/>
-                       </VBox.margin>
-                    </Label>
-                    <Label fx:id="MainWindowText" text="main window">
-                       <VBox.margin>
-                           <Insets bottom="15.0" left="15.0"/>
-                       </VBox.margin>
-                    </Label>
+    <bottom>
+        <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="TOP_CENTER">
+            <children>
+                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                    <children>
+                        <Button fx:id="returnToMain" alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false"
+                                prefHeight="60.0" prefWidth="130.0" onAction="#returnToMain">
+                            <graphic>
+                                <VBox alignment="CENTER" prefHeight="60.0" prefWidth="100.0">
+                                    <children>
+                                        <Label fx:id="returnToText" alignment="CENTER" text="Return to" />
+                                        <Label fx:id="MainWindowText" text="main window" />
+                                    </children>
+                                </VBox>
+                            </graphic>
+                        </Button>
+                    </children>
                 </VBox>
-            </graphic>
-            <GridPane.margin>
-               <Insets bottom="10.0" />
-            </GridPane.margin>
-         </Button>
-       </GridPane>
-   </center>
+                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                    <children>
+                        <Button fx:id="loadMaze" alignment="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadFile"
+                                prefHeight="60.0" prefWidth="130.0" text="Load maze" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </bottom>
+    <center>
+        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="chooseRowsLabel" text="Enter Rows number:" />
+                <TextField fx:id="EnterRowsText" alignment="CENTER" promptText="enter rows here" />
+                <Label fx:id="chooseColsLabel" text="Enter cols number:" />
+                <TextField fx:id="EnterColsText" alignment="CENTER" promptText="enter cols here" />
+                <Label fx:id="chooseMazeType" text="Choose maze type:" />
+                <ChoiceBox prefWidth="250.0" fx:id="primChoice">
+                    <items>
+                        <FXCollections fx:id="choiceBoxMaze" fx:factory="observableArrayList">
+                            <String fx:value="Simple" />
+                            <String fx:value="Randomized Prim" />
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+            <Button mnemonicParsing="false" text="GO!" fx:id="Go" onAction="#generateMaze"/>
+            </children>
+        </VBox>
+    </center>
 
 </BorderPane>

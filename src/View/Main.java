@@ -31,6 +31,7 @@ public class Main extends Application
 
         primaryStage.setTitle("mainScene");
         primaryStage.setScene(mainScene);
+
         primaryStage.show();
 
         primaryStage.setOnCloseRequest(e -> System.exit(0));
