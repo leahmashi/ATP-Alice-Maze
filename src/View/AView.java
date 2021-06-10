@@ -34,6 +34,7 @@ public abstract class AView implements IView, Observer, Initializable
     protected MenuBarOptions menuBarOptions = new MenuBarOptions();
     protected MediaPlayer mediaPlayer;
     protected static boolean isOff;
+    static double volume = 100;
     protected Configurations configurations;
 
 
@@ -51,7 +52,12 @@ public abstract class AView implements IView, Observer, Initializable
     {
         boolean success = menuBarOptions.createNewFile(actionEvent, mediaPlayer);
         if (!success)
+        {
             raisePopupWindow("couldn't create new maze", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+            return;
+        }
+        //mediaPlayer.setVolume(volume);
+
     }
 
     @FXML
@@ -59,14 +65,22 @@ public abstract class AView implements IView, Observer, Initializable
     {
         boolean success = menuBarOptions.loadFile(actionEvent, mediaPlayer, viewModel);
         if (!success)
+        {
             raisePopupWindow("couldn't load file choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+            return;
+        }
+        //mediaPlayer.setVolume(volume);
     }
 
     @FXML
     public void showProperties(ActionEvent actionEvent) { menuBarOptions.showProperties(actionEvent, viewModel, mediaPlayer); }
 
     @FXML
-    public void showSettings(ActionEvent actionEvent) { isOff = menuBarOptions.showSettings(mediaPlayer); }
+    public void showSettings(ActionEvent actionEvent)
+    {
+        isOff = menuBarOptions.showSettings(mediaPlayer);
+        volume = mediaPlayer.getVolume();
+    }
     @FXML
     public void showHelp(ActionEvent actionEvent) { menuBarOptions.showHelp(); }
     @FXML
@@ -74,11 +88,16 @@ public abstract class AView implements IView, Observer, Initializable
     @FXML
     public void exitProgram(ActionEvent actionEvent) { menuBarOptions.exitProgram(); }
 
-    public void setMediaPlayer(MediaPlayer mediaPlayer) { this.mediaPlayer = mediaPlayer; }
+    public void setMediaPlayer(MediaPlayer mediaPlayer)
+    {
+        this.mediaPlayer = mediaPlayer;
+        this.mediaPlayer.setVolume(volume);
+    }
 
     public void setMusic(Media musicFile)
     {
         mediaPlayer = new MediaPlayer(musicFile);
+        mediaPlayer.setVolume(volume);
         setMediaPlayer(mediaPlayer);
         if (!isOff)
         {
@@ -121,6 +140,7 @@ public abstract class AView implements IView, Observer, Initializable
         MediaPlayer oldMediaPlayer = mediaPlayer;
         Media media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(volume);
         MediaView mediaView = new MediaView(mediaPlayer);
         setMediaPlayer(mediaPlayer);
         Alert alert = new Alert(type);
@@ -151,6 +171,7 @@ public abstract class AView implements IView, Observer, Initializable
     {
         Media media = new Media(new File(mediaName).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(volume);
         MediaView mediaView = new MediaView(mediaPlayer);
         mediaView.setPreserveRatio(true);
         borderPane.setCenter(mediaView);
@@ -160,7 +181,6 @@ public abstract class AView implements IView, Observer, Initializable
         mediaView.fitHeightProperty().bind(clipStage.heightProperty());
         clipStage.setOnHidden(e -> mediaPlayer.stop());
         mediaPlayer.setAutoPlay(true);
-
         if (isOff)
             mediaPlayer.setMute(true);
 

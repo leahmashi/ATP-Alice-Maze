@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -37,6 +38,8 @@ public class MazeViewController extends AView
 
     @FXML
     private MazeDisplayer mazeDisplayerFXML;
+    @FXML
+    private ScrollPane pane;
 
     StringProperty updatePlayerRow = new SimpleStringProperty();
     StringProperty updatePlayerCol = new SimpleStringProperty();
@@ -55,6 +58,8 @@ public class MazeViewController extends AView
         Platform.runLater(() -> {
             if (!_isLoaded)
                 viewModel.generateMaze(_rows, _cols);
+            mazeDisplayerFXML.widthProperty().bind(pane.widthProperty());
+            mazeDisplayerFXML.heightProperty().bind(pane.heightProperty());
             Media musicFile = new Media(new File("resources/music/PaintingTheRosesRed.mp3").toURI().toString());
             setMusic(musicFile);
         });

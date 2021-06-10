@@ -104,7 +104,7 @@ public class MenuBarOptions
         Label label = new Label("Volume");
         slider = new Slider();
         slider.setMax(100);
-        slider.setValue(100);
+        slider.setValue(mediaPlayer.getVolume() * 100);
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
         VBox vbox = new VBox();
