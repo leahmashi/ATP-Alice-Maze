@@ -55,8 +55,6 @@ public abstract class AView implements IView, Observer, Initializable
             raisePopupWindow("couldn't create new maze", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
             return;
         }
-        //mediaPlayer.setVolume(volume);
-
     }
 
     @FXML
@@ -68,7 +66,7 @@ public abstract class AView implements IView, Observer, Initializable
             raisePopupWindow("couldn't load file choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
             return;
         }
-        //mediaPlayer.setVolume(volume);
+
         //TODO: fix music from main window
     }
 

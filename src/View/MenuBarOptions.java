@@ -66,8 +66,16 @@ public class MenuBarOptions
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Load");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Maze files (*.maze)", "*.maze"));
-        File file = fileChooser.showOpenDialog(loadStage);
-        if (file != null)
+        File file;
+        try {
+             file = fileChooser.showOpenDialog(loadStage);
+        } catch (Exception e)
+        {
+            return false;
+        }
+        if (file == null)
+            return false;
+        else
         {
             boolean success = viewModel.loadMaze(file);
             if (!success)
