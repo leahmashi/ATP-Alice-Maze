@@ -76,13 +76,15 @@ public class MazeViewController extends AView
         {
             Stage clipStage = new Stage();
             BorderPane borderPane = new BorderPane();
-            addClip(clipStage, borderPane, "resources/clips/finalStageClip.mp4", "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
+            borderPane.setMinHeight(500);
+            borderPane.setMinWidth(500);
+            Media media = new Media(new File("resources/clips/finalStageClip.mp4").toURI().toString());
+            addClip(clipStage, borderPane, media, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
             addContinueButton(borderPane, clipStage, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
             Scene clipScene = new Scene(borderPane, 900, 650);
             clipScene.getStylesheets().add("View/CSSs/finalStageStyle.css");
             clipStage.setScene(clipScene);
             clipStage.setTitle("veryMerryUnbirthday");
-            //TODO: fix window size so button isn't cropped
             clipStage.showAndWait();
 
             Window currWindow = mazeDisplayerFXML.getScene().getWindow();

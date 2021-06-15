@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -20,6 +21,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -67,11 +69,20 @@ public abstract class AView implements IView, Observer, Initializable
             return;
         }
 
+        Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
+        window.setOnHidden(e -> mediaPlayer.stop());
+        window.hide();
         //TODO: fix music from main window
     }
 
     @FXML
-    public void showProperties(ActionEvent actionEvent) { menuBarOptions.showProperties(actionEvent, viewModel, mediaPlayer, this); }
+    public void showProperties(ActionEvent actionEvent)
+    {
+        Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
+        window.setOnHidden(e -> mediaPlayer.stop());
+        viewModel.showProperties(window, mediaPlayer, this);
+        window.hide();
+    }
 
     @FXML
     public void showSettings(ActionEvent actionEvent)
@@ -162,21 +173,27 @@ public abstract class AView implements IView, Observer, Initializable
         alert.showAndWait();
     }
 
-    protected void addClip(Stage clipStage, BorderPane borderPane, String mediaName, String nextSceneFxml, String nextStageTitle, String nextRootID)
+    protected void addClip(Stage clipStage, BorderPane borderPane, Media media, String nextSceneFxml, String nextStageTitle, String nextRootID)
     {
-        Media media = new Media(new File(mediaName).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setVolume(volume);
         MediaView mediaView = new MediaView(mediaPlayer);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setOnReady(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.play();
+            }
+        });
         mediaView.setPreserveRatio(true);
         borderPane.setCenter(mediaView);
 
         //TODO fix resize view
         mediaView.fitWidthProperty().bind(clipStage.widthProperty());
         mediaView.fitHeightProperty().bind(clipStage.heightProperty());
+
         clipStage.setOnHidden(e -> mediaPlayer.stop());
         clipStage.setOnCloseRequest(e -> System.exit(0));
-        mediaPlayer.setAutoPlay(true);
         if (isOff)
             mediaPlayer.setMute(true);
 

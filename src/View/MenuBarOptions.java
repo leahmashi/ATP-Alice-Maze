@@ -69,8 +69,7 @@ public class MenuBarOptions
         File file;
         try {
              file = fileChooser.showOpenDialog(loadStage);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
         if (file == null)
@@ -81,19 +80,10 @@ public class MenuBarOptions
             if (!success)
                 return false;
         }
-
-        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
-        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().hide();
+//
+//        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
+//        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().hide();
         return true;
-    }
-
-    @FXML
-    public void showProperties(ActionEvent actionEvent, MyViewModel viewModel, MediaPlayer mediaPlayer, AView controller)
-    {
-        Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
-        viewModel.showProperties(window, mediaPlayer, controller);
-        window.setOnHidden(e -> mediaPlayer.stop());
-        window.hide();
     }
 
     @FXML
@@ -104,12 +94,12 @@ public class MenuBarOptions
         dialog.initModality(Modality.APPLICATION_MODAL);
         AnchorPane pane = new AnchorPane();
         //toggle switch
-        String s;
+        String status;
         if(musicSwitch.isSelected())
-            s = "Music OFF";
+            status = "Music OFF";
         else
-            s = "Music ON";
-        musicLabel = new Label(s);
+            status = "Music ON";
+        musicLabel = new Label(status);
         HBox hbox = new HBox(2);
         hbox.setPadding(new Insets(0, 10, 10, 10));
         hbox.setSpacing(10);
@@ -155,7 +145,7 @@ public class MenuBarOptions
 
     private void setMusic(MediaPlayer mediaPlayer, ActionEvent actionEvent)
     {
-        if (musicSwitch.isSelected()) //TODO style the toggle button and add label
+        if (musicSwitch.isSelected())
         {
             mediaPlayer.stop();
             actionEvent.consume();
