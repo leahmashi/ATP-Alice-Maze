@@ -43,7 +43,7 @@
             <MazeDisplayer fx:id="mazeDisplayerFXML" height="575.0" width="900.0" imageFileNamePlayer="./resources/images/pawn-right.jpg"
                            imageFileNameWall="./resources/images/bush-green.jpg" imageFileNameSol="./resources/images/Rose.jpg"
                            imageFileNameEndPoint="./resources/images/queen-left.jpg" onScroll="#zoom" onMouseClicked="#mouseClicked"
-                           onKeyPressed="#keyPressed" onMouseDragged="#dragMouse">
+                           onKeyPressed="#keyPressed">
             </MazeDisplayer>
         </ScrollPane>
     </center>

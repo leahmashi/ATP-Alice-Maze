@@ -205,45 +205,6 @@ public class MazeDisplayer extends Canvas
         }
         scrollEvent.consume();
     }
-
-    public void dragPlayer(MouseEvent mouseEvent)
-    {
-        int rows = mazeArr.length;
-        int cols = mazeArr[0].length;
-        double xDiff = (getWidth()/cols)/2;
-        double yDiff = (getHeight()/rows)/2;
-        double x = getPlayerCol() * (getWidth()/cols);
-        double y = getPlayerRow() * (getHeight()/rows);
-        double xRight = (getPlayerCol() + 1) * getWidth();
-        double xLeft = (getPlayerCol() - 1) * getWidth();
-        double yDown = (getPlayerRow() + 1) * getHeight();
-        double yUp = (getPlayerRow() - 1) * getHeight();
-        System.out.println(mouseEvent.getSceneY());
-        //move right
-        if(mouseEvent.getSceneX() > x+xDiff && mouseEvent.getSceneX() <= xRight && mazeArr[getPlayerRow()][getPlayerCol()+1] != 1 &&
-                getPlayerCol()+1 < this.endCol)
-        {
-            setPlayerPosition(getPlayerCol(), getPlayerCol()+1);
-        }
-        //move left
-        else if(mouseEvent.getSceneX() <= x+xDiff && mouseEvent.getSceneX() >= xLeft && mazeArr[getPlayerRow()][getPlayerCol()-1] != 1 &&
-                getPlayerCol()-1 >= 0)
-        {
-            setPlayerPosition(getPlayerRow(), getPlayerCol()-1);
-        }
-        //move down
-        else if(mouseEvent.getSceneY() > y+yDiff && mouseEvent.getSceneY() <= yDown && mazeArr[getPlayerRow()+1][getPlayerCol()] != 1 &&
-                getPlayerRow()+1 < this.endRow)
-        {
-            setPlayerPosition(getPlayerRow()+1, getPlayerCol());
-        }
-        //move up
-        else if(mouseEvent.getSceneY() <= y+yDiff && mouseEvent.getSceneY() >= yUp && mazeArr[getPlayerRow()-1][getPlayerCol()] != 1 &&
-                getPlayerCol()-1 >= 0)
-        {
-            setPlayerPosition(getPlayerRow()-1, getPlayerCol());
-        }
-    }
 }
 
 

@@ -171,12 +171,5 @@ public class MazeViewController extends AView
         }
     }
 
-    public void dragMouse(MouseEvent mouseEvent)
-    {
-        mazeDisplayerFXML.dragPlayer(mouseEvent);
-        mouseEvent.consume();
-        //TODO: if we have time
-    }
-
     //TODO: check resize and draw
 }
