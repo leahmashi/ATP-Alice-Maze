@@ -104,7 +104,12 @@ public class MenuBarOptions
         dialog.initModality(Modality.APPLICATION_MODAL);
         AnchorPane pane = new AnchorPane();
         //toggle switch
-        musicLabel = new Label("Music ON");
+        String s;
+        if(musicSwitch.isSelected())
+            s = "Music OFF";
+        else
+            s = "Music ON";
+        musicLabel = new Label(s);
         HBox hbox = new HBox(2);
         hbox.setPadding(new Insets(0, 10, 10, 10));
         hbox.setSpacing(10);
