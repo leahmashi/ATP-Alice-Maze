@@ -5,7 +5,6 @@ import Client.Client;
 import Client.IClientStrategy;
 import IO.MyCompressorOutputStream;
 import IO.MyDecompressorInputStream;
-import Server.Configurations;
 import Server.Server;
 import Server.ServerStrategyGenerateMaze;
 import Server.ServerStrategySolveSearchProblem;
@@ -36,7 +35,6 @@ public class MyModel extends Observable implements IModel
     private int playerCol;
     Server mazeGeneratingServer;
     Server solveSearchProblemSolver;
-    private Configurations configurations;
 
     //constructor
     public MyModel()

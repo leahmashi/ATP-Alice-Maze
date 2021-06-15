@@ -6,7 +6,6 @@ import View.AView;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -52,9 +51,6 @@ public class MyViewModel extends Observable implements Observer
     public void movePlayer(KeyEvent keyEvent)
     {
         MovementDirection direction;
-
-        //TODO: add multiKey?
-
         switch (keyEvent.getCode())
         {
             case UP, NUMPAD8 -> direction = MovementDirection.UP;

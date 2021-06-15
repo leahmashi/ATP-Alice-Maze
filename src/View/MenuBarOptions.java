@@ -16,8 +16,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,11 +75,8 @@ public class MenuBarOptions
             return false;
         else
         {
-            boolean success = viewModel.loadMaze(file);
-            if (!success)
-                return false;
+            return viewModel.loadMaze(file);
         }
-        return true;
     }
 
     @FXML
@@ -168,16 +163,17 @@ public class MenuBarOptions
     {
         String text = """
                 The queen has summoned you!
-                get to her as fast as you can while painting the roses red
-                to move right press the right arrow or numpad 6
-                to move left press the left arrow or numpad 4
-                to move down press the down arrow or numpad 2
-                to move up press the up arrow or numpad 8
-                to move diagonally:
-                diagonal up right press numpad 9
-                diagonal up left press numpad 7
-                diagonal down right press numpad 3
-                diagonal down left press numpad 1""";
+                Get to her as fast as you can!
+                You can move:
+                    Right by pressing the right arrow or numpad 6
+                    Left by pressing the left arrow or numpad 4
+                    Down by pressing the down arrow or numpad 2
+                    UP by pressing the up arrow or numpad 8
+                    Or even quicker diagonally:
+                        diagonal up right by pressing numpad 9
+                        diagonal up left by pressing numpad 7
+                        diagonal down right by pressing numpad 3
+                        diagonal down left by pressing numpad 1""";
         Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
         alert.setContentText(text);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
@@ -194,11 +190,11 @@ public class MenuBarOptions
                 Shahar loves to code in his available time
                 Leah is a disney lover, and likes to dance and sing in her spare time
                 They used these algorithms to create and solve the maze:
-                1. Randomized prim - allows the user to create a random maze based on this algorithm.
-                2. Simple maze - allows the user to create a simple maze
-                3. Best first search - allows the user to solve the maze with the cheapest path (moving diagonal is cheaper)
-                4. Breadth first search - allows the user to solve the maze in the shortest time.
-                5. Depth first search - allows the user to solve the maze with a random path.
+                    1. Randomized prim - allows the user to create a random maze based on this algorithm.
+                    2. Simple maze - allows the user to create a simple maze
+                    3. Best first search - allows the user to solve the maze with the cheapest path (moving diagonal is cheaper)
+                    4. Breadth first search - allows the user to solve the maze in the shortest time.
+                    5. Depth first search - allows the user to solve the maze with a random path.
                 """;
         Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
         alert.setContentText(text);

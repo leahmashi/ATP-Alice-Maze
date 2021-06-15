@@ -1,11 +1,13 @@
 package View.controllers;
 
+import Model.IModel;
+import Model.MyModel;
 import View.AView;
+import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.stage.Stage;
@@ -19,6 +21,7 @@ import java.util.ResourceBundle;
 
 public class MyViewController extends AView
 {
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -29,9 +32,7 @@ public class MyViewController extends AView
     @FXML
     public void generateMaze(ActionEvent event)
     {
-        Window window = ((Node)(event.getSource())).getScene().getWindow();
-        window.setOnHidden(e -> mediaPlayer.stop());
-
+        hideOldWindow(event);
         Stage clipStage = new Stage();
         BorderPane borderPane = new BorderPane();
         Media media = new Media(new File("resources/clips/WhiteRabbitClip.mp4").toURI().toString());
@@ -41,9 +42,7 @@ public class MyViewController extends AView
         clipScene.getStylesheets().add("View/CSSs/MainStyle.css");
         clipStage.setScene(clipScene);
         clipStage.setTitle("WhiteRabbitClip");
-
         clipStage.show();
-        window.hide();
     }
 
     @FXML
@@ -52,20 +51,6 @@ public class MyViewController extends AView
         Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
         window.setOnHidden(e -> mediaPlayer.stop());
         viewModel.showProperties(window, mediaPlayer, this);
-        window.hide();
-    }
-
-    @FXML
-    public void loadFileButton(ActionEvent actionEvent)
-    {
-        boolean success = menuBarOptions.loadFile(viewModel);
-        if (!success)
-        {
-            raisePopupWindow("couldn't load file choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
-            return;
-        }
-        Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
-        window.setOnHidden(e -> mediaPlayer.stop());
         window.hide();
     }
 }

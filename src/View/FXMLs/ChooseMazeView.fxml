@@ -47,30 +47,31 @@
         </VBox>
     </top>
     <bottom>
-        <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="TOP_CENTER">
-            <children>
-                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-                    <children>
-                        <Button fx:id="returnToMain" alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false"
-                                prefHeight="60.0" prefWidth="130.0" onAction="#returnToMain">
-                            <graphic>
-                                <VBox alignment="CENTER" prefHeight="60.0" prefWidth="100.0">
-                                    <children>
-                                        <Label fx:id="returnToText" alignment="CENTER" text="Return to" />
-                                        <Label fx:id="MainWindowText" text="main window" />
-                                    </children>
-                                </VBox>
-                            </graphic>
-                        </Button>
-                    </children>
-                </VBox>
-                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
-                    <children>
-                        <Button fx:id="loadMaze" alignment="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadFile"
-                                prefHeight="60.0" prefWidth="130.0" text="Load maze" />
-                    </children>
-                </VBox>
-            </children>
+        <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0"
+              BorderPane.alignment="TOP_CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                <children>
+                    <Button fx:id="returnToMain" alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity"
+                            mnemonicParsing="false"
+                            prefHeight="60.0" prefWidth="130.0" onAction="#returnToMain">
+                        <graphic>
+                            <VBox alignment="CENTER" prefHeight="60.0" prefWidth="100.0">
+                                <children>
+                                    <Label fx:id="returnToText" alignment="CENTER" text="Return to"/>
+                                    <Label fx:id="MainWindowText" text="main window"/>
+                                </children>
+                            </VBox>
+                        </graphic>
+                    </Button>
+                </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                <children>
+                    <Button fx:id="loadMaze" alignment="CENTER" minWidth="-Infinity" mnemonicParsing="false"
+                            onAction="#loadFileButton"
+                            prefHeight="60.0" prefWidth="130.0" text="Load maze"/>
+                </children>
+            </VBox>
         </HBox>
     </bottom>
     <center>

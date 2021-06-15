@@ -9,7 +9,6 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 
@@ -104,10 +103,9 @@ public class MazeDisplayer extends Canvas
         try { solPathImage = new Image(new FileInputStream(getImageFileNameSol())); }
         catch (FileNotFoundException e) { System.out.println("There is no sol image file"); }
         ArrayList<AState> solutionPath = solution.getSolutionPath();
-        for (int i = 0; i < solutionPath.size(); i++)
-        {
-            int row = ((MazeState) solutionPath.get(i)).getPosition().getRowIndex();
-            int col = ((MazeState) solutionPath.get(i)).getPosition().getColumnIndex();
+        for (AState aState : solutionPath) {
+            int row = ((MazeState) aState).getPosition().getRowIndex();
+            int col = ((MazeState) aState).getPosition().getColumnIndex();
             if ((row == playerRow && col == playerCol) || (row == endRow && col == endCol))
                 continue;
             double x = col * cellWidth;
@@ -170,12 +168,10 @@ public class MazeDisplayer extends Canvas
         draw();
     }
 
-    public void zoom(ScrollEvent scrollEvent) //TODO: remove limit at end
+    public void zoom(ScrollEvent scrollEvent)
     {
         if (scrollEvent.isControlDown())
         {
-            System.out.println(scrollCount);
-
             double zoomFactor = 1.05;
             if (scrollEvent.getDeltaY() < 0)
             {

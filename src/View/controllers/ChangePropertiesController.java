@@ -7,16 +7,11 @@ import algorithms.mazeGenerators.SimpleMazeGenerator;
 import algorithms.search.BestFirstSearch;
 import algorithms.search.BreadthFirstSearch;
 import algorithms.search.DepthFirstSearch;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +28,6 @@ public class ChangePropertiesController extends AView
     ChoiceBox<String> solvingAlgorithm;
     @FXML
     ChoiceBox<String> mazeGenerator;
-    private int threadsAmount;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -55,9 +49,9 @@ public class ChangePropertiesController extends AView
 
         try
         {
-            if (threadsNum != "")
+            if (!threadsNum.equals(""))
             {
-                threadsAmount = Integer.parseInt(threadsNum);
+                int threadsAmount = Integer.parseInt(threadsNum);
                 if (threadsAmount <= 0)
                     throw new Exception();
 
@@ -74,7 +68,7 @@ public class ChangePropertiesController extends AView
             return;
         }
 
-        if ((solvingAlgoChoice == null || solvingAlgoChoice == "") && (mazeGeneratorChoice == null || mazeGeneratorChoice == "") && threadsNum == "")
+        if ((solvingAlgoChoice == null || solvingAlgoChoice.equals("")) && (mazeGeneratorChoice == null || mazeGeneratorChoice.equals("")) && threadsNum.equals(""))
             raisePopupWindow("Please enter a property value you want to change", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
         else
         {
@@ -95,41 +89,39 @@ public class ChangePropertiesController extends AView
 
     private boolean setGenerator(String mazeGeneratorChoice)
     {
-        switch (mazeGeneratorChoice)
-        {
-            case "Simple":
+        switch (mazeGeneratorChoice) {
+            case "Simple" -> {
                 configurations.setMazeGeneratingAlgorithm("SimpleMazeGenerator");
-                if (configurations.getMazeGeneratingAlgorithm().getClass().getName() == new SimpleMazeGenerator().getClass().getName())
+                if (configurations.getMazeGeneratingAlgorithm().getClass().getName().equals(SimpleMazeGenerator.class.getName()))
                     return true;
-                break;
-            case "Randomized Prim":
+            }
+            case "Randomized Prim" -> {
                 configurations.setMazeGeneratingAlgorithm("MyMazeGenerator");
-                if (configurations.getMazeGeneratingAlgorithm().getClass().getName() == new MyMazeGenerator().getClass().getName())
+                if (configurations.getMazeGeneratingAlgorithm().getClass().getName().equals(MyMazeGenerator.class.getName()))
                     return true;
-                break;
+            }
         }
         return false;
     }
 
     private boolean setSolver(String solvingAlgoChoice)
     {
-        switch (solvingAlgoChoice)
-        {
-            case "Depth First Search":
+        switch (solvingAlgoChoice) {
+            case "Depth First Search" -> {
                 configurations.setMazeSearchingAlgorithm("DepthFirstSearch");
-                if (configurations.getMazeSearchingAlgorithm().getName() == new DepthFirstSearch().getName())
+                if (configurations.getMazeSearchingAlgorithm().getName().equals(new DepthFirstSearch().getName()))
                     return true;
-                break;
-            case "Breadth First Search":
+            }
+            case "Breadth First Search" -> {
                 configurations.setMazeSearchingAlgorithm("BreadthFirstSearch");
-                if (configurations.getMazeSearchingAlgorithm().getName() == new BreadthFirstSearch().getName())
+                if (configurations.getMazeSearchingAlgorithm().getName().equals(new BreadthFirstSearch().getName()))
                     return true;
-                break;
-            case "Best First Search":
+            }
+            case "Best First Search" -> {
                 configurations.setMazeSearchingAlgorithm("BestFirstSearch");
-                if (configurations.getMazeSearchingAlgorithm().getName() == new BestFirstSearch().getName())
+                if (configurations.getMazeSearchingAlgorithm().getName().equals(new BestFirstSearch().getName()))
                     return true;
-                break;
+            }
         }
         return false;
     }

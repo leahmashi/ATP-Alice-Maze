@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -186,7 +187,6 @@ public abstract class AView implements IView, Observer, Initializable
         mediaView.setPreserveRatio(true);
         borderPane.setCenter(mediaView);
 
-        //TODO fix resize view
         mediaView.fitWidthProperty().bind(clipStage.widthProperty());
         mediaView.fitHeightProperty().bind(clipStage.heightProperty());
 
@@ -222,4 +222,22 @@ public abstract class AView implements IView, Observer, Initializable
         });
     }
 
+    protected void hideOldWindow(ActionEvent actionEvent)
+    {
+        Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
+        window.setOnHidden(e -> mediaPlayer.stop());
+        window.hide();
+    }
+
+    @FXML
+    protected void loadFileButton(ActionEvent actionEvent)
+    {
+        boolean success = menuBarOptions.loadFile(viewModel);
+        if (!success)
+        {
+            raisePopupWindow("couldn't load file choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+            return;
+        }
+        hideOldWindow(actionEvent);
+    }
 }

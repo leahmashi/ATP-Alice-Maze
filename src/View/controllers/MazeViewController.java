@@ -8,12 +8,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
@@ -23,7 +20,6 @@ import javafx.stage.Window;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Objects;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -35,19 +31,6 @@ public class MazeViewController extends AView
 
     @FXML
     private MazeDisplayer mazeDisplayerFXML;
-    @FXML
-    private ScrollPane pane;
-
-    StringProperty updatePlayerRow = new SimpleStringProperty();
-    StringProperty updatePlayerCol = new SimpleStringProperty();
-
-    //getters & setters
-    public void setUpdatePlayerRow(int updatePlayerRow) { this.updatePlayerRow.set(updatePlayerRow + ""); }
-    public void setUpdatePlayerCol(int updatePlayerCol) { this.updatePlayerCol.set(updatePlayerCol + ""); }
-    public String getUpdatePlayerRow() { return updatePlayerRow.get(); }
-    public StringProperty updatePlayerRowProperty() { return updatePlayerRow; }
-    public String getUpdatePlayerCol() { return updatePlayerCol.get(); }
-    public StringProperty updatePlayerColProperty() { return updatePlayerCol; }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -70,8 +53,6 @@ public class MazeViewController extends AView
     public void setPlayerPosition(int row, int col)
     {
         mazeDisplayerFXML.setPlayerPosition(row, col);
-        setUpdatePlayerRow(row);
-        setUpdatePlayerCol(col);
         if (row == viewModel.getMaze().getGoalPosition().getRowIndex() && col == viewModel.getMaze().getGoalPosition().getColumnIndex())
         {
             Stage clipStage = new Stage();
@@ -108,10 +89,7 @@ public class MazeViewController extends AView
     {
         Stage MainWindowStage = changeScene("View/FXMLs/MyView.fxml", "mainScene", "mainWindow");
         MainWindowStage.getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
-
-        Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
-        window.setOnHidden(e -> mediaPlayer.stop());
-        window.hide();
+        hideOldWindow(actionEvent);
     }
 
     @Override
@@ -139,12 +117,7 @@ public class MazeViewController extends AView
     private void mazeSolved() { mazeDisplayerFXML.setSolution(viewModel.getSolution()); }
 
     @FXML
-    public void solveMaze() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Solving maze...");
-        alert.show();
-        viewModel.solveMaze();
-    }
+    public void solveMaze() { viewModel.solveMaze(); }
 
     public void zoom(ScrollEvent scrollEvent) { mazeDisplayerFXML.zoom(scrollEvent); }
 

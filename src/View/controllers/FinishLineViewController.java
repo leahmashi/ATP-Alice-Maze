@@ -3,7 +3,6 @@ package View.controllers;
 import View.AView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.media.Media;
 
 import java.io.File;
@@ -17,19 +16,16 @@ public class FinishLineViewController extends AView
     {
         Media finishLineMedia = new Media(new File("resources/music/veryMerryUnbirthday.mp3").toURI().toString());
         setMusic(finishLineMedia);
-
     }
+
     @FXML
     public void finish() { System.exit(0); }
-
 
     @FXML
     public void startOver(ActionEvent actionEvent)
     {
-        System.out.println("hello from startOver");
         changeScene("View/FXMLs/MyView.fxml", "mainScene", "mainWindow");
-        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
-        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+        hideOldWindow(actionEvent);
     }
 
 }
