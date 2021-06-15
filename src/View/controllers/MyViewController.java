@@ -1,12 +1,17 @@
 package View.controllers;
 
 import View.AView;
+import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.net.URL;
 import java.util.Objects;
@@ -36,6 +41,14 @@ public class MyViewController extends AView
         clipStage.show();
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
 
+    @FXML
+    public void showPropertiesButton(ActionEvent actionEvent)
+    {
+        Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
+        viewModel.showProperties(window, mediaPlayer);
+        window.setOnHidden(e -> mediaPlayer.stop());
+        window.hide();
     }
 }
