@@ -107,14 +107,11 @@ public class MazeViewController extends AView
     public void returnToMain(ActionEvent actionEvent)
     {
         Stage MainWindowStage = changeScene("View/FXMLs/MyView.fxml", "mainScene", "mainWindow");
-
-        ((Node)(actionEvent.getSource())).getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
-        ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-
-        Media musicFile = new Media(Objects.requireNonNull(getClass().getClassLoader().getResource("music/AliceMainWindowMusic.mp3")).toString());
-        setMusic(musicFile);
-
         MainWindowStage.getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
+
+        Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
+        window.setOnHidden(e -> mediaPlayer.stop());
+        window.hide();
     }
 
     @Override

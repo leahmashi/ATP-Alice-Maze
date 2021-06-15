@@ -71,7 +71,6 @@ public abstract class AView implements IView, Observer, Initializable
         Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
         window.setOnHidden(e -> mediaPlayer.stop());
         window.hide();
-        //TODO: fix music from main window
     }
 
     @FXML
