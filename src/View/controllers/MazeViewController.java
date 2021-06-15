@@ -55,8 +55,8 @@ public class MazeViewController extends AView
         Platform.runLater(() -> {
             if (!_isLoaded)
                 viewModel.generateMaze(_rows, _cols);
-            mazeDisplayerFXML.widthProperty().bind(pane.widthProperty());
-            mazeDisplayerFXML.heightProperty().bind(pane.heightProperty());
+//            mazeDisplayerFXML.widthProperty().bind(pane.widthProperty());
+//            mazeDisplayerFXML.heightProperty().bind(pane.heightProperty());
             Media musicFile = new Media(new File("resources/music/PaintingTheRosesRed.mp3").toURI().toString());
             setMusic(musicFile);
         });

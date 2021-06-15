@@ -179,6 +179,11 @@ public class MazeDisplayer extends Canvas
             double zoomFactor = 1.05;
             if (scrollEvent.getDeltaY() < 0)
             {
+                if (scrollCount < -(mazeArr.length + mazeArr[0].length) / 9)
+                {
+                    scrollEvent.consume();
+                    return;
+                }
                 scrollCount--;
                 setHeight(getHeight() / zoomFactor);
                 setWidth(getWidth() / zoomFactor);
