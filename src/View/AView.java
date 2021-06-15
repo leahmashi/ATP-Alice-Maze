@@ -71,7 +71,7 @@ public abstract class AView implements IView, Observer, Initializable
     }
 
     @FXML
-    public void showProperties(ActionEvent actionEvent) { menuBarOptions.showProperties(actionEvent, viewModel, mediaPlayer); }
+    public void showProperties(ActionEvent actionEvent) { menuBarOptions.showProperties(actionEvent, viewModel, mediaPlayer, this); }
 
     @FXML
     public void showSettings(ActionEvent actionEvent)

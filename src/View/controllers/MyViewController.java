@@ -1,18 +1,17 @@
 package View.controllers;
 
 import View.AView;
-import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -20,7 +19,6 @@ import java.util.ResourceBundle;
 
 public class MyViewController extends AView
 {
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -28,6 +26,7 @@ public class MyViewController extends AView
         setMusic(musicFile);
     }
 
+    @FXML
     public void generateMaze(ActionEvent event)
     {
         Stage clipStage = new Stage();
@@ -47,8 +46,8 @@ public class MyViewController extends AView
     public void showPropertiesButton(ActionEvent actionEvent)
     {
         Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
-        viewModel.showProperties(window, mediaPlayer);
         window.setOnHidden(e -> mediaPlayer.stop());
+        viewModel.showProperties(window, mediaPlayer, this);
         window.hide();
     }
 }

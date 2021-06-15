@@ -88,10 +88,10 @@ public class MenuBarOptions
     }
 
     @FXML
-    public void showProperties(ActionEvent actionEvent, MyViewModel viewModel, MediaPlayer mediaPlayer)
+    public void showProperties(ActionEvent actionEvent, MyViewModel viewModel, MediaPlayer mediaPlayer, AView controller)
     {
         Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
-        viewModel.showProperties(window, mediaPlayer);
+        viewModel.showProperties(window, mediaPlayer, controller);
         window.setOnHidden(e -> mediaPlayer.stop());
         window.hide();
     }

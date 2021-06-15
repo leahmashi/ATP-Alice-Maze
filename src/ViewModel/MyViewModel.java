@@ -2,21 +2,14 @@ package ViewModel;
 
 import Model.IModel;
 import Model.MovementDirection;
-import View.controllers.ChangePropertiesController;
+import View.AView;
 import algorithms.mazeGenerators.Maze;
 import algorithms.search.Solution;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -84,30 +77,29 @@ public class MyViewModel extends Observable implements Observer
 
     public boolean loadMaze(File file) { return this.model.loadMaze(file); }
 
-    public void  showProperties(Window parentWindow, MediaPlayer mediaPlayer)
+    public void showProperties(Window parentWindow, MediaPlayer mediaPlayer, AView controller)
     {
         Media parentStageMedia = mediaPlayer.getMedia();
-        Parent root = null;
+        Stage changePropertiesStage = new Stage();
+        Parent root;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/changePropertiesView.fxml"));
         try
         {
             root = fxmlLoader.load();
-        } catch (IOException e)
-        {
+            root.setId("changeProperties");
+            Scene changePropertiesScene = new Scene(root, 900, 650);
+            changePropertiesStage.setTitle("changeProperties");
+            changePropertiesStage.setScene(changePropertiesScene);
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        root.setId("changeProperties");
-        Stage changePropertiesStage = new Stage();
-        ChangePropertiesController controller = fxmlLoader.getController();
-        Scene changePropertiesScene = new Scene(root, 900, 650);
-        changePropertiesStage.setTitle("changeProperties");
-        changePropertiesStage.setScene(changePropertiesScene);
-        changePropertiesStage.show();
 
-        changePropertiesStage.setOnHidden(e -> {
+        changePropertiesStage.show();
+        changePropertiesStage.setOnCloseRequest(e -> {
             mediaPlayer.stop();
             controller.setMusic(parentStageMedia);
-            ((Stage) parentWindow.getScene().getWindow()).show();
+            ((Stage) parentWindow).show();
         });
     }
 }
