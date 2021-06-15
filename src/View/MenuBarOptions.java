@@ -60,14 +60,15 @@ public class MenuBarOptions
     }
 
     @FXML
-    public boolean loadFile(ActionEvent actionEvent, MediaPlayer mediaPlayer, MyViewModel viewModel)
+    public boolean loadFile(MyViewModel viewModel)
     {
         Stage loadStage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Load");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Maze files (*.maze)", "*.maze"));
         File file;
-        try {
+        try
+        {
              file = fileChooser.showOpenDialog(loadStage);
         } catch (Exception e) {
             return false;
@@ -80,9 +81,6 @@ public class MenuBarOptions
             if (!success)
                 return false;
         }
-//
-//        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().setOnHidden(e -> mediaPlayer.stop());
-//        ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow().hide();
         return true;
     }
 

@@ -62,13 +62,12 @@ public abstract class AView implements IView, Observer, Initializable
     @FXML
     public void loadFile(ActionEvent actionEvent)
     {
-        boolean success = menuBarOptions.loadFile(actionEvent, mediaPlayer, viewModel);
+        boolean success = menuBarOptions.loadFile(viewModel);
         if (!success)
         {
             raisePopupWindow("couldn't load file choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
             return;
         }
-
         Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
         window.setOnHidden(e -> mediaPlayer.stop());
         window.hide();
