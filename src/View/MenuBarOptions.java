@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -115,7 +116,23 @@ public class MenuBarOptions
         musicSwitch.setOnAction(actionEvent -> setMusic(mediaPlayer, actionEvent));
         slider.valueProperty().addListener(observable -> {
             if (slider.isValueChanging())
+            {
                 mediaPlayer.setVolume(slider.getValue() / 100.0);
+                if (slider.getValue() == 0)
+                {
+                    musicSwitch.setSelected(true);
+                    musicSwitch.setText("OFF");
+                    musicLabel.setText("Music OFF");
+                    mediaPlayer.stop();
+                }
+                else
+                {
+                    musicSwitch.setSelected(false);
+                    musicSwitch.setText("ON");
+                    musicLabel.setText("Music ON");
+                    mediaPlayer.play();
+                }
+            }
         });
         Scene scene = new Scene(pane);
         dialog.setScene(scene);
@@ -132,6 +149,7 @@ public class MenuBarOptions
             musicSwitch.setText("OFF");
             musicLabel.setText("Music OFF");
             slider.setValue(0);
+            mediaPlayer.setVolume(0);
         }
         else
         {
@@ -140,6 +158,7 @@ public class MenuBarOptions
             musicSwitch.setText("ON");
             musicLabel.setText("Music ON");
             slider.setValue(100);
+            mediaPlayer.setVolume(100);
         }
     }
 
