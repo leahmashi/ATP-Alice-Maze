@@ -1,9 +1,6 @@
 package View.controllers;
 
-import Model.IModel;
-import Model.MyModel;
 import View.AView;
-import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

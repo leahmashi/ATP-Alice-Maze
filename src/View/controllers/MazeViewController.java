@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 
 public class MazeViewController extends AView
 {
+    public boolean isFinish;
     public int _rows;
     public int _cols;
     public boolean _isLoaded;
@@ -55,22 +56,25 @@ public class MazeViewController extends AView
         mazeDisplayerFXML.setPlayerPosition(row, col);
         if (row == viewModel.getMaze().getGoalPosition().getRowIndex() && col == viewModel.getMaze().getGoalPosition().getColumnIndex())
         {
-            Stage clipStage = new Stage();
-            BorderPane borderPane = new BorderPane();
-            borderPane.setMinHeight(500);
-            borderPane.setMinWidth(500);
-            Media media = new Media(new File("resources/clips/finalStageClip.mp4").toURI().toString());
-            addClip(clipStage, borderPane, media, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
-            addContinueButton(borderPane, clipStage, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
-            Scene clipScene = new Scene(borderPane, 900, 650);
-            clipScene.getStylesheets().add("View/CSSs/finalStageStyle.css");
-            clipStage.setScene(clipScene);
-            clipStage.setTitle("veryMerryUnbirthday");
-            clipStage.showAndWait();
-
-            Window currWindow = mazeDisplayerFXML.getScene().getWindow();
-            currWindow.setOnHidden(e -> mediaPlayer.stop());
-            currWindow.hide();
+            if(!isFinish)
+            {
+                isFinish = true;
+                Stage clipStage = new Stage();
+                BorderPane borderPane = new BorderPane();
+                borderPane.setMinHeight(500);
+                borderPane.setMinWidth(500);
+                Media media = new Media(new File("resources/clips/finalStageClip.mp4").toURI().toString());
+                addClip(clipStage, borderPane, media, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
+                addContinueButton(borderPane, clipStage, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
+                Scene clipScene = new Scene(borderPane, 900, 650);
+                clipScene.getStylesheets().add("View/CSSs/finalStageStyle.css");
+                clipStage.setScene(clipScene);
+                clipStage.setTitle("veryMerryUnbirthday");
+                Window currWindow = mazeDisplayerFXML.getScene().getWindow();
+                currWindow.setOnHidden(e -> mediaPlayer.stop());
+                currWindow.hide();
+                clipStage.showAndWait();
+            }
         }
     }
 
