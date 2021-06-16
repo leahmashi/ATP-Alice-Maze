@@ -3,17 +3,17 @@
     <output-path>$PROJECT_DIR$/out/artifacts/ATP_Project_PartC_jar</output-path>
     <root id="archive" name="ATP-Project-PartC.jar">
       <element id="module-output" name="ATP-Project-PartC" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../javafx-sdk-16/lib/src.zip" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../javafx-sdk-16/lib/javafx-swt.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../javafx-sdk-16/lib/javafx.web.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../javafx-sdk-16/lib/javafx.base.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../javafx-sdk-16/lib/javafx.fxml.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../javafx-sdk-16/lib/javafx.media.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../javafx-sdk-16/lib/javafx.swing.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../javafx-sdk-16/lib/javafx.controls.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../javafx-sdk-16/lib/javafx.graphics.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../ATP-Project-PartB/out/artifacts/ATP_Project_PartB_jar/ATP-Project-PartB.jar" path-in-jar="/" />
-      <element id="dir-copy" path="$PROJECT_DIR$/../javafx-sdk-16/bin" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../ATP-Project-PartA/out/artifacts/ATP_Project_PartA_jar/ATP-Project-PartA.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/HMMBGU/2021/secondTerm/ATP/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/src.zip" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/HMMBGU/2021/secondTerm/ATP/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/HMMBGU/2021/secondTerm/ATP/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/HMMBGU/2021/secondTerm/ATP/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/HMMBGU/2021/secondTerm/ATP/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/HMMBGU/2021/secondTerm/ATP/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/HMMBGU/2021/secondTerm/ATP/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/HMMBGU/2021/secondTerm/ATP/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/HMMBGU/2021/secondTerm/ATP/openjfx-16_windows-x64_bin-sdk/javafx-sdk-16/lib/javafx.graphics.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

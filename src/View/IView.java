@@ -21,4 +21,5 @@ public interface IView
     void showHelp(ActionEvent actionEvent);
     void showAbout(ActionEvent actionEvent);
     void exitProgram(ActionEvent actionEvent);
+    MediaPlayer getMediaPlayer();
 }

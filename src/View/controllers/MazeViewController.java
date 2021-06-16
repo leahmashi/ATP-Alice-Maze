@@ -4,8 +4,6 @@ package View.controllers;
 import View.AView;
 import View.MazeDisplayer;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -14,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -56,7 +55,7 @@ public class MazeViewController extends AView
         mazeDisplayerFXML.setPlayerPosition(row, col);
         if (row == viewModel.getMaze().getGoalPosition().getRowIndex() && col == viewModel.getMaze().getGoalPosition().getColumnIndex())
         {
-            if(!isFinish)
+            if (!isFinish)
             {
                 isFinish = true;
                 Stage clipStage = new Stage();
@@ -64,14 +63,15 @@ public class MazeViewController extends AView
                 borderPane.setMinHeight(500);
                 borderPane.setMinWidth(500);
                 Media media = new Media(new File("resources/clips/finalStageClip.mp4").toURI().toString());
+                Window currWindow = mazeDisplayerFXML.getScene().getWindow();
+                MediaPlayer mediaPlayerCurr = mediaPlayer;
+                currWindow.setOnHidden(e -> mediaPlayerCurr.stop());
                 addClip(clipStage, borderPane, media, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
                 addContinueButton(borderPane, clipStage, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
                 Scene clipScene = new Scene(borderPane, 900, 650);
                 clipScene.getStylesheets().add("View/CSSs/finalStageStyle.css");
                 clipStage.setScene(clipScene);
                 clipStage.setTitle("veryMerryUnbirthday");
-                Window currWindow = mazeDisplayerFXML.getScene().getWindow();
-                currWindow.setOnHidden(e -> mediaPlayer.stop());
                 currWindow.hide();
                 clipStage.showAndWait();
             }

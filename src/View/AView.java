@@ -240,4 +240,7 @@ public abstract class AView implements IView, Observer, Initializable
         }
         hideOldWindow(actionEvent);
     }
+
+    @Override
+    public MediaPlayer getMediaPlayer() { return mediaPlayer; }
 }

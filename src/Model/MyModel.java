@@ -102,16 +102,18 @@ public class MyModel extends Observable implements IModel
     {
         Stage MazeWindowStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
-        Parent root = null;
+        Parent root;
         try {
             root = fxmlLoader.load();
+            root.setId("mazeScene");
+            MazeViewController controller = fxmlLoader.getController();
+            Scene MazeWindowScene = new Scene(root);
+            controller.initData(maze.getTotalRows(), maze.getTotalCols(), true);
+            MazeWindowStage.setScene(MazeWindowScene);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        root.setId("mazeScene");
-        MazeViewController controller = fxmlLoader.getController();
-        Scene MazeWindowScene = new Scene(root);
-        controller.initData(maze.getTotalRows(), maze.getTotalCols(), true);
+
         MazeWindowStage.setOnCloseRequest(e -> System.exit(0));
         MyViewModel viewModel = new MyViewModel(this);
         IView view = fxmlLoader.getController();
@@ -119,7 +121,6 @@ public class MyModel extends Observable implements IModel
         setChanged();
         notifyObservers("maze generated");
 
-        MazeWindowStage.setScene(MazeWindowScene);
         MazeWindowStage.show();
     }
 
