@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 public class helpController extends AView
 {
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {

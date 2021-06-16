@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefViewportHeight="650.0" prefViewportWidth="900.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="View.controllers.helpController">
+<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefViewportHeight="650.0" prefViewportWidth="900.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.helpController">
    <content>
       <BorderPane>
          <right>
@@ -36,6 +27,9 @@
                                  <tooltip>
                                     <Tooltip height="50.0" text="move diagonal up left" width="120.0" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="8">
                                  <HBox.margin>
@@ -44,6 +38,9 @@
                                  <tooltip>
                                     <Tooltip text="move up" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                               <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="9">
                                  <HBox.margin>
@@ -52,6 +49,9 @@
                                  <tooltip>
                                     <Tooltip text="move diagonal up right" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                            </children>
                         </HBox>
@@ -64,6 +64,9 @@
                                  <tooltip>
                                     <Tooltip text="move left" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="5">
                                  <HBox.margin>
@@ -72,6 +75,9 @@
                                  <tooltip>
                                     <Tooltip text="no move" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                               <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="6">
                                  <HBox.margin>
@@ -80,6 +86,9 @@
                                  <tooltip>
                                     <Tooltip text="move right" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                            </children>
                         </HBox>
@@ -92,6 +101,9 @@
                                  <tooltip>
                                     <Tooltip text="move diagonal down left" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="2">
                                  <HBox.margin>
@@ -100,6 +112,9 @@
                                  <tooltip>
                                     <Tooltip text="move down" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                               <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="3">
                                  <HBox.margin>
@@ -108,6 +123,9 @@
                                  <tooltip>
                                     <Tooltip text="move diagonal down right" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                            </children>
                         </HBox>
@@ -124,6 +142,9 @@
                                  <tooltip>
                                     <Tooltip text="move left" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                            </children>
                         </VBox>
@@ -136,17 +157,20 @@
                                  <tooltip>
                                     <Tooltip text="move up" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                               <Button alignment="CENTER" contentDisplay="CENTER" lineSpacing="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="V">
                                  <VBox.margin>
                                     <Insets left="10.0" />
                                  </VBox.margin>
-                                 <font>
-                                    <Font size="9.0" />
-                                 </font>
                                  <tooltip>
                                     <Tooltip text="move down" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
                               </Button>
                            </children>
                         </VBox>
@@ -159,6 +183,9 @@
                                  <tooltip>
                                     <Tooltip text="move right" />
                                  </tooltip>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Button>
                            </children>
                         </VBox>
@@ -170,8 +197,14 @@
          <center>
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextArea editable="false" layoutY="42.0" prefHeight="300.0" prefWidth="350.0" text="&#10;&#10;&#10;The queen has summoned you!&#10;get to her as fast as you can while painting the roses red&#10;to move right press the right arrow or numpad 6&#10;to move left press the left arrow or numpad 4&#10;to move down press the down arrow or numpad 2&#10;to move up press the up arrow or numpad 8&#10;to move diagonally:&#10;diagonal up right press numpad 9&#10;diagonal up left press numpad 7&#10;diagonal down right press numpad 3&#10;diagonal down left press numpad 1" />
-                  <Label layoutX="163.0" layoutY="61.0" text="Help" />
+                  <TextArea editable="false" layoutY="42.0" prefHeight="300.0" prefWidth="350.0" text="&#10;&#10;The queen has summoned you!&#10;Get to her as fast as you can!&#10;You can move:&#10;     Right by pressing the right arrow or numpad 6&#10;     Left by pressing the left arrow or numpad 4&#10;     Down by pressing the down arrow or numpad 2&#10;     UP by pressing the up arrow or numpad 8&#10;     Or even quicker diagonally:&#10;          diagonal up right by pressing numpad 9&#10;          diagonal up left by pressing numpad 7&#10;          diagonal down right by pressing numpad 3&#10;          diagonal down left by pressing numpad 1">
+                     <font>
+                        <Font name="System Italic" size="13.0" />
+                     </font></TextArea>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="55.0" text="Instructions">
+                     <font>
+                        <Font name="System Bold Italic" size="16.0" />
+                     </font></Label>
                </children>
                <BorderPane.margin>
                   <Insets left="10.0" />

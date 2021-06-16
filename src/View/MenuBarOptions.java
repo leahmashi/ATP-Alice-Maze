@@ -161,7 +161,7 @@ public class MenuBarOptions
     }
 
     @FXML
-    public void showHelp(ActionEvent actionEvent, MediaPlayer mediaPlayer, AView controller, Window parentWindow)
+    public void showHelp(MediaPlayer mediaPlayer, AView controller, Window parentWindow)
     {
         Media parentStageMedia = mediaPlayer.getMedia();
         Stage helpStage = new Stage();
@@ -185,33 +185,31 @@ public class MenuBarOptions
             controller.setMusic(parentStageMedia);
             ((Stage) parentWindow).show();
         });
-
-
-
-//        String text = """
-//                The queen has summoned you!
-//                Get to her as fast as you can!
-//                You can move:
-//                    Right by pressing the right arrow or numpad 6
-//                    Left by pressing the left arrow or numpad 4
-//                    Down by pressing the down arrow or numpad 2
-//                    UP by pressing the up arrow or numpad 8
-//                    Or even quicker diagonally:
-//                        diagonal up right by pressing numpad 9
-//                        diagonal up left by pressing numpad 7
-//                        diagonal down right by pressing numpad 3
-//                        diagonal down left by pressing numpad 1""";
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
-//        alert.setContentText(text);
-//        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-//        alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
-//        alert.setTitle("Instructions");
-//        alert.showAndWait();
     }
 
     @FXML
-    public void showAbout()
+    public void showAbout(Window parentWindow)
     {
+        Stage helpStage = new Stage();
+        Parent root;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/aboutWindow.fxml"));
+        try
+        {
+            root = fxmlLoader.load();
+            root.setId("aboutWindow");
+            Scene helpScene = new Scene(root, 600, 400);
+            helpStage.setTitle("aboutWindow");
+            helpStage.setScene(helpScene);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        helpStage.show();
+        helpStage.setOnCloseRequest(e -> {
+            ((Stage) parentWindow).show();
+        });
+
         String text = """
                 Leah and Shahar are students from information systems in Ben-Gurion university
                 Shahar loves to code in his available time

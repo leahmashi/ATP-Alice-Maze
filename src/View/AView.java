@@ -94,11 +94,16 @@ public abstract class AView implements IView, Observer, Initializable
     {
         Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
         window.setOnHidden(e -> mediaPlayer.stop());
-        menuBarOptions.showHelp(actionEvent, mediaPlayer, this, window);
+        menuBarOptions.showHelp(mediaPlayer, this, window);
     }
 
     @FXML
-    public void showAbout(ActionEvent actionEvent) { menuBarOptions.showAbout(); }
+    public void showAbout(ActionEvent actionEvent)
+    {
+        Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
+        menuBarOptions.showAbout(window);
+    }
+
     @FXML
     public void exitProgram(ActionEvent actionEvent) { menuBarOptions.exitProgram(); }
 
