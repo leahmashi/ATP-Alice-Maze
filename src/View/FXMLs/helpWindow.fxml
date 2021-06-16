@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefViewportHeight="650.0" prefViewportWidth="900.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="View.controllers.helpController">
+   <content>
+      <BorderPane>
+         <right>
+            <Pane BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets right="10.0" />
+               </BorderPane.margin>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4a4ff" height="180.0" layoutY="42.0" stroke="BLACK" strokeType="INSIDE" width="220.0" />
+                  <VBox layoutX="10.0" layoutY="56.0" prefHeight="160.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                           <children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="7" textAlignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <tooltip>
+                                    <Tooltip height="50.0" text="move diagonal up left" width="120.0" />
+                                 </tooltip>
+                              </Button>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="8">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="move up" />
+                                 </tooltip>
+                              </Button>
+                              <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="9">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="move diagonal up right" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                           <children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="4" textAlignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <tooltip>
+                                    <Tooltip text="move left" />
+                                 </tooltip>
+                              </Button>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="5">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="no move" />
+                                 </tooltip>
+                              </Button>
+                              <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="6">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="move right" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="50.0" prefWidth="200.0" spacing="25.0">
+                           <children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="1" textAlignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <tooltip>
+                                    <Tooltip text="move diagonal down left" />
+                                 </tooltip>
+                              </Button>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="2">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="move down" />
+                                 </tooltip>
+                              </Button>
+                              <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="3">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="move diagonal down right" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <HBox layoutX="10.0" layoutY="257.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="&lt;">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="move left" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                           <children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="^">
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="move up" />
+                                 </tooltip>
+                              </Button>
+                              <Button alignment="CENTER" contentDisplay="CENTER" lineSpacing="10.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="V">
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                                 <tooltip>
+                                    <Tooltip text="move down" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="&gt;">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="move right" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </right>
+         <center>
+            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextArea editable="false" layoutY="42.0" prefHeight="300.0" prefWidth="350.0" text="&#10;&#10;&#10;The queen has summoned you!&#10;get to her as fast as you can while painting the roses red&#10;to move right press the right arrow or numpad 6&#10;to move left press the left arrow or numpad 4&#10;to move down press the down arrow or numpad 2&#10;to move up press the up arrow or numpad 8&#10;to move diagonally:&#10;diagonal up right press numpad 9&#10;diagonal up left press numpad 7&#10;diagonal down right press numpad 3&#10;diagonal down left press numpad 1" />
+                  <Label layoutX="163.0" layoutY="61.0" text="Help" />
+               </children>
+               <BorderPane.margin>
+                  <Insets left="10.0" />
+               </BorderPane.margin>
+            </Pane>
+         </center>
+      </BorderPane>
+   </content>
+</ScrollPane>

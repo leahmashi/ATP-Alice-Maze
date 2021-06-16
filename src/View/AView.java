@@ -90,7 +90,13 @@ public abstract class AView implements IView, Observer, Initializable
         volume = mediaPlayer.getVolume();
     }
     @FXML
-    public void showHelp(ActionEvent actionEvent) { menuBarOptions.showHelp(); }
+    public void showHelp(ActionEvent actionEvent)
+    {
+        Window window = ((Node)(actionEvent.getSource())).getScene().getWindow();
+        window.setOnHidden(e -> mediaPlayer.stop());
+        menuBarOptions.showHelp(actionEvent, mediaPlayer, this, window);
+    }
+
     @FXML
     public void showAbout(ActionEvent actionEvent) { menuBarOptions.showAbout(); }
     @FXML

@@ -12,10 +12,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
@@ -159,27 +161,52 @@ public class MenuBarOptions
     }
 
     @FXML
-    public void showHelp()
+    public void showHelp(ActionEvent actionEvent, MediaPlayer mediaPlayer, AView controller, Window parentWindow)
     {
-        String text = """
-                The queen has summoned you!
-                Get to her as fast as you can!
-                You can move:
-                    Right by pressing the right arrow or numpad 6
-                    Left by pressing the left arrow or numpad 4
-                    Down by pressing the down arrow or numpad 2
-                    UP by pressing the up arrow or numpad 8
-                    Or even quicker diagonally:
-                        diagonal up right by pressing numpad 9
-                        diagonal up left by pressing numpad 7
-                        diagonal down right by pressing numpad 3
-                        diagonal down left by pressing numpad 1""";
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
-        alert.setContentText(text);
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
-        alert.setTitle("Instructions");
-        alert.showAndWait();
+        Media parentStageMedia = mediaPlayer.getMedia();
+        Stage helpStage = new Stage();
+        Parent root;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/helpWindow.fxml"));
+        try
+        {
+            root = fxmlLoader.load();
+            root.setId("helpWindow");
+            Scene helpScene = new Scene(root, 600, 400);
+            helpStage.setTitle("helpWindow");
+            helpStage.setScene(helpScene);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        helpStage.show();
+        helpStage.setOnCloseRequest(e -> {
+            mediaPlayer.stop();
+            controller.setMusic(parentStageMedia);
+            ((Stage) parentWindow).show();
+        });
+
+
+
+//        String text = """
+//                The queen has summoned you!
+//                Get to her as fast as you can!
+//                You can move:
+//                    Right by pressing the right arrow or numpad 6
+//                    Left by pressing the left arrow or numpad 4
+//                    Down by pressing the down arrow or numpad 2
+//                    UP by pressing the up arrow or numpad 8
+//                    Or even quicker diagonally:
+//                        diagonal up right by pressing numpad 9
+//                        diagonal up left by pressing numpad 7
+//                        diagonal down right by pressing numpad 3
+//                        diagonal down left by pressing numpad 1""";
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
+//        alert.setContentText(text);
+//        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+//        alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
+//        alert.setTitle("Instructions");
+//        alert.showAndWait();
     }
 
     @FXML
