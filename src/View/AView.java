@@ -121,6 +121,7 @@ public abstract class AView implements IView, Observer, Initializable
         if (!isOff)
         {
             mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setVolume(100);
             mediaPlayer.setOnEndOfMedia(() -> {
                 mediaPlayer.seek(Duration.ZERO);
                 mediaPlayer.play();
@@ -233,23 +234,26 @@ public abstract class AView implements IView, Observer, Initializable
 
     private Button createMuteButton()
     {
-        Button muteButton = new Button("Unmute");
+        Button muteButton = new Button();
+        if (isOff)
+            muteButton.setText("Unmute");
+        else
+            muteButton.setText("Mute");
         muteButton.setId("muteButton");
         muteButton.setMinHeight(60);
         muteButton.setMinWidth(130);
         muteButton.setOnAction(e -> {
-            String status;
             if (muteButton.getText() == "Mute")
             {
-                status = "Unmute";
-                mediaPlayer.setVolume(100);
-            }
-            else
-            {
-                status = "Mute";
+                muteButton.setText("Unmute");
                 mediaPlayer.setVolume(0);
             }
-            muteButton.setText(status);
+            else if (muteButton.getText() == "Unmute")
+            {
+                muteButton.setText("Mute");
+                mediaPlayer.setMute(false);
+                mediaPlayer.setVolume(100);
+            }
         });
         return muteButton;
     }

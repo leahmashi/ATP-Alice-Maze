@@ -141,7 +141,7 @@ public class MenuBarOptions
     private void setStatusToggleSwitch()
     {
         String status;
-        if(musicSwitch.isSelected())
+        if (musicSwitch.isSelected())
             status = "Music OFF";
         else
             status = "Music ON";
