@@ -50,6 +50,7 @@ public class MazeViewController extends AView
             mazeDisplayerFXML.heightProperty().bind(pane.heightProperty());
             mazeDisplayerFXML.widthProperty().addListener(event -> mazeDisplayerFXML.drawMaze(viewModel.getMaze()));
             mazeDisplayerFXML.heightProperty().addListener(event -> mazeDisplayerFXML.drawMaze(viewModel.getMaze()));
+
         });
     }
 
@@ -166,8 +167,9 @@ public class MazeViewController extends AView
                     return;
                 }
                 scrollCount--;
-                mazeDisplayerFXML.setScaleX(mazeDisplayerFXML.getScaleX() / zoomFactor);
                 mazeDisplayerFXML.setScaleY(mazeDisplayerFXML.getScaleY() / zoomFactor);
+                mazeDisplayerFXML.setScaleX(mazeDisplayerFXML.getScaleX() / zoomFactor);
+
             }
             else if (scrollEvent.getDeltaY() > 0)
             {
@@ -177,8 +179,9 @@ public class MazeViewController extends AView
                     return;
                 }
                 scrollCount++;
-                mazeDisplayerFXML.setScaleX(mazeDisplayerFXML.getScaleX() * zoomFactor);
                 mazeDisplayerFXML.setScaleY(mazeDisplayerFXML.getScaleY() * zoomFactor);
+                mazeDisplayerFXML.setScaleX(mazeDisplayerFXML.getScaleX() * zoomFactor);
+
             }
             else if (scrollEvent.getDeltaY() == 0)
                 return;
@@ -186,4 +189,5 @@ public class MazeViewController extends AView
         }
         scrollEvent.consume();
     }
+
 }

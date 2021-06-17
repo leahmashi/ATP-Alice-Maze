@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import View.MazeDisplayer?>
+
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" stylesheets="@../CSSs/MazeStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MazeViewController">
     <bottom>
         <HBox alignment="CENTER" fillHeight="true" spacing="10">
@@ -35,16 +36,17 @@
         </HBox>
     </bottom>
     <center>
-        <ScrollPane fx:id="pane" BorderPane.alignment="CENTER" onScroll="#zoom">
-<!--            hbarPolicy="ALWAYS" pannable="true" vbarPolicy="ALWAYS"-->
+        <ScrollPane fx:id="pane" hbarPolicy="ALWAYS" pannable="true" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER" onScroll="#zoom"  >
+            <content>
 <!--        <Pane fx:id="pane" onScroll="#zoom" BorderPane.alignment="CENTER" >-->
             <MazeDisplayer fx:id="mazeDisplayerFXML" imageFileNamePlayer="./resources/images/pawn-right.jpg"
                            imageFileNameWall="./resources/images/bush-green.jpg" imageFileNameSol="./resources/images/Rose.jpg"
                            imageFileNameEndPoint="./resources/images/queen-left.jpg" onMouseClicked="#mouseClicked"
-                           onKeyPressed="#keyPressed"  height="575.0" width="900.0">
+                           onKeyPressed="#keyPressed" height="575.0" width="900.0" >
 <!--                height="575.0" width="900.0" onScroll="#zoom"-->
             </MazeDisplayer>
 <!--        </Pane>-->
+            </content>
         </ScrollPane>
     </center>
     <top>
