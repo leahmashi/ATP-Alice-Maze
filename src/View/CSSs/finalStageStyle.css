@@ -1,11 +1,11 @@
 #finalStage {
-    -fx-background-image: url("../../../../../resources/images/FinishLine.jpg");
+    -fx-background-image: url("../../../../../resources/images/cheshireCat.jpg");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
 }
 
 
-#finish, #StartOver, #continueButton {
+#finish, #StartOver, #continueButton, #muteButton {
     -fx-text-fill: white;
     -fx-font-family: "Calibari";
     -fx-font-size: 15px;
@@ -14,7 +14,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
 
-#finish:hover, #StartOver:hover, #continueButton:hover {
+#finish:hover, #StartOver:hover, #continueButton:hover, #muteButton:hover {
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;

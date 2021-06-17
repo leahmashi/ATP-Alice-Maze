@@ -67,7 +67,7 @@ public class MazeViewController extends AView
                 MediaPlayer mediaPlayerCurr = mediaPlayer;
                 currWindow.setOnHidden(e -> mediaPlayerCurr.stop());
                 addClip(clipStage, borderPane, media, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
-                addContinueButton(borderPane, clipStage, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
+                addControlButtons(borderPane, clipStage, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
                 Scene clipScene = new Scene(borderPane, 900, 650);
                 clipScene.getStylesheets().add("View/CSSs/finalStageStyle.css");
                 clipStage.setScene(clipScene);

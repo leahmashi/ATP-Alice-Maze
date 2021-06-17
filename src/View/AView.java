@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -213,17 +213,19 @@ public abstract class AView implements IView, Observer, Initializable
         });
     }
 
-
-    protected void addContinueButton(BorderPane borderPane, Stage clipStage, String nextSceneFxml, String nextStageTitle, String nextRootID)
+    protected void addControlButtons(BorderPane borderPane, Stage clipStage, String nextSceneFxml, String nextStageTitle, String nextRootID)
     {
         Button continueButton = new Button("continue");
+        Button muteButton = new Button("mute");
         continueButton.setId("continueButton");
-        continueButton.prefHeight(60);
-        continueButton.prefWidth(130);
-        VBox vBox = new VBox(4);
-        vBox.setAlignment(Pos.TOP_CENTER);
-        vBox.getChildren().add(continueButton);
-        borderPane.setBottom(vBox);
+        muteButton.setId("muteButton");
+        continueButton.setMinHeight(60);
+        continueButton.setMinWidth(130);
+        muteButton.setMinHeight(60);
+        muteButton.setMinWidth(130);
+        HBox hBox = new HBox(10, muteButton, continueButton);
+        hBox.setAlignment(Pos.TOP_CENTER);
+        borderPane.setBottom(hBox);
 
         continueButton.setOnAction(actionEvent -> {
             mediaPlayer.stop();

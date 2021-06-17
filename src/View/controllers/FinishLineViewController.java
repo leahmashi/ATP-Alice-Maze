@@ -14,7 +14,7 @@ public class FinishLineViewController extends AView
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        Media finishLineMedia = new Media(new File("resources/music/veryMerryUnbirthday.mp3").toURI().toString());
+        Media finishLineMedia = new Media(new File("resources/music/finalSceneMusic.mp3").toURI().toString());
         setMusic(finishLineMedia);
     }
 

@@ -34,7 +34,7 @@ public class MyViewController extends AView
         BorderPane borderPane = new BorderPane();
         Media media = new Media(new File("resources/clips/WhiteRabbitClip.mp4").toURI().toString());
         addClip(clipStage, borderPane, media, "View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
-        addContinueButton(borderPane, clipStage, "View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
+        addControlButtons(borderPane, clipStage, "View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
         Scene clipScene = new Scene(borderPane, 900, 650);
         clipScene.getStylesheets().add("View/CSSs/MainStyle.css");
         clipStage.setScene(clipScene);
