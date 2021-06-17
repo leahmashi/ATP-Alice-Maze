@@ -1,31 +1,31 @@
-#changeProperties {
-    -fx-background-image: url("../../../../../resources/images/caterpillar.jpg");
+#chooseMaze {
+    -fx-background-image: url("images/AliceFalling.jpg");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
 }
 
-#EnterThreadsNum, #chooseGeneratorLabel, #chooseSolverLabel {
+#chooseRowsLabel, #chooseColsLabel, #chooseMazeType {
     -fx-text-fill: white;
     -fx-font-family: "Calibari";
     -fx-font-size: 15px;
     -fx-font-weight: bold italic;
 }
 
-#numberOfThreads {
+#returnToText, #MainWindowText {
+    -fx-text-fill: white;
+    -fx-font-family: "Calibari";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold italic;
+}
+
+#EnterRowsText, #EnterColsText {
     -fx-text-fill: black;
     -fx-font-family: "Calibari";
     -fx-font-size: 12px;
     -fx-font-weight: bold italic;
 }
 
-#primChoice, #simpleChoice, #DFSChoice, #BFSChoice, #BestChoice {
-    -fx-text-fill: black;
-    -fx-font-family: "Calibari";
-    -fx-font-size: 15px;
-    -fx-font-weight: bold italic;
-}
-
-#saveChanges {
+#returnToMain, #Go, #loadMaze {
     -fx-text-fill: white;
     -fx-font-family: "Calibari";
     -fx-font-size: 13px;
@@ -34,7 +34,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
 
-#saveChanges:hover {
+#returnToMain:hover, #Go:hover, #loadMaze:hover {
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;

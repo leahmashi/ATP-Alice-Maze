@@ -39,9 +39,9 @@
         <ScrollPane fx:id="pane" hbarPolicy="ALWAYS" pannable="true" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER" onScroll="#zoom"  >
             <content>
 <!--        <Pane fx:id="pane" onScroll="#zoom" BorderPane.alignment="CENTER" >-->
-            <MazeDisplayer fx:id="mazeDisplayerFXML" imageFileNamePlayer="./resources/images/pawn-right.jpg"
-                           imageFileNameWall="./resources/images/bush-green.jpg" imageFileNameSol="./resources/images/Rose.jpg"
-                           imageFileNameEndPoint="./resources/images/queen-left.jpg" onMouseClicked="#mouseClicked"
+            <MazeDisplayer fx:id="mazeDisplayerFXML" imageFileNamePlayer="src/main/resources/CSSs/images/pawn-right.jpg"
+                           imageFileNameWall="src/main/resources/CSSs/images/bush-green.jpg" imageFileNameSol="src/main/resources/CSSs/images/Rose.jpg"
+                           imageFileNameEndPoint="src/main/resources/CSSs/images/queen-left.jpg" onMouseClicked="#mouseClicked"
                            onKeyPressed="#keyPressed" height="575.0" width="900.0" >
 <!--                height="575.0" width="900.0" onScroll="#zoom"-->
             </MazeDisplayer>

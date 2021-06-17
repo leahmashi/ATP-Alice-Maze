@@ -36,7 +36,7 @@ public class MenuBarOptions
         Parent root;
         try
         {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("View/FXMLs/ChooseMazeView.fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("FXMLs/ChooseMazeView.fxml")));
         } catch (IOException e)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -177,7 +177,7 @@ public class MenuBarOptions
         Media parentStageMedia = mediaPlayer.getMedia();
         Stage helpStage = new Stage();
         Parent root;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/helpWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("FXMLs/helpWindow.fxml"));
         try
         {
             root = fxmlLoader.load();

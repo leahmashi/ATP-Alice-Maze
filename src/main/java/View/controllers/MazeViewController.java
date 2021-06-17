@@ -77,10 +77,10 @@ public class MazeViewController extends AView
                 Window currWindow = mazeDisplayerFXML.getScene().getWindow();
                 MediaPlayer mediaPlayerCurr = mediaPlayer;
                 currWindow.setOnHidden(e -> mediaPlayerCurr.stop());
-                addClip(clipStage, borderPane, media, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
-                addControlButtons(borderPane, clipStage, "View/FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
+                addClip(clipStage, borderPane, media, "FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
+                addControlButtons(borderPane, clipStage, "FXMLs/finalSceneView.fxml", "finalStage", "finalStage");
                 Scene clipScene = new Scene(borderPane, 900, 650);
-                clipScene.getStylesheets().add("View/CSSs/finalStageStyle.css");
+                clipScene.getStylesheets().add("CSSs/finalStageStyle.css");
                 clipStage.setScene(clipScene);
                 clipStage.setTitle("veryMerryUnbirthday");
                 currWindow.hide();
@@ -102,7 +102,7 @@ public class MazeViewController extends AView
     @FXML
     public void returnToMain(ActionEvent actionEvent)
     {
-        Stage MainWindowStage = changeScene("View/FXMLs/MyView.fxml", "mainScene", "mainWindow");
+        Stage MainWindowStage = changeScene("FXMLs/MyView.fxml", "mainScene", "mainWindow");
         MainWindowStage.getScene().getWindow().setOnHidden(e -> mediaPlayer.stop());
         hideOldWindow(actionEvent);
     }
@@ -134,7 +134,6 @@ public class MazeViewController extends AView
     @FXML
     public void solveMaze() { viewModel.solveMaze(); }
 
-//    public void zoom(ScrollEvent scrollEvent) { mazeDisplayerFXML.zoom(scrollEvent); }
 
     @FXML
     public void saveFile()
@@ -155,17 +154,18 @@ public class MazeViewController extends AView
                 raisePopupWindow("The maze wasn't saved please choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
         }
     }
-
     public void zoom(ScrollEvent scrollEvent)
     {
         double zoomFactor = 1.05;
+        double deltaY = scrollEvent.getDeltaY();
         if (scrollEvent.isControlDown())
         {
-            if (scrollEvent.getDeltaY() < 0) {
+            if (deltaY < 0) {
                 if (scrollCount < -(viewModel.getMaze().getMazeArray().length + viewModel.getMaze().getMazeArray()[0].length) / 9) {
                     scrollEvent.consume();
                     return;
                 }
+
                 scrollCount--;
                 mazeDisplayerFXML.setScaleY(mazeDisplayerFXML.getScaleY() / zoomFactor);
                 mazeDisplayerFXML.setScaleX(mazeDisplayerFXML.getScaleX() / zoomFactor);

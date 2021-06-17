@@ -24,7 +24,7 @@ public class FinishLineViewController extends AView
     @FXML
     public void startOver(ActionEvent actionEvent)
     {
-        changeScene("View/FXMLs/MyView.fxml", "mainScene", "mainWindow");
+        changeScene("FXMLs/MyView.fxml", "mainScene", "mainWindow");
         hideOldWindow(actionEvent);
     }
 

@@ -17,6 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -35,6 +37,8 @@ public class MyModel extends Observable implements IModel
     private int playerCol;
     Server mazeGeneratingServer;
     Server solveSearchProblemSolver;
+    private static final Logger generateMazeLOG = LogManager.getLogger("generateMaze");
+    private static final Logger solveMazeLOG = LogManager.getLogger("solveMaze");
 
     //constructor
     public MyModel()
@@ -101,7 +105,7 @@ public class MyModel extends Observable implements IModel
     private void changeToMazeScene()
     {
         Stage MazeWindowStage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("FXMLs/MazeView.fxml"));
         Parent root;
         try {
             root = fxmlLoader.load();
@@ -187,6 +191,7 @@ public class MyModel extends Observable implements IModel
         playerRow = 0;
         setChanged();
         notifyObservers("maze generated");
+        generateMazeLOG.info(String.format("user[%d]: maze generated successfully", Thread.currentThread().getId()));
     }
 
     @Override
@@ -220,6 +225,7 @@ public class MyModel extends Observable implements IModel
         }
         setChanged();
         notifyObservers("maze solved");
+        solveMazeLOG.info(String.format("user[%d]: maze solved successfully", Thread.currentThread().getId()));
     }
 
     @Override

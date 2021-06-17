@@ -67,7 +67,7 @@ public class chooseMazeViewController extends AView
         }
 
         Stage MazeWindowStage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MazeView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("FXMLs/MazeView.fxml"));
         Parent root;
         try
         {
@@ -89,7 +89,7 @@ public class chooseMazeViewController extends AView
 
     public void returnToMain(ActionEvent actionEvent)
     {
-        changeScene("View/FXMLs/MyView.fxml", "mainScene", "mainWindow");
+        changeScene("FXMLs/MyView.fxml", "mainScene", "mainWindow");
         hideOldWindow(actionEvent);
     }
 

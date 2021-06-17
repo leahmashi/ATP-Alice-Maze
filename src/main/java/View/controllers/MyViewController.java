@@ -33,10 +33,10 @@ public class MyViewController extends AView
         Stage clipStage = new Stage();
         BorderPane borderPane = new BorderPane();
         Media media = new Media(new File("resources/clips/WhiteRabbitClip.mp4").toURI().toString());
-        addClip(clipStage, borderPane, media, "View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
-        addControlButtons(borderPane, clipStage, "View/FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
+        addClip(clipStage, borderPane, media, "FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
+        addControlButtons(borderPane, clipStage, "FXMLs/ChooseMazeView.fxml", "chooseMazeScene", "chooseMaze");
         Scene clipScene = new Scene(borderPane, 900, 650);
-        clipScene.getStylesheets().add("View/CSSs/MainStyle.css");
+        clipScene.getStylesheets().add("CSSs/MainStyle.css");
         clipStage.setScene(clipScene);
         clipStage.setTitle("WhiteRabbitClip");
         clipStage.show();

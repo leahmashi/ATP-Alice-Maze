@@ -56,7 +56,6 @@ public abstract class AView implements IView, Observer, Initializable
         if (!success)
         {
             raisePopupWindow("couldn't create new maze", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
-            return;
         }
     }
 
@@ -243,12 +242,12 @@ public abstract class AView implements IView, Observer, Initializable
         muteButton.setMinHeight(60);
         muteButton.setMinWidth(130);
         muteButton.setOnAction(e -> {
-            if (muteButton.getText() == "Mute")
+            if (muteButton.getText().equals("Mute"))
             {
                 muteButton.setText("Unmute");
                 mediaPlayer.setVolume(0);
             }
-            else if (muteButton.getText() == "Unmute")
+            else if (muteButton.getText().equals("Unmute"))
             {
                 muteButton.setText("Mute");
                 mediaPlayer.setMute(false);

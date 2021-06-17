@@ -19,7 +19,7 @@ public class Main extends Application
     public void start(Stage primaryStage) throws Exception
     {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/MyView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("FXMLs/MyView.fxml"));
         Parent root = fxmlLoader.load();
         root.setId("mainWindow");
         Scene mainScene = new Scene(root, 900, 650);
