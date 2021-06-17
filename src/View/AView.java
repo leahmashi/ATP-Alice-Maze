@@ -215,15 +215,10 @@ public abstract class AView implements IView, Observer, Initializable
 
     protected void addControlButtons(BorderPane borderPane, Stage clipStage, String nextSceneFxml, String nextStageTitle, String nextRootID)
     {
-        Button continueButton = new Button("continue");
-        Button muteButton = new Button("mute");
-        continueButton.setId("continueButton");
-        muteButton.setId("muteButton");
-        continueButton.setMinHeight(60);
-        continueButton.setMinWidth(130);
+        Button continueButton = createContinueButton();
+        Button muteButton = createMuteButton();
         muteButton.setMinHeight(60);
         muteButton.setMinWidth(130);
-//        muteButton. //TODO
         HBox hBox = new HBox(10, muteButton, continueButton);
         hBox.setAlignment(Pos.TOP_CENTER);
         borderPane.setBottom(hBox);
@@ -234,6 +229,38 @@ public abstract class AView implements IView, Observer, Initializable
             clipStage.hide();
             clipStage.close();
         });
+    }
+
+    private Button createMuteButton()
+    {
+        Button muteButton = new Button("Unmute");
+        muteButton.setId("muteButton");
+        muteButton.setMinHeight(60);
+        muteButton.setMinWidth(130);
+        muteButton.setOnAction(e -> {
+            String status;
+            if (muteButton.getText() == "Mute")
+            {
+                status = "Unmute";
+                mediaPlayer.setVolume(100);
+            }
+            else
+            {
+                status = "Mute";
+                mediaPlayer.setVolume(0);
+            }
+            muteButton.setText(status);
+        });
+        return muteButton;
+    }
+
+    private Button createContinueButton()
+    {
+        Button continueButton = new Button("continue");
+        continueButton.setId("continueButton");
+        continueButton.setMinHeight(60);
+        continueButton.setMinWidth(130);
+        return continueButton;
     }
 
     protected void hideOldWindow(ActionEvent actionEvent)

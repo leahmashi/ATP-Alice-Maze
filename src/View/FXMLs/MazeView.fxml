@@ -6,8 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import View.MazeDisplayer?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../CSSs/MazeStyle.css" fx:controller="View.controllers.MazeViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../CSSs/MazeStyle.css" fx:controller="View.controllers.MazeViewController"
+            fx:id="borderPane" >
     <bottom>
         <HBox alignment="CENTER" spacing="10" fillHeight="true" >
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0"
@@ -39,11 +40,12 @@
         </HBox>
     </bottom>
     <center>
-        <ScrollPane BorderPane.alignment="CENTER" fx:id="pane" pannable="true" hbarPolicy="ALWAYS" vbarPolicy="ALWAYS" >
-            <MazeDisplayer fx:id="mazeDisplayerFXML" height="575.0" width="900.0" imageFileNamePlayer="./resources/images/pawn-right.jpg"
+        <ScrollPane BorderPane.alignment="CENTER" fx:id="pane" pannable="true" hbarPolicy="ALWAYS" vbarPolicy="ALWAYS" maxHeight="-Infinity" maxWidth="-Infinity">
+            <MazeDisplayer fx:id="mazeDisplayerFXML" imageFileNamePlayer="./resources/images/pawn-right.jpg"
                            imageFileNameWall="./resources/images/bush-green.jpg" imageFileNameSol="./resources/images/Rose.jpg"
                            imageFileNameEndPoint="./resources/images/queen-left.jpg" onScroll="#zoom" onMouseClicked="#mouseClicked"
-                           onKeyPressed="#keyPressed">
+                           onKeyPressed="#keyPressed" height="${pane.height}" width="${pane.width}">
+<!--                height="575.0" width="900.0"-->
             </MazeDisplayer>
         </ScrollPane>
     </center>

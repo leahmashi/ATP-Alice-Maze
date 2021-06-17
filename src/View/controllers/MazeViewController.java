@@ -4,10 +4,12 @@ package View.controllers;
 import View.AView;
 import View.MazeDisplayer;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
@@ -31,6 +33,10 @@ public class MazeViewController extends AView
 
     @FXML
     private MazeDisplayer mazeDisplayerFXML;
+    @FXML
+    ScrollPane pane;
+    @FXML
+    BorderPane borderPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -40,6 +46,14 @@ public class MazeViewController extends AView
                 viewModel.generateMaze(_rows, _cols);
             Media musicFile = new Media(new File("resources/music/PaintingTheRosesRed.mp3").toURI().toString());
             setMusic(musicFile);
+            InvalidationListener listener = new InvalidationListener(){
+                @Override
+                public void invalidated(javafx.beans.Observable observable) {
+                    mazeDisplayerFXML.drawMaze(viewModel.getMaze());
+                }
+            };
+            mazeDisplayerFXML.widthProperty().addListener(listener);
+            mazeDisplayerFXML.heightProperty().addListener(listener);
         });
     }
 
