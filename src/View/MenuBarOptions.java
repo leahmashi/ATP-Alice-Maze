@@ -88,30 +88,19 @@ public class MenuBarOptions
         dialog.setTitle("Music Setting");
         dialog.initModality(Modality.APPLICATION_MODAL);
         AnchorPane pane = new AnchorPane();
-        //toggle switch
-        String status;
-        if(musicSwitch.isSelected())
-            status = "Music OFF";
-        else
-            status = "Music ON";
-        musicLabel = new Label(status);
-        HBox hbox = new HBox(2);
-        hbox.setPadding(new Insets(0, 10, 10, 10));
-        hbox.setSpacing(10);
-        hbox.getChildren().addAll(musicSwitch, musicLabel);
-        //slider
-        Label label = new Label("Volume");
-        slider = new Slider();
-        slider.setMax(100);
-        slider.setValue(mediaPlayer.getVolume() * 100);
-        slider.setShowTickLabels(true);
-        slider.setShowTickMarks(true);
-        VBox vbox = new VBox();
-        vbox.setPadding(new Insets(40, 60, 60, 60));
-        vbox.setSpacing(10);
-        vbox.getChildren().addAll(hbox, label, slider);
-        pane.getChildren().addAll(vbox);
+        setStatusToggleSwitch();
+        HBox hbox = new HBox(10, musicSwitch, musicLabel);
+        addSlider(mediaPlayer, hbox, pane);
         musicSwitch.setOnAction(actionEvent -> setMusic(mediaPlayer, actionEvent));
+        connectSliderToMediaPlayer(mediaPlayer);
+        Scene scene = new Scene(pane);
+        dialog.setScene(scene);
+        dialog.showAndWait();
+        return musicSwitch.isSelected();
+    }
+
+    private void connectSliderToMediaPlayer(MediaPlayer mediaPlayer)
+    {
         slider.valueProperty().addListener(observable -> {
             if (slider.isValueChanging())
             {
@@ -132,10 +121,32 @@ public class MenuBarOptions
                 }
             }
         });
-        Scene scene = new Scene(pane);
-        dialog.setScene(scene);
-        dialog.showAndWait();
-        return musicSwitch.isSelected();
+    }
+
+    private void addSlider(MediaPlayer mediaPlayer, HBox hbox, AnchorPane pane)
+    {
+        Label label = new Label("Volume");
+        slider = new Slider();
+        slider.setMax(100);
+        slider.setValue(mediaPlayer.getVolume() * 100);
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(40, 60, 60, 60));
+        vbox.setSpacing(10);
+        vbox.getChildren().addAll(hbox, label, slider);
+        pane.getChildren().addAll(vbox);
+    }
+
+    private void setStatusToggleSwitch()
+    {
+        String status;
+        if(musicSwitch.isSelected())
+            status = "Music OFF";
+        else
+            status = "Music ON";
+        musicLabel = new Label(status);
+
     }
 
     private void setMusic(MediaPlayer mediaPlayer, ActionEvent actionEvent)
@@ -190,26 +201,6 @@ public class MenuBarOptions
     @FXML
     public void showAbout(Window parentWindow)
     {
-        Stage helpStage = new Stage();
-        Parent root;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/aboutWindow.fxml"));
-        try
-        {
-            root = fxmlLoader.load();
-            root.setId("aboutWindow");
-            Scene helpScene = new Scene(root, 600, 400);
-            helpStage.setTitle("aboutWindow");
-            helpStage.setScene(helpScene);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        helpStage.show();
-        helpStage.setOnCloseRequest(e -> {
-            ((Stage) parentWindow).show();
-        });
-
         String text = """
                 Leah and Shahar are students from information systems in Ben-Gurion university
                 Shahar loves to code in his available time

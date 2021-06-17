@@ -223,6 +223,7 @@ public abstract class AView implements IView, Observer, Initializable
         continueButton.setMinWidth(130);
         muteButton.setMinHeight(60);
         muteButton.setMinWidth(130);
+//        muteButton. //TODO
         HBox hBox = new HBox(10, muteButton, continueButton);
         hBox.setAlignment(Pos.TOP_CENTER);
         borderPane.setBottom(hBox);
