@@ -4,7 +4,6 @@ package View.controllers;
 import View.AView;
 import View.MazeDisplayer;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -30,6 +29,7 @@ public class MazeViewController extends AView
     public int _rows;
     public int _cols;
     public boolean _isLoaded;
+    private int scrollCount;
 
     @FXML
     private MazeDisplayer mazeDisplayerFXML;
@@ -46,14 +46,10 @@ public class MazeViewController extends AView
                 viewModel.generateMaze(_rows, _cols);
             Media musicFile = new Media(new File("resources/music/PaintingTheRosesRed.mp3").toURI().toString());
             setMusic(musicFile);
-            InvalidationListener listener = new InvalidationListener(){
-                @Override
-                public void invalidated(javafx.beans.Observable observable) {
-                    mazeDisplayerFXML.drawMaze(viewModel.getMaze());
-                }
-            };
-            mazeDisplayerFXML.widthProperty().addListener(listener);
-            mazeDisplayerFXML.heightProperty().addListener(listener);
+            mazeDisplayerFXML.widthProperty().bind(pane.widthProperty());
+            mazeDisplayerFXML.heightProperty().bind(pane.heightProperty());
+            mazeDisplayerFXML.widthProperty().addListener(event -> mazeDisplayerFXML.drawMaze(viewModel.getMaze()));
+            mazeDisplayerFXML.heightProperty().addListener(event -> mazeDisplayerFXML.drawMaze(viewModel.getMaze()));
         });
     }
 
@@ -137,7 +133,7 @@ public class MazeViewController extends AView
     @FXML
     public void solveMaze() { viewModel.solveMaze(); }
 
-    public void zoom(ScrollEvent scrollEvent) { mazeDisplayerFXML.zoom(scrollEvent); }
+//    public void zoom(ScrollEvent scrollEvent) { mazeDisplayerFXML.zoom(scrollEvent); }
 
     @FXML
     public void saveFile()
@@ -157,5 +153,37 @@ public class MazeViewController extends AView
             else
                 raisePopupWindow("The maze wasn't saved please choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
         }
+    }
+
+    public void zoom(ScrollEvent scrollEvent)
+    {
+        double zoomFactor = 1.05;
+        if (scrollEvent.isControlDown())
+        {
+            if (scrollEvent.getDeltaY() < 0) {
+                if (scrollCount < -(viewModel.getMaze().getMazeArray().length + viewModel.getMaze().getMazeArray()[0].length) / 9) {
+                    scrollEvent.consume();
+                    return;
+                }
+                scrollCount--;
+                mazeDisplayerFXML.setScaleX(mazeDisplayerFXML.getScaleX() / zoomFactor);
+                mazeDisplayerFXML.setScaleY(mazeDisplayerFXML.getScaleY() / zoomFactor);
+            }
+            else if (scrollEvent.getDeltaY() > 0)
+            {
+                if (scrollCount > (viewModel.getMaze().getMazeArray().length + viewModel.getMaze().getMazeArray()[0].length) / 9)
+                {
+                    scrollEvent.consume();
+                    return;
+                }
+                scrollCount++;
+                mazeDisplayerFXML.setScaleX(mazeDisplayerFXML.getScaleX() * zoomFactor);
+                mazeDisplayerFXML.setScaleY(mazeDisplayerFXML.getScaleY() * zoomFactor);
+            }
+            else if (scrollEvent.getDeltaY() == 0)
+                return;
+            mazeDisplayerFXML.drawMaze(viewModel.getMaze());
+        }
+        scrollEvent.consume();
     }
 }

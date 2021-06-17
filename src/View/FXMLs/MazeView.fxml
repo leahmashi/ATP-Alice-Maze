@@ -5,25 +5,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import View.MazeDisplayer?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../CSSs/MazeStyle.css" fx:controller="View.controllers.MazeViewController"
-            fx:id="borderPane" >
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" stylesheets="@../CSSs/MazeStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MazeViewController">
     <bottom>
-        <HBox alignment="CENTER" spacing="10" fillHeight="true" >
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0"
-                    onAction="#returnToMain" BorderPane.alignment="BOTTOM_LEFT" fx:id="returnToMain" HBox.hgrow="ALWAYS">
+        <HBox alignment="CENTER" fillHeight="true" spacing="10">
+            <Button fx:id="returnToMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToMain" prefHeight="60.0" prefWidth="130.0" BorderPane.alignment="BOTTOM_LEFT" HBox.hgrow="ALWAYS">
                 <graphic>
-                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                          prefHeight="60.0" prefWidth="130.0">
-                        <Label text="return to" fx:id="returnTo">
+                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="130.0">
+                        <Label fx:id="returnTo" text="return to">
                             <VBox.margin>
-                                <Insets top="10.0" left="30.0"/>
+                                <Insets left="30.0" top="10.0" />
                             </VBox.margin>
                         </Label>
-                        <Label text="main window" fx:id="mainWindow">
+                        <Label fx:id="mainWindow" text="main window">
                             <VBox.margin>
-                                <Insets left="20.0"/>
+                                <Insets left="20.0" />
                             </VBox.margin>
                         </Label>
                     </VBox>
@@ -32,7 +27,7 @@
                     <Insets bottom="10.0" />
                 </HBox.margin>
             </Button>
-            <Button fx:id="solveMaze" onAction="#solveMaze" prefHeight="60.0" prefWidth="130.0" text="Solve Maze" HBox.hgrow="ALWAYS" BorderPane.alignment="BOTTOM_RIGHT">
+            <Button fx:id="solveMaze" onAction="#solveMaze" prefHeight="60.0" prefWidth="130.0" text="Solve Maze" BorderPane.alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
                 <HBox.margin>
                     <Insets bottom="10.0" />
                 </HBox.margin>
@@ -40,13 +35,16 @@
         </HBox>
     </bottom>
     <center>
-        <ScrollPane BorderPane.alignment="CENTER" fx:id="pane" pannable="true" hbarPolicy="ALWAYS" vbarPolicy="ALWAYS" maxHeight="-Infinity" maxWidth="-Infinity">
+        <ScrollPane fx:id="pane" BorderPane.alignment="CENTER" onScroll="#zoom">
+<!--            hbarPolicy="ALWAYS" pannable="true" vbarPolicy="ALWAYS"-->
+<!--        <Pane fx:id="pane" onScroll="#zoom" BorderPane.alignment="CENTER" >-->
             <MazeDisplayer fx:id="mazeDisplayerFXML" imageFileNamePlayer="./resources/images/pawn-right.jpg"
                            imageFileNameWall="./resources/images/bush-green.jpg" imageFileNameSol="./resources/images/Rose.jpg"
-                           imageFileNameEndPoint="./resources/images/queen-left.jpg" onScroll="#zoom" onMouseClicked="#mouseClicked"
-                           onKeyPressed="#keyPressed" height="${pane.height}" width="${pane.width}">
-<!--                height="575.0" width="900.0"-->
+                           imageFileNameEndPoint="./resources/images/queen-left.jpg" onMouseClicked="#mouseClicked"
+                           onKeyPressed="#keyPressed"  height="575.0" width="900.0">
+<!--                height="575.0" width="900.0" onScroll="#zoom"-->
             </MazeDisplayer>
+<!--        </Pane>-->
         </ScrollPane>
     </center>
     <top>
@@ -54,43 +52,39 @@
             <MenuBar>
                 <Menu mnemonicParsing="false">
                     <graphic>
-                        <Button text="File" prefWidth="60.0"/>
+                        <Button prefWidth="60.0" text="File" />
                     </graphic>
-                    <MenuItem mnemonicParsing="false" text="New" onAction="#createNewFile"/>
-                    <MenuItem mnemonicParsing="false" text="Save" onAction="#saveFile"/>
-                    <MenuItem mnemonicParsing="false" text="Load" onAction="#loadFile"/>
+                    <MenuItem mnemonicParsing="false" onAction="#createNewFile" text="New" />
+                    <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save" />
+                    <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Load" />
                 </Menu>
-                <Menu mnemonicParsing="false" >
+                <Menu mnemonicParsing="false">
                     <graphic>
-                        <Button text="Options" prefWidth="60.0"/>
+                        <Button prefWidth="60.0" text="Options" />
                     </graphic>
-                    <MenuItem mnemonicParsing="false" text="Properties" onAction="#showProperties"/>
+                    <MenuItem mnemonicParsing="false" onAction="#showProperties" text="Properties" />
                 </Menu>
                 <Menu>
                     <graphic>
-                        <Button text="Settings" onAction="#showSettings" prefWidth="60.0"/>
-                    </graphic>
-                </Menu>
-                <Menu mnemonicParsing="false" >
-                    <graphic>
-                        <Button text="Help" onAction="#showHelp" prefWidth="60.0"/>
+                        <Button onAction="#showSettings" prefWidth="60.0" text="Settings" />
                     </graphic>
                 </Menu>
                 <Menu mnemonicParsing="false">
                     <graphic>
-                        <Button text="About" onAction="#showAbout" prefWidth="60.0"/>
+                        <Button onAction="#showHelp" prefWidth="60.0" text="Help" />
                     </graphic>
                 </Menu>
-                <Menu mnemonicParsing="false" >
+                <Menu mnemonicParsing="false">
                     <graphic>
-                        <Button text="Exit" onAction="#exitProgram" prefWidth="60.0"/>
+                        <Button onAction="#showAbout" prefWidth="60.0" text="About" />
+                    </graphic>
+                </Menu>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <Button onAction="#exitProgram" prefWidth="60.0" text="Exit" />
                     </graphic>
                 </Menu>
             </MenuBar>
         </VBox>
     </top>
 </BorderPane>
-
-
-
-

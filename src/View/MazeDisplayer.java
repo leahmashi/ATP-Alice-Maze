@@ -9,7 +9,6 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
@@ -168,39 +167,85 @@ public class MazeDisplayer extends Canvas
         draw();
     }
 
-    public void zoom(ScrollEvent scrollEvent)
-    {
-        if (scrollEvent.isControlDown())
-        {
-            double zoomFactor = 1.05;
-            if (scrollEvent.getDeltaY() < 0)
-            {
-                if (scrollCount < -(mazeArr.length + mazeArr[0].length) / 9)
-                {
-                    scrollEvent.consume();
-                    return;
-                }
-                scrollCount--;
-                setHeight(getHeight() / zoomFactor);
-                setWidth(getWidth() / zoomFactor);
-            }
-            else if (scrollEvent.getDeltaY() > 0)
-            {
-                if (scrollCount > (mazeArr.length + mazeArr[0].length) / 9)
-                {
-                    scrollEvent.consume();
-                    return;
-                }
-                scrollCount++;
-                setWidth(getWidth() * zoomFactor);
-                setHeight(getHeight() * zoomFactor);
-            }
-            else if (scrollEvent.getDeltaY() == 0)
-                return;
-            draw();
-        }
-        scrollEvent.consume();
-    }
+//    public void zoom(ScrollEvent scrollEvent)
+//    {
+//        if (scrollEvent.isControlDown())
+//        {
+//            double zoomFactor = 1.05;
+//            if (scrollEvent.getDeltaY() < 0)
+//            {
+//                if (scrollCount < -(mazeArr.length + mazeArr[0].length) / 9)
+//                {
+//                    scrollEvent.consume();
+//                    return;
+//                }
+//                scrollCount--;
+//                setHeight(getHeight() / zoomFactor);
+//                setWidth(getWidth() / zoomFactor);
+//            }
+//            else if (scrollEvent.getDeltaY() > 0)
+//            {
+//                if (scrollCount > (mazeArr.length + mazeArr[0].length) / 9)
+//                {
+//                    scrollEvent.consume();
+//                    return;
+//                }
+//                scrollCount++;
+//                setWidth(getWidth() * zoomFactor);
+//                setHeight(getHeight() * zoomFactor);
+//            }
+//            else if (scrollEvent.getDeltaY() == 0)
+//                return;
+//            draw();
+//        }
+//        scrollEvent.consume();
+//    }
+
+//    public void zoom(ScrollEvent scrollEvent)
+//    {
+//        double delta = 1.2;
+//        DoubleProperty myScale = new SimpleDoubleProperty(1.0);
+//
+//        double scale = myScale.get(); // currently we only use Y, same value is used for X
+//        double oldScale = scale;
+//
+//        if (scrollEvent.getDeltaY() < 0)
+//            scale /= delta;
+//        else
+//            scale *= delta;
+//
+//        scale = clamp( scale, .1d, 10.0d);
+//
+//        double f = (scale / oldScale)-1;
+//
+//        double dx = (scrollEvent.getSceneX() - (this.getBoundsInParent().getWidth()/2 + this.getBoundsInParent().getMinX()));
+//        double dy = (scrollEvent.getSceneY() - (this.getBoundsInParent().getHeight()/2 + this.getBoundsInParent().getMinY()));
+//
+//        myScale.set(scale);
+//
+//        // note: pivot value must be untransformed, i. e. without scaling
+//        this.setPivot(f*dx, f*dy);
+//
+//        scrollEvent.consume();
+//
+//    }
+//
+//    public void setPivot( double x, double y) {
+//        setTranslateX(getTranslateX()-x);
+//        setTranslateY(getTranslateY()-y);
+//    }
+//
+//    private static double clamp( double value, double min, double max) {
+//
+//        if( Double.compare(value, min) < 0)
+//            return min;
+//
+//        if( Double.compare(value, max) > 0)
+//            return max;
+//
+//        return value;
+//    }
+
 }
 
 
