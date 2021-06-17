@@ -78,7 +78,7 @@ public class MyViewModel extends Observable implements Observer
         Media parentStageMedia = mediaPlayer.getMedia();
         Stage changePropertiesStage = new Stage();
         Parent root;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("View/FXMLs/changePropertiesView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("FXMLs/changePropertiesView.fxml"));
         try
         {
             root = fxmlLoader.load();
