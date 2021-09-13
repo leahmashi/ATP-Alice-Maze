@@ -49,7 +49,6 @@ public abstract class AView implements IView, Observer, Initializable
     @Override
     public void update(Observable o, Object arg) { }
 
-    @FXML
     public void createNewFile(ActionEvent actionEvent)
     {
         boolean success = menuBarOptions.createNewFile(actionEvent, mediaPlayer);
@@ -88,6 +87,7 @@ public abstract class AView implements IView, Observer, Initializable
         isOff = menuBarOptions.showSettings(mediaPlayer);
         volume = mediaPlayer.getVolume();
     }
+
     @FXML
     public void showHelp(ActionEvent actionEvent)
     {
@@ -189,12 +189,7 @@ public abstract class AView implements IView, Observer, Initializable
         mediaPlayer.setVolume(volume);
         MediaView mediaView = new MediaView(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setOnReady(new Runnable() {
-            @Override
-            public void run() {
-                mediaPlayer.play();
-            }
-        });
+        mediaPlayer.setOnReady(() -> mediaPlayer.play());
         mediaView.setPreserveRatio(true);
         borderPane.setCenter(mediaView);
 
@@ -235,7 +230,7 @@ public abstract class AView implements IView, Observer, Initializable
     {
         Button muteButton = new Button();
         if (isOff)
-            muteButton.setText("Unmute");
+            muteButton.setText("UnMute");
         else
             muteButton.setText("Mute");
         muteButton.setId("muteButton");
@@ -244,10 +239,10 @@ public abstract class AView implements IView, Observer, Initializable
         muteButton.setOnAction(e -> {
             if (muteButton.getText().equals("Mute"))
             {
-                muteButton.setText("Unmute");
+                muteButton.setText("UnMute");
                 mediaPlayer.setVolume(0);
             }
-            else if (muteButton.getText().equals("Unmute"))
+            else if (muteButton.getText().equals("UnMute"))
             {
                 muteButton.setText("Mute");
                 mediaPlayer.setMute(false);
@@ -285,6 +280,4 @@ public abstract class AView implements IView, Observer, Initializable
         hideOldWindow(actionEvent);
     }
 
-    @Override
-    public MediaPlayer getMediaPlayer() { return mediaPlayer; }
 }

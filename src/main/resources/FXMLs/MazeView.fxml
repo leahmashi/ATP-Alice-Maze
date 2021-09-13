@@ -50,43 +50,47 @@
         </ScrollPane>
     </center>
     <top>
-        <VBox BorderPane.alignment="CENTER">
-            <MenuBar>
-                <Menu mnemonicParsing="false">
-                    <graphic>
-                        <Button prefWidth="60.0" text="File" />
-                    </graphic>
-                    <MenuItem mnemonicParsing="false" onAction="#createNewFile" text="New" />
-                    <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save" />
-                    <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Load" />
-                </Menu>
-                <Menu mnemonicParsing="false">
-                    <graphic>
-                        <Button prefWidth="60.0" text="Options" />
-                    </graphic>
-                    <MenuItem mnemonicParsing="false" onAction="#showProperties" text="Properties" />
-                </Menu>
-                <Menu>
-                    <graphic>
-                        <Button onAction="#showSettings" prefWidth="60.0" text="Settings" />
-                    </graphic>
-                </Menu>
-                <Menu mnemonicParsing="false">
-                    <graphic>
-                        <Button onAction="#showHelp" prefWidth="60.0" text="Help" />
-                    </graphic>
-                </Menu>
-                <Menu mnemonicParsing="false">
-                    <graphic>
-                        <Button onAction="#showAbout" prefWidth="60.0" text="About" />
-                    </graphic>
-                </Menu>
-                <Menu mnemonicParsing="false">
-                    <graphic>
-                        <Button onAction="#exitProgram" prefWidth="60.0" text="Exit" />
-                    </graphic>
-                </Menu>
-            </MenuBar>
-        </VBox>
+        <MenuBar>
+            <Menu mnemonicParsing="false">
+                <graphic>
+                    <MenuButton prefWidth="80.0" text="File">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#createNewFile" text="New" />
+                            <MenuItem mnemonicParsing="false" text="Save" onAction="#saveFile"/>
+                            <MenuItem mnemonicParsing="false" onAction="#loadFile" text="Load" />
+                        </items>
+                    </MenuButton>
+                </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false">
+                <graphic>
+                    <MenuButton prefWidth="80.0" text="Options">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#showProperties" text="Properties" />
+                        </items>
+                    </MenuButton>
+                </graphic>
+            </Menu>
+            <Menu>
+                <graphic>
+                    <Button onAction="#showSettings" prefWidth="80.0" text="Settings" />
+                </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false">
+                <graphic>
+                    <Button onAction="#showHelp" prefWidth="80.0" text="Help" />
+                </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false">
+                <graphic>
+                    <Button onAction="#showAbout" prefWidth="80.0" text="About" />
+                </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false">
+                <graphic>
+                    <Button onAction="#exitProgram" prefWidth="80.0" text="Exit" />
+                </graphic>
+            </Menu>
+        </MenuBar>
     </top>
 </BorderPane>

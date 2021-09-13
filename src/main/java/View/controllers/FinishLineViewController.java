@@ -3,6 +3,7 @@ package View.controllers;
 import View.AView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 
 import java.io.File;
@@ -11,6 +12,9 @@ import java.util.ResourceBundle;
 
 public class FinishLineViewController extends AView
 {
+    @FXML
+    public Button StartOver;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
