@@ -34,7 +34,7 @@ public class MazeViewController extends AView
     @FXML
     private MazeDisplayer mazeDisplayerFXML;
     @FXML
-    ScrollPane pane;
+    ScrollPane ScrollPane;
     @FXML
     BorderPane borderPane;
 
@@ -46,8 +46,8 @@ public class MazeViewController extends AView
                 viewModel.generateMaze(_rows, _cols);
             Media musicFile = new Media(new File("resources/music/PaintingTheRosesRed.mp3").toURI().toString());
             setMusic(musicFile);
-            mazeDisplayerFXML.widthProperty().bind(pane.widthProperty());
-            mazeDisplayerFXML.heightProperty().bind(pane.heightProperty());
+            mazeDisplayerFXML.widthProperty().bind(ScrollPane.widthProperty());
+            mazeDisplayerFXML.heightProperty().bind(ScrollPane.heightProperty());
             mazeDisplayerFXML.widthProperty().addListener(event -> mazeDisplayerFXML.drawMaze(viewModel.getMaze()));
             mazeDisplayerFXML.heightProperty().addListener(event -> mazeDisplayerFXML.drawMaze(viewModel.getMaze()));
 
@@ -154,12 +154,10 @@ public class MazeViewController extends AView
                 raisePopupWindow("The maze wasn't saved please choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
         }
     }
-    public void zoom(ScrollEvent scrollEvent)
-    {
+    public void zoom(ScrollEvent scrollEvent) {
         double zoomFactor = 1.05;
         double deltaY = scrollEvent.getDeltaY();
-        if (scrollEvent.isControlDown())
-        {
+        if (scrollEvent.isControlDown()) {
             if (deltaY < 0) {
                 if (scrollCount < -(viewModel.getMaze().getMazeArray().length + viewModel.getMaze().getMazeArray()[0].length) / 9) {
                     scrollEvent.consume();
@@ -170,11 +168,8 @@ public class MazeViewController extends AView
                 mazeDisplayerFXML.setScaleY(mazeDisplayerFXML.getScaleY() / zoomFactor);
                 mazeDisplayerFXML.setScaleX(mazeDisplayerFXML.getScaleX() / zoomFactor);
 
-            }
-            else if (scrollEvent.getDeltaY() > 0)
-            {
-                if (scrollCount > (viewModel.getMaze().getMazeArray().length + viewModel.getMaze().getMazeArray()[0].length) / 9)
-                {
+            } else if (scrollEvent.getDeltaY() > 0) {
+                if (scrollCount > (viewModel.getMaze().getMazeArray().length + viewModel.getMaze().getMazeArray()[0].length) / 9) {
                     scrollEvent.consume();
                     return;
                 }
@@ -182,12 +177,11 @@ public class MazeViewController extends AView
                 mazeDisplayerFXML.setScaleY(mazeDisplayerFXML.getScaleY() * zoomFactor);
                 mazeDisplayerFXML.setScaleX(mazeDisplayerFXML.getScaleX() * zoomFactor);
 
-            }
-            else if (scrollEvent.getDeltaY() == 0)
+            } else if (scrollEvent.getDeltaY() == 0)
                 return;
             mazeDisplayerFXML.drawMaze(viewModel.getMaze());
         }
         scrollEvent.consume();
-    }
 
+    }
 }

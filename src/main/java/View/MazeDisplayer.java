@@ -166,7 +166,6 @@ public class MazeDisplayer extends Canvas
         this.solution = solution;
         draw();
     }
-
 }
 
 
