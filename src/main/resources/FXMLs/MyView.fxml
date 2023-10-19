@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" stylesheets="@../CSSs/MainStyle.css"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.MyViewController">
     <top>
         <MenuBar>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <MenuButton prefWidth="80.0" text="File">
+                    <MenuButton prefWidth="80.0" text="File" fx:id="File">
                         <items>
                             <MenuItem mnemonicParsing="false" onAction="#createNewFile" text="New" />
                             <MenuItem disable="true" mnemonicParsing="false" text="Save" />
@@ -20,7 +21,7 @@
             </Menu>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <MenuButton prefWidth="80.0" text="Options">
+                    <MenuButton prefWidth="80.0" text="Options" fx:id="Options">
                         <items>
                             <MenuItem mnemonicParsing="false" onAction="#showProperties" text="Properties" />
                         </items>
@@ -29,32 +30,35 @@
             </Menu>
             <Menu>
                 <graphic>
-                    <Button onAction="#showSettings" prefWidth="80.0" text="Settings" />
+                    <Button onAction="#showSettings" prefWidth="80.0" text="Settings" fx:id="Settings"/>
                 </graphic>
             </Menu>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <Button onAction="#showHelp" prefWidth="80.0" text="Help" />
+                    <Button onAction="#showHelp" prefWidth="80.0" text="Help" fx:id="HelpTop"/>
                 </graphic>
             </Menu>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <Button onAction="#showAbout" prefWidth="80.0" text="About" />
+                    <Button onAction="#showAbout" prefWidth="80.0" text="About" fx:id="About"/>
                 </graphic>
             </Menu>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <Button onAction="#exitProgram" prefWidth="80.0" text="Exit" />
+                    <Button onAction="#exitProgram" prefWidth="80.0" text="Exit" fx:id="Exit"/>
                 </graphic>
             </Menu>
         </MenuBar>
     </top>
    <bottom>
-          <HBox alignment="CENTER" spacing="50.0" BorderPane.alignment="CENTER">
-              <Button fx:id="generateMaze" alignment="CENTER" onAction="#generateMaze" prefHeight="60.0" prefWidth="130.0" text="Generate Maze" textAlignment="CENTER" />
-              <Button fx:id="LoadMaze" alignment="CENTER" onAction="#loadFileButton" prefHeight="60.0" prefWidth="130.0" text="Load maze" textAlignment="CENTER" />
-              <Button fx:id="Properties" alignment="CENTER" onAction="#showPropertiesButton" prefHeight="60.0" prefWidth="130.0" text="Properties" textAlignment="CENTER" />
-              <Button fx:id="Help" alignment="CENTER" onAction="#showHelp" prefHeight="60.0" prefWidth="130.0" text="Help" textAlignment="CENTER" />
-          </HBox>
+      <HBox alignment="CENTER" spacing="50.0" BorderPane.alignment="CENTER">
+          <BorderPane.margin>
+              <Insets bottom="15.0" left="25.0" right="25.0" top="0.0" />
+          </BorderPane.margin>
+          <Button fx:id="generateMaze" alignment="CENTER" onAction="#generateMaze" prefHeight="60.0" prefWidth="130.0" text="Generate Maze" textAlignment="CENTER" />
+          <Button fx:id="LoadMaze" alignment="CENTER" onAction="#loadFileButton" prefHeight="60.0" prefWidth="130.0" text="Load maze" textAlignment="CENTER" />
+          <Button fx:id="Properties" alignment="CENTER" onAction="#showPropertiesButton" prefHeight="60.0" prefWidth="130.0" text="Properties" textAlignment="CENTER" />
+          <Button fx:id="Help" alignment="CENTER" onAction="#showHelp" prefHeight="60.0" prefWidth="130.0" text="Help" textAlignment="CENTER" />
+      </HBox>
    </bottom>
 </BorderPane>

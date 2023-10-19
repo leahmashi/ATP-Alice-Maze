@@ -43,7 +43,7 @@ public class MyModel extends Observable implements IModel
     //constructor
     public MyModel()
     {
-        mazeGeneratingServer = new Server(5400, 1000, new ServerStrategyGenerateMaze());
+        mazeGeneratingServer = new Server(5454, 1000, new ServerStrategyGenerateMaze());
         solveSearchProblemSolver = new Server(5401,1000, new ServerStrategySolveSearchProblem());
 
         solveSearchProblemSolver.start();
@@ -158,7 +158,7 @@ public class MyModel extends Observable implements IModel
     {
         try
         {
-            Client client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy()
+            Client client = new Client(InetAddress.getByName("localhost"), 5454, new IClientStrategy()
             {
                 @Override
                 public void clientStrategy(InputStream inFromServer, OutputStream outToServer)
@@ -173,7 +173,7 @@ public class MyModel extends Observable implements IModel
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
                         InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                        byte[] decompressedMaze = new byte[(rows*cols)+12 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze
+                        byte[] decompressedMaze = new byte[(rows*cols)+12 /*CHANGE SIZE ACCORDING TO YOUR MAZE SIZE*/]; //allocating byte[] for the decompressed maze
                         is.read(decompressedMaze); //Fill decompressedMaze with bytes
                         maze = new Maze(decompressedMaze);
                     } catch (Exception e)
@@ -199,7 +199,7 @@ public class MyModel extends Observable implements IModel
     {
         try
         {
-            Client client = new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy()
+            Client client = new Client(InetAddress.getByName("localhost"), 5401, new IClientStrategy()
             {
                 @Override
                 public void clientStrategy(InputStream inFromServer, OutputStream outToServer)

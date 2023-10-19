@@ -1,3 +1,5 @@
+@import "Menu-Bar.css"
+
 #changeProperties {
     -fx-background-image: url("images/caterpillar.jpg");
     -fx-background-size: 100% 100%;
@@ -28,18 +30,28 @@
 #saveChanges {
     -fx-text-fill: white;
     -fx-font-family: "Calibari";
-    -fx-font-size: 13px;
-    -fx-font-weight: bold italic;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
     -fx-background-color: linear-gradient(#61a2b1, #2A5058);
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
 
 #saveChanges:hover {
-    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
-    -fx-background-radius: 3px, 3px, 2px, 1px;
-    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-background-color: #3c7fb1, linear-gradient(#fafdfe, #e8f5fc),linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em;
     -fx-text-fill: -fx-text-base-color;
     -fx-alignment: CENTER;
     -fx-content-display: LEFT;
+}
+
+.choice-box .menu-item:focused > .label, .choice-box > .label {
+    -fx-text-fill: black;
+}
+
+#chooseProperties {
+    -fx-background-color: rgba(0, 100, 100, 0.8);
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
 }

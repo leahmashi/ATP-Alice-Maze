@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -54,7 +55,7 @@ public abstract class AView implements IView, Observer, Initializable
         boolean success = menuBarOptions.createNewFile(actionEvent, mediaPlayer);
         if (!success)
         {
-            raisePopupWindow("couldn't create new maze", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+            raisePopupWindow("Couldn't create new maze", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.ERROR);
         }
     }
 
@@ -64,7 +65,7 @@ public abstract class AView implements IView, Observer, Initializable
         boolean success = menuBarOptions.loadFile(viewModel);
         if (!success)
         {
-            raisePopupWindow("couldn't load file choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+            raisePopupWindow("Couldn't load file\nChoose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.ERROR);
             return;
         }
         Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
@@ -170,8 +171,14 @@ public abstract class AView implements IView, Observer, Initializable
         height.bind(Bindings.selectDouble(alert.getDialogPane().sceneProperty(), "height"));
         mediaView.setPreserveRatio(true);
         alert.getDialogPane().setContent(content);
-        alert.setTitle("popupWindow");
+        if (type == Alert.AlertType.ERROR) {
+            alert.setTitle("Off With There Heads!!!");
+        }
+        else {
+            alert.setTitle("Well Done!");
+        }
         alert.setHeaderText(text);
+        alert.getDialogPane().getStylesheets().add("CSSs/Alerts.css");
         alert.setOnShowing(e -> {
             oldMediaPlayer.stop();
             mediaPlayer.play();
@@ -216,6 +223,7 @@ public abstract class AView implements IView, Observer, Initializable
         muteButton.setMinWidth(130);
         HBox hBox = new HBox(10, muteButton, continueButton);
         hBox.setAlignment(Pos.TOP_CENTER);
+        borderPane.setPadding(new Insets(15, 25, 25, 0));
         borderPane.setBottom(hBox);
 
         continueButton.setOnAction(actionEvent -> {
@@ -254,7 +262,7 @@ public abstract class AView implements IView, Observer, Initializable
 
     private Button createContinueButton()
     {
-        Button continueButton = new Button("continue");
+        Button continueButton = new Button("Continue");
         continueButton.setId("continueButton");
         continueButton.setMinHeight(60);
         continueButton.setMinWidth(130);
@@ -274,7 +282,7 @@ public abstract class AView implements IView, Observer, Initializable
         boolean success = menuBarOptions.loadFile(viewModel);
         if (!success)
         {
-            raisePopupWindow("couldn't load file choose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+            raisePopupWindow("Couldn't load file\nChoose a legal file (type *.maze)", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.ERROR);
             return;
         }
         hideOldWindow(actionEvent);

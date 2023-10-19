@@ -1,86 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.geometry.*?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.*?>
 <AnchorPane prefHeight="650.0" prefWidth="900.0" stylesheets="@../CSSs/changePropertiesStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.ChangePropertiesController">
     <BorderPane prefHeight="650.0" prefWidth="900.0">
         <center>
-            <GridPane BorderPane.alignment="CENTER">
-                <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                </rowConstraints>
-                <ChoiceBox fx:id="solvingAlgorithm" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                    <GridPane.margin>
-                        <Insets bottom="50.0" left="15.0"/>
-                    </GridPane.margin>
-                    <items>
-                        <FXCollections fx:id="choiceBoxSolver" fx:factory="observableArrayList">
-                            <String fx:id="DFSChoice" fx:value="Depth First Search"/>
-                            <String fx:id="BFSChoice" fx:value="Breadth First Search"/>
-                            <String fx:id="BestChoice" fx:value="Best First Search"/>
-                            <String fx:value=""/>
-                        </FXCollections>
-                    </items>
-                </ChoiceBox>
-                <TextField fx:id="numberOfThreads" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                    <GridPane.margin>
-                        <Insets top="100.0"/>
-                    </GridPane.margin>
-                </TextField>
-                <Label fx:id="EnterThreadsNum" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"
-                       prefWidth="180.0" text="Enter number of threads:" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                    <GridPane.margin>
-                        <Insets bottom="50.0" left="10.0" top="100.0"/>
-                    </GridPane.margin>
-                </Label>
-                <ChoiceBox fx:id="mazeGenerator" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                    <GridPane.margin>
-                        <Insets left="15.0" top="10.0"/>
-                    </GridPane.margin>
-                    <items>
-                        <FXCollections fx:id="choiceBoxGenerator" fx:factory="observableArrayList">
-                            <String fx:id="simpleChoice" fx:value="Simple"/>
-                            <String fx:id="primChoice" fx:value="Randomized Prim"/>
-                            <String fx:value=""/>
-                        </FXCollections>
-                    </items>
-                </ChoiceBox>
-                <Label fx:id="chooseGeneratorLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"
-                       prefWidth="230.0" text="choose Maze generator type:" GridPane.columnIndex="2"
-                       GridPane.rowIndex="2">
-                    <GridPane.margin>
-                        <Insets bottom="40.0"/>
-                    </GridPane.margin>
-                </Label>
-                <Label fx:id="chooseSolverLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"
-                       prefWidth="200.0" text="choose Solving algorithm:" GridPane.columnIndex="2"
-                       GridPane.rowIndex="3">
-                    <GridPane.margin>
-                        <Insets bottom="105.0"/>
-                    </GridPane.margin>
-                </Label>
-                <Button fx:id="saveChanges" mnemonicParsing="false" onAction="#saveNewProperties" text="save changes"
-                        GridPane.columnIndex="2" GridPane.rowIndex="4">
-                    <GridPane.margin>
-                        <Insets bottom="150.0" left="50.0"/>
-                    </GridPane.margin>
-                </Button>
-            </GridPane>
+            <VBox fx:id="chooseProperties" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="250.0"
+                  spacing="20.0" BorderPane.alignment="CENTER">
+                <children>
+                    <Label fx:id="EnterThreadsNum" text="Enter number of threads:" />
+                    <TextField fx:id="numberOfThreads" alignment="CENTER" promptText="number of rows" />
+                    <Label fx:id="chooseGeneratorLabel" text="Choose maze generator:" />
+                    <ChoiceBox prefWidth="250.0" fx:id="mazeGenerator">
+                        <items>
+                            <FXCollections fx:id="choiceBoxMaze" fx:factory="observableArrayList">
+                                <String fx:value="Simple" />
+                                <String fx:value="Randomized Prim" />
+                            </FXCollections>
+                        </items>
+                    </ChoiceBox>
+                    <Label fx:id="chooseSolverLabel" text="Choose Solving algorithm:" />
+                    <ChoiceBox prefWidth="250.0" fx:id="solvingAlgorithm">
+                        <items>
+                            <FXCollections fx:id="choiceBoxSolver" fx:factory="observableArrayList">
+                                <String fx:id="DFSChoice" fx:value="Depth First Search"/>
+                                <String fx:id="BFSChoice" fx:value="Breadth First Search"/>
+                                <String fx:id="BestChoice" fx:value="Best First Search"/>
+                                <String fx:value=""/>
+                            </FXCollections>
+                        </items>
+                    </ChoiceBox>
+                    <Button fx:id="saveChanges" mnemonicParsing="false" onAction="#saveNewProperties" text="save changes"/>
+                </children>
+            </VBox>
+<!--            <GridPane BorderPane.alignment="CENTER">-->
+<!--                <columnConstraints>-->
+<!--                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>-->
+<!--                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>-->
+<!--                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>-->
+<!--                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>-->
+<!--                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>-->
+<!--                </columnConstraints>-->
+<!--                <rowConstraints>-->
+<!--                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>-->
+<!--                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>-->
+<!--                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>-->
+<!--                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>-->
+<!--                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>-->
+<!--                </rowConstraints>-->
+<!--                <ChoiceBox fx:id="solvingAlgorithm" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3">-->
+<!--                    <GridPane.margin>-->
+<!--                        <Insets bottom="50.0" left="15.0"/>-->
+<!--                    </GridPane.margin>-->
+<!--                    <items>-->
+<!--                        <FXCollections fx:id="choiceBoxSolver" fx:factory="observableArrayList">-->
+<!--                            <String fx:id="DFSChoice" fx:value="Depth First Search"/>-->
+<!--                            <String fx:id="BFSChoice" fx:value="Breadth First Search"/>-->
+<!--                            <String fx:id="BestChoice" fx:value="Best First Search"/>-->
+<!--                            <String fx:value=""/>-->
+<!--                        </FXCollections>-->
+<!--                    </items>-->
+<!--                </ChoiceBox>-->
+<!--                <TextField fx:id="numberOfThreads" GridPane.columnIndex="2" GridPane.rowIndex="1">-->
+<!--                    <GridPane.margin>-->
+<!--                        <Insets top="100.0"/>-->
+<!--                    </GridPane.margin>-->
+<!--                </TextField>-->
+<!--                <Label fx:id="EnterThreadsNum" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"-->
+<!--                       prefWidth="180.0" text="Enter number of threads:" GridPane.columnIndex="2" GridPane.rowIndex="1">-->
+<!--                    <GridPane.margin>-->
+<!--                        <Insets bottom="50.0" left="10.0" top="100.0"/>-->
+<!--                    </GridPane.margin>-->
+<!--                </Label>-->
+<!--                <ChoiceBox fx:id="mazeGenerator" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2">-->
+<!--                    <GridPane.margin>-->
+<!--                        <Insets left="15.0" top="10.0"/>-->
+<!--                    </GridPane.margin>-->
+<!--                    <items>-->
+<!--                        <FXCollections fx:id="choiceBoxGenerator" fx:factory="observableArrayList">-->
+<!--                            <String fx:id="simpleChoice" fx:value="Simple"/>-->
+<!--                            <String fx:id="primChoice" fx:value="Randomized Prim"/>-->
+<!--                            <String fx:value=""/>-->
+<!--                        </FXCollections>-->
+<!--                    </items>-->
+<!--                </ChoiceBox>-->
+<!--                <Label fx:id="chooseGeneratorLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"-->
+<!--                       prefWidth="230.0" text="choose Maze generator type:" GridPane.columnIndex="2"-->
+<!--                       GridPane.rowIndex="2">-->
+<!--                    <GridPane.margin>-->
+<!--                        <Insets bottom="40.0"/>-->
+<!--                    </GridPane.margin>-->
+<!--                </Label>-->
+<!--                <Label fx:id="chooseSolverLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0"-->
+<!--                       prefWidth="200.0" text="choose Solving algorithm:" GridPane.columnIndex="2"-->
+<!--                       GridPane.rowIndex="3">-->
+<!--                    <GridPane.margin>-->
+<!--                        <Insets bottom="105.0"/>-->
+<!--                    </GridPane.margin>-->
+<!--                </Label>-->
+<!--                <Button fx:id="saveChanges" mnemonicParsing="false" onAction="#saveNewProperties" text="save changes"-->
+<!--                        GridPane.columnIndex="2" GridPane.rowIndex="4">-->
+<!--                    <GridPane.margin>-->
+<!--                        <Insets bottom="150.0" left="50.0"/>-->
+<!--                    </GridPane.margin>-->
+<!--                </Button>-->
+<!--            </GridPane>-->
         </center>
         <top>
             <MenuBar>

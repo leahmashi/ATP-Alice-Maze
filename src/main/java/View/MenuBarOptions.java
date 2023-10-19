@@ -202,7 +202,7 @@ public class MenuBarOptions
     public void showAbout(Window parentWindow)
     {
         String text = """
-                Leah and Shahar are students from information systems in Ben-Gurion university
+                Leah and Shahar are information systems students in Ben-Gurion university
                 Shahar loves to code in his available time
                 Leah is a disney lover, and likes to dance and sing in her spare time
                 They used these algorithms to create and solve the maze:
@@ -214,6 +214,7 @@ public class MenuBarOptions
                 """;
         Alert alert = new Alert(Alert.AlertType.INFORMATION, text, ButtonType.OK);
         alert.setContentText(text);
+        alert.getDialogPane().getStylesheets().add("CSSs/Alerts.css");
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
         alert.setTitle("About us");

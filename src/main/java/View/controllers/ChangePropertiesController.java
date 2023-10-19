@@ -64,12 +64,12 @@ public class ChangePropertiesController extends AView
         }
         catch (Exception e)
         {
-            raisePopupWindow("Please enter an integer value for number of threads", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+            raisePopupWindow("Number of threads must be an integer", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.ERROR);
             return;
         }
 
         if ((solvingAlgoChoice == null || solvingAlgoChoice.equals("")) && (mazeGeneratorChoice == null || mazeGeneratorChoice.equals("")) && threadsNum.equals(""))
-            raisePopupWindow("Please enter a property value you want to change", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.INFORMATION);
+            raisePopupWindow("No values entered", "resources/clips/offWithTheirHeads.mp4", Alert.AlertType.ERROR);
         else
         {
             if (solvingAlgoChoice != null)
@@ -82,7 +82,7 @@ public class ChangePropertiesController extends AView
             }
         }
         if (successSetGenerator || successSetSolver || successSetThreadNum)
-            raisePopupWindow("the properties were saved successfully", "resources/clips/SuccessClip.mp4", Alert.AlertType.INFORMATION);
+            raisePopupWindow("Saved successfully", "resources/clips/SuccessClip.mp4", Alert.AlertType.INFORMATION);
 
     }
 

@@ -54,7 +54,7 @@ public class chooseMazeViewController extends AView
             String mazeChoice = (String) primChoice.getValue();
             if (mazeChoice == null)
             {
-                raisePopupWindow("Please choose a maze type", clipErrorPath, Alert.AlertType.INFORMATION);
+                raisePopupWindow("You didn't choose a maze generator type", clipErrorPath, Alert.AlertType.ERROR);
                 return;
             }
             else
@@ -62,7 +62,7 @@ public class chooseMazeViewController extends AView
         }
         catch (Exception e)
         {
-            raisePopupWindow("One or more inputs isn't a positive number over 2\nplease try again", clipErrorPath, Alert.AlertType.INFORMATION);
+            raisePopupWindow("One of the inputs isn't a positive number over 2", clipErrorPath, Alert.AlertType.ERROR);
             return; //stay on choose scene
         }
 

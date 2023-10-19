@@ -10,7 +10,7 @@
         <MenuBar>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <MenuButton prefWidth="80.0" text="File">
+                    <MenuButton prefWidth="80.0" text="File" fx:id="File">
                         <items>
                             <MenuItem mnemonicParsing="false" onAction="#createNewFile" text="New" />
                             <MenuItem disable="true" mnemonicParsing="false" text="Save" />
@@ -21,7 +21,7 @@
             </Menu>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <MenuButton prefWidth="80.0" text="Options">
+                    <MenuButton prefWidth="80.0" text="Options" fx:id="Options">
                         <items>
                             <MenuItem mnemonicParsing="false" onAction="#showProperties" text="Properties" />
                         </items>
@@ -30,22 +30,22 @@
             </Menu>
             <Menu>
                 <graphic>
-                    <Button onAction="#showSettings" prefWidth="80.0" text="Settings" />
+                    <Button onAction="#showSettings" prefWidth="80.0" text="Settings" fx:id="Settings"/>
                 </graphic>
             </Menu>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <Button onAction="#showHelp" prefWidth="80.0" text="Help" />
+                    <Button onAction="#showHelp" prefWidth="80.0" text="Help" fx:id="HelpTop"/>
                 </graphic>
             </Menu>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <Button onAction="#showAbout" prefWidth="80.0" text="About" />
+                    <Button onAction="#showAbout" prefWidth="80.0" text="About" fx:id="About"/>
                 </graphic>
             </Menu>
             <Menu mnemonicParsing="false">
                 <graphic>
-                    <Button onAction="#exitProgram" prefWidth="80.0" text="Exit" />
+                    <Button onAction="#exitProgram" prefWidth="80.0" text="Exit" fx:id="Exit"/>
                 </graphic>
             </Menu>
         </MenuBar>
@@ -56,16 +56,8 @@
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                 <children>
                     <Button fx:id="returnToMain" alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity"
-                            mnemonicParsing="false"
-                            prefHeight="60.0" prefWidth="130.0" onAction="#returnToMain">
-                        <graphic>
-                            <VBox alignment="CENTER" prefHeight="60.0" prefWidth="100.0">
-                                <children>
-                                    <Label fx:id="returnToText" alignment="CENTER" text="Return to"/>
-                                    <Label fx:id="MainWindowText" text="main window"/>
-                                </children>
-                            </VBox>
-                        </graphic>
+                            mnemonicParsing="false" textAlignment="CENTER"
+                            prefHeight="60.0" prefWidth="130.0" onAction="#returnToMain" text="Return to&#10;main window">
                     </Button>
                 </children>
             </VBox>
@@ -79,13 +71,14 @@
         </HBox>
     </bottom>
     <center>
-        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" spacing="20.0" BorderPane.alignment="CENTER">
+        <VBox fx:id="chooseMazeSettings" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="250.0"
+              spacing="20.0" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="chooseRowsLabel" text="Enter Rows number:" />
-                <TextField fx:id="EnterRowsText" alignment="CENTER" promptText="enter rows here" />
-                <Label fx:id="chooseColsLabel" text="Enter cols number:" />
-                <TextField fx:id="EnterColsText" alignment="CENTER" promptText="enter cols here" />
-                <Label fx:id="chooseMazeType" text="Choose maze type:" />
+                <Label fx:id="chooseRowsLabel" text="Enter number of Rows:" />
+                <TextField fx:id="EnterRowsText" alignment="CENTER" promptText="number of rows" />
+                <Label fx:id="chooseColsLabel" text="Enter number of columns:" />
+                <TextField fx:id="EnterColsText" alignment="CENTER" promptText="number of columns" />
+                <Label fx:id="chooseMazeType" text="Choose maze generator:" />
                 <ChoiceBox prefWidth="250.0" fx:id="primChoice">
                     <items>
                         <FXCollections fx:id="choiceBoxMaze" fx:factory="observableArrayList">

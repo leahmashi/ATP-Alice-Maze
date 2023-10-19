@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSSs/finalStageStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.controllers.FinishLineViewController">
     <bottom>
         <HBox alignment="CENTER" spacing="10">
+            <BorderPane.margin>
+                <Insets bottom="15.0" left="25.0" right="25.0" top="0.0" />
+            </BorderPane.margin>
             <Button fx:id="finish" onAction="#finish" prefHeight="60.0" prefWidth="130.0" text="Finish" HBox.hgrow="ALWAYS" BorderPane.alignment="BOTTOM_LEFT"/>
             <Button fx:id="StartOver" onAction="#startOver" prefHeight="60.0" prefWidth="130.0" text="Start Over" HBox.hgrow="ALWAYS" BorderPane.alignment="BOTTOM_RIGHT"/>
         </HBox>

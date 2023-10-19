@@ -1,0 +1,26 @@
+.dialog-pane {
+    -fx-background-color: linear-gradient(#ffffff, #e8f5fc);
+}
+
+.dialog-pane:header .header-panel {
+    -fx-background-color: linear-gradient(#ffffff, #e8f5fc);
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-font-weight: bold;
+    -fx-text-alignment: CENTER;
+}
+
+.dialog-pane .button {
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-selection-bar: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #3c7fb1, linear-gradient(#fafdfe, #e8f5fc),linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-text-fill: #3c7fb1, linear-gradient(#fafdfe, #e8f5fc),linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
+}
