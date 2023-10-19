@@ -15,7 +15,9 @@ For solving the mazes we implemented Depth First Search, Breadth First Search, a
 Here's a demo of the game:  
 
 
-https://github.com/leahmashi/ATP-Project-PartC/assets/63493176/8b3f932e-84b7-4b1e-bd11-10b1c3b76b1c
+https://github.com/leahmashi/ATP-Alice-Maze/assets/63493176/86f557b5-e0bc-4627-9937-db908cb326d1
+
+
 
 
 
